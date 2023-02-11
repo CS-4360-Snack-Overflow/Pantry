@@ -2,7 +2,7 @@
 require('dotenv').config();
 const express = require('express');
 const testRoutes = require('./routes/testroutes')
-const rootRoutes = require('./routes')
+const indexRoutes = require('./routes')
 
 // Express app
 const app = express();
@@ -20,7 +20,7 @@ app.use((request, response, next) => {
 // Handle test requests
 app.use('/test/', testRoutes);
 // Handle root requests
-app.use(rootRoutes);
+app.use(indexRoutes);
 
 // Listen for requests
 app.listen(process.env.PORT, () => {
