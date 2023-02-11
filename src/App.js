@@ -11,7 +11,6 @@ import { css } from "styled-components/macro"; //eslint-disable-line
  *
  * The App component below is using React router to render the landing page that you see on the live demo website
  * and the component previews.
- *
  */
 
 /* Use AnimationRevealPage as a wrapper component for your pages if you are building a custom one yourself */
@@ -109,7 +108,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 export default function App() {
   // If you want to disable the animation just use the disabled `prop` like below on your page's component
   // return <AnimationRevealPage disabled>xxxxxxxxxx</AnimationRevealPage>;
-
 
   return (
     <>
