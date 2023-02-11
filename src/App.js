@@ -118,13 +118,13 @@ export default function App() {
           <Route path="/components/:type/:name" element={<ComponentRenderer />} />
           {/* <Route path="/thank-you" element={<ThankYouPage />} /> */}
           <Route path="/" element={<RestaurantLandingPage />} />
-          <Route path="/about" element={<LoginPage />} />
-          <Route path="/about" element={<SignupPage />} />
-          <Route path="/about" element={<PricingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
           <Route path="/about" element={<AboutUsPage />} />
-          <Route path="/about" element={<ContactUsPage />} />
-          <Route path="/about" element={<TermsOfServicePage />} />
-          <Route path="/about" element={<PrivacyPolicyPage />} />
+          <Route path="/contact" element={<ContactUsPage />} />
+          <Route path="/terms" element={<TermsOfServicePage />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
         </Routes>
       </Router>
     </>
