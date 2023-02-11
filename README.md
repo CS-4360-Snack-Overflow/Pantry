@@ -1,4 +1,4 @@
-[![Build Status](http://ec2-18-234-193-120.compute-1.amazonaws.com:8080/buildStatus/icon?job=Pantry+CI+CD)](http://ec2-18-234-193-120.compute-1.amazonaws.com:8080/job/Pantry%20CI%20CD/)
+<a href='http://ec2-18-234-193-120.compute-1.amazonaws.com:8080/job/Pantry%20CI%20CD/'><img src='http://ec2-18-234-193-120.compute-1.amazonaws.com:8080/buildStatus/icon?job=Pantry+CI+CD'></a>
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
