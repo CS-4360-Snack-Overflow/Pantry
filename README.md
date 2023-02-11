@@ -1,4 +1,4 @@
-[![Build Status](http://ec2-54-236-45-82.compute-1.amazonaws.com:8080/buildStatus/icon?job=Pantry+CI+CD)](http://ec2-54-236-45-82.compute-1.amazonaws.com:8080/job/Pantry%20CI%20CD/)
+[![Build Status](http://ec2-54-236-45-82.compute-1.amazonaws.com:8080/buildStatus/icon?job=Pantry+CI+CD)]
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
