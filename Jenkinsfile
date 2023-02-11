@@ -4,12 +4,6 @@ pipeline {
 	tools {nodejs "node"}
 
 	stages{
-
-		stage('Change directory to backend') {
-			steps {
-				
-			}
-		}
 		stage('Install backend dependencies') {
 			steps {
 				dir('Backend') {
