@@ -11,6 +11,7 @@ import { css } from "styled-components/macro"; //eslint-disable-line
  *
  * The App component below is using React router to render the landing page that you see on the live demo website
  * and the component previews.
+ *
  */
 
 /* Use AnimationRevealPage as a wrapper component for your pages if you are building a custom one yourself */
@@ -85,29 +86,30 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 // import HotelTravelLandingPage from "demos/HotelTravelLandingPage.js";
 // import AgencyLandingPage from "demos/AgencyLandingPage.js";
 // import SaaSProductLandingPage from "demos/SaaSProductLandingPage.js";
-import RestaurantLandingPage from "demos/RestaurantLandingPage.js";
+// import RestaurantLandingPage from "demos/RestaurantLandingPage.js";
 // import ServiceLandingPage from "demos/ServiceLandingPage.js";
 // import HostingCloudLandingPage from "demos/HostingCloudLandingPage.js";
 
 /* Inner Pages */
-import LoginPage from "pages/Login.js";
-import SignupPage from "pages/Signup.js";
-import PricingPage from "pages/Pricing.js";
-import AboutUsPage from "pages/AboutUs.js";
-import ContactUsPage from "pages/ContactUs.js";
+// import LoginPage from "pages/Login.js";
+// import SignupPage from "pages/Signup.js";
+// import PricingPage from "pages/Pricing.js";
+// import AboutUsPage from "pages/AboutUs.js";
+// import ContactUsPage from "pages/ContactUs.js";
 // import BlogIndexPage from "pages/BlogIndex.js";
-import TermsOfServicePage from "pages/TermsOfService.js";
-import PrivacyPolicyPage from "pages/PrivacyPolicy.js";
+// import TermsOfServicePage from "pages/TermsOfService.js";
+// import PrivacyPolicyPage from "pages/PrivacyPolicy.js";
 
 import ComponentRenderer from "ComponentRenderer.js";
-// import MainLandingPage from "MainLandingPage.js";
-// import ThankYouPage from "ThankYouPage.js";
+import MainLandingPage from "MainLandingPage.js";
+import ThankYouPage from "ThankYouPage.js";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default function App() {
   // If you want to disable the animation just use the disabled `prop` like below on your page's component
   // return <AnimationRevealPage disabled>xxxxxxxxxx</AnimationRevealPage>;
+
 
   return (
     <>
