@@ -1,3 +1,5 @@
+[![Build Status](http://ec2-18-234-193-120.compute-1.amazonaws.com:8080/buildStatus/icon?job=Pantry+CI+CD)](http://ec2-18-234-193-120.compute-1.amazonaws.com:8080/job/Pantry%20CI%20CD/)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Script
