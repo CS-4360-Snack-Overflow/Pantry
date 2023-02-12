@@ -20,9 +20,9 @@ router.get('/:id', (request, response) => {
 
 // POST a new test object
 router.post('/', (request, response) => {
-	response.json({
-		mssg: `POST new test object`,
-		status: 200
+	const {testMsg} = request.body;
+	response.status(201).json({
+		mssg: `POST new test object`
 	});
 });
 
