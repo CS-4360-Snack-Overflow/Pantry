@@ -35,9 +35,8 @@ const Quote = tw.blockquote``
 const CustomerName = tw.p`mt-4 font-bold`
 const CustomerCompany = tw.p`mt-1 text-sm text-gray-500`
 
-
 export default ({
-  heading = "Better, Faster and Cheaper Cloud.",
+  heading = "All your recipes. In one location.",
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
   imageSrc = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
   imageDecoratorBlob = true,
@@ -54,19 +53,13 @@ export default ({
   const buttonRoundedCss = buttonRounded && tw`rounded-full`;
   const navLinks = [
     <NavLinks key={1}>
-      <NavLink href="/#">About</NavLink>
-      <NavLink href="/#">Blog</NavLink>
-      <NavLink href="/#">Pricing</NavLink>
-      <NavLink href="/#">Contact Us</NavLink>
-      <NavLink href="/#">Testimonials</NavLink>
+      <NavLink href="/recipes">Recipes</NavLink>
+      <NavLink href="/about">About Us</NavLink>
+      <NavLink href="/contact">Contact Us</NavLink>
     </NavLinks>,
     <NavLinks key={2}>
-      <NavLink href="/#" tw="lg:ml-12!">
-        Login
-      </NavLink>
-      <PrimaryLink css={buttonRoundedCss} href="/#">
-        Sign Up
-      </PrimaryLink>
+      <NavLink href="/#" tw="lg:ml-12!">Login</NavLink>
+      <PrimaryLink css={buttonRoundedCss} href="/#">Sign Up</PrimaryLink>
     </NavLinks>
   ];
   return (
