@@ -1,28 +1,24 @@
-// Import dependencies
-require('dotenv').config();
+// there are routes in this folder, but none of the routes are been implemented, do it later.
+// add the databse object from that other file
+// then create teh ATLAS credential file, locally don't post
+// then implement CRUD for dgiri12db/recipes
+//
 const express = require('express');
-const testRoutes = require('./routes/testroutes')
-const indexRoutes = require('./routes')
-
-// Express app
 const app = express();
 
-// Middleware //
-// If request has data, parse and attach
-app.use(express.json())
-// Log all requests in the console
-app.use((request, response, next) => {
-	console.log(`Request recieved: Path = ${request.path}, Command = ${request.method}`);
-	next();
+// site for learning about routes is follows:
+// https://www.freecodecamp.org/news/building-a-simple-crud-application-with-express-and-mongodb-63f80f3eb1cd/
+
+// this is a route in express
+app.get('/',(req,res) => {
+	res.sendFile('/Users/diptanshugiri1/On\ This\ Mac/github/Team-Project/backend/index.html');
 });
 
+// this is also a route in express
+app.get('/route1',(req,res) => {
+	res.send("Welp! Looks like you activated a route bruv!")});
 
-// Handle test requests
-app.use('/test/', testRoutes);
-// Handle root requests
-app.use(indexRoutes);
-
-// Listen for requests
-app.listen(process.env.PORT, () => {
-	console.log(`listening on port ${process.env.PORT}`);
+app.listen(4000, ()=>{
+	console.log("Listening to port 4000");
 });
+
