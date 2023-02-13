@@ -23,38 +23,42 @@ export default () => {
       <Header />
       <MainFeature1
         subheading={<Subheading>About Pantry</Subheading>}
-        heading="We are a modern design agency."
+        heading="Meet the team."
+        description="Here at Pantry we aim to carve a new branch into the recipe market. We are a team of six developers who are passionate about creating a beautiful and functional website for users to find new recipes. Our goal is for users to spend less time searching and more time cooking."
         buttonRounded={false}
-        primaryButtonText="See Portfolio"
-        imageSrc="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
+        primaryButtonText="Meet the Team"
+        imageSrc="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+        primaryButtonUrl={<a href="team"></a>}
       />
       <MainFeature1
         subheading={<Subheading>Our Vision</Subheading>}
         heading="We aim to disrupt the design space."
+        description=" As a team, we wanted to create a website that allows users to find recipes based on ingredients they already have. Current websites that attempt to do this are confusing and cumbersome to navigate. This market is in its infancy and can be improved upon in many ways."
         buttonRounded={false}
         primaryButtonText="Contact Us"
-        imageSrc="https://images.unsplash.com/3/doctype-hi-res.jpg?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=80"
+        imageSrc="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+        primaryButtonUrl="/contact"
         textOnLeft={false}
       />
       <Features
         subheading={<Subheading>Our Values</Subheading>}
         heading="We follow these."
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        description="Our promises to the customer:"
         cards={[
           {
             imageSrc: SupportIconImage,
-            title: "24/7 Support",
-            description: "Lorem ipsum donor amet siti ceali placeholder text alipiscing elit sed do eiusmod temport"
+            title: "Timely Support",
+            description: "Feel free to contact us with any questions or concerns. We will respond as soon as possible."
           },
           {
             imageSrc: ShieldIconImage,
             title: "Strong Teams",
-            description: "Lorem ipsum donor amet siti ceali placeholder text alipiscing elit sed do eiusmod temport"
+            description: "Our team strives to continuously improve our skills and learn new technologies. We are always looking for new ways to improve Pantry."
           },
           {
             imageSrc: CustomerLoveIconImage,
             title: "Customer Satisfaction",
-            description: "Lorem ipsum donor amet siti ceali placeholder text alipiscing elit sed do eiusmod temport"
+            description: "We want to create a website that is easy to use and provides value to our users. We will continue to improve Pantry to meet your needs."
           },
         ]}
         linkText=""
@@ -62,6 +66,7 @@ export default () => {
       <TeamCardGrid
         subheading={<Subheading>The Team</Subheading>}
       />
+      
       <Footer />
     </AnimationRevealPage>
   );
