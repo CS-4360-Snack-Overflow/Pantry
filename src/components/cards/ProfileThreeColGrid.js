@@ -64,7 +64,6 @@ export default ({
         },
       ],
     },
-
     {
       imageSrc: "https://images.unsplash.com/photo-1517070208541-6ddc4d3efbcb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
       position: "UI-UX Designer",
