@@ -35,7 +35,7 @@ export default () => {
         description="Most cooking websites currently do not have search filters to account for what ingredients people are already in their kitchen. This means going out to purchase additional ingredients after they finding a recipe. We aim to change that by providing a website that allows users to search for recipes based on the ingredients they already have available."
         buttonRounded={false}
         primaryButtonText="Contact Us"
-        imageSrc="https://images.unsplash.com/3/doctype-hi-res.jpg?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=80"
+        imageSrc="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
         textOnLeft={false}
         primaryButtonUrl="/contact"
       />
