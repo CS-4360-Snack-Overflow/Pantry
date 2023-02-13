@@ -22,9 +22,8 @@ MongoClient.connect(connectionString, (err, database) => {
 	db = database; // this is where we get ref to the DB
 	//app.listen is now inside mongodb connect function,
 	//so that only start running server when database is connected.
-	app.listen(4000, ()=>{
-		console.log("Listening to port 4000");
-	});
+	console.log("Database connection successful");
+	database.close();
 });
 
 // site for learning about routes is follows:
@@ -41,13 +40,40 @@ app.get('/route1',(req,res) => {
 
 //the following code responds to POST from client
 app.post('/routepost', (req, res) => {
-	console.log(req.body)
+	console.log(req.body);
 	res.sendFile('/Users/diptanshugiri1/On\ This\ Mac/github/Team-Project/backend/index.html');
 	// there is a sendFile because client freezes after sending POST, sendFile will refresh their page and also give them an empty form
-
 });
 
 //so now Express listens to POST and req.body gives us data
 //now what's left is send this data to MongoDB with MongoDB Querying Langauge or something
 //
 
+//implementing POST crud to MongoDB
+
+//this is Create function
+app.post('/crudpost', (req, res) => {
+	db.collection('recipes').save(req.body, (err, result) => { 
+		if (err) return console.log(err)
+	});
+	// here goes another method
+	console.log('saved to database');
+	res.redirect('/');
+});
+
+//this is Read function
+app.get('/readDB', (req, res) => {
+	var cursor = db.collection('recipes').find()
+	.toArray(function (err, results) {
+		console.log(results);
+	}
+	);
+});
+//toArray is a function of find() inside collection, to retreive data from MongoDB
+//to use the '/readDB' route, just enter in address bar
+
+
+
+app.listen(4000, ()=>{
+	console.log("Listening to port 4000");
+});
