@@ -19,7 +19,7 @@ const connectionString = process.env.ATLAS_URI;
 var db;
 MongoClient.connect(connectionString, (err, database) => {
 	if (err) return console.log(err);
-	db = database;
+	db = database; // this is where we get ref to the DB
 	//app.listen is now inside mongodb connect function,
 	//so that only start running server when database is connected.
 	app.listen(4000, ()=>{
@@ -49,11 +49,5 @@ app.post('/routepost', (req, res) => {
 
 //so now Express listens to POST and req.body gives us data
 //now what's left is send this data to MongoDB with MongoDB Querying Langauge or something
-
-
-
-
-app.listen(4000, ()=>{
-	console.log("Listening to port 4000");
-});
+//
 
