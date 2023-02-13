@@ -22,7 +22,7 @@ export default () => {
     <AnimationRevealPage>
       <Header />
       <MainFeature1
-        subheading={<Subheading>About Treact</Subheading>}
+        subheading={<Subheading>About Pantry</Subheading>}
         heading="We are a modern design agency."
         buttonRounded={false}
         primaryButtonText="See Portfolio"
@@ -59,7 +59,7 @@ export default () => {
         ]}
         linkText=""
       />
-      <TeamCardGrid 
+      <TeamCardGrid
         subheading={<Subheading>Our Team</Subheading>}
       />
       <Footer />
