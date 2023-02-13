@@ -18,6 +18,11 @@ app.get('/',(req,res) => {
 app.get('/route1',(req,res) => {
 	res.send("Welp! Looks like you activated a route bruv!")});
 
+//the following code responds to POST from client
+app.post('/routepost', (req, res) => {
+	console.log('Hello World bruv! Me, the server, received a POST from client')
+});
+
 app.listen(4000, ()=>{
 	console.log("Listening to port 4000");
 });

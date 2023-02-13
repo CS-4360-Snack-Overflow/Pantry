@@ -1,4 +1,14 @@
 <h1>Welcome to Pantry!</h1>
 <p>So, this is it for now bruv! do some CRUD over there yeah?</p>
-<a href="http://localhost:4000/route1">Click me for a route!</a>
+<a href="/route1">Click me for a route!</a><br>
+<!-- <a href...> can only send GET messages, not POST messages-->
+<!-- typing the route on the address bar is the same as only being able to send GET messages-->
+<!-- only the method attr of form tag can send POSTs -->
+<form action="/routepost" method="POST"> 
+       	<input type="text" placeholder="name" name="name"> 
+       	<input type="text" placeholder="quote" name="quote">
+	<button type="submit">Submit</button>
+</form>
+
+<!-- no need to write href="http://localhost:4000/route1; the above works just as fine. remember, routes are web addresses that the client sends the server. -->
 
