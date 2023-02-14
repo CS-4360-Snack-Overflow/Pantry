@@ -5,7 +5,7 @@ import { css } from "styled-components/macro";
 import { Container, ContentWithPaddingXl } from "components/misc/Layouts.js";
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings";
 import {SectionDescription} from "components/misc/Typography";
-import { ReactComponent as TwitterIcon} from "images/twitter-icon.svg";
+//import { ReactComponent as TwitterIcon} from "images/twitter-icon.svg";
 import { ReactComponent as LinkedinIcon} from "images/linkedin-icon.svg";
 import { ReactComponent as GithubIcon } from "images/github-icon.svg";
 

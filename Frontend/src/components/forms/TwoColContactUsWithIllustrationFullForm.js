@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-import EmailIllustrationSrc from "images/email-illustration.svg";
+//import EmailIllustrationSrc from "images/email-illustration.svg";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -15,10 +15,10 @@ const TextColumn = styled(Column)(props => [
   props.textOnLeft ? tw`md:mr-12 lg:mr-16 md:order-first` : tw`md:ml-12 lg:ml-16 md:order-last`
 ]);
 
-const Image = styled.div(props => [
+/* const Image = styled.div(props => [
   `background-image: url("${props.imageSrc}");`,
   tw`rounded bg-contain bg-no-repeat bg-center h-full`,
-]);
+]); */
 const TextContent = tw.div`lg:py-8 text-center md:text-left`;
 
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
@@ -36,7 +36,7 @@ const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8`
 export default ({
   subheading = "Contact Us",
   heading = <>Feel free to <span tw="text-primary-500">get in touch</span><wbr/> with us.</>,
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  description = "We understand that things don't always work out. If you have any concerns, criticism, or even praise, please reach out.",
   submitButtonText = "Send",
   formAction = "#",
   formMethod = "get",
@@ -48,7 +48,7 @@ export default ({
     <Container>
       <TwoColumn>
         <ImageColumn>
-          <Image imageSrc={EmailIllustrationSrc} />
+          {/* <Image imageSrc={EmailIllustrationSrc} /> */}
         </ImageColumn>
         <TextColumn textOnLeft={textOnLeft}>
           <TextContent>
