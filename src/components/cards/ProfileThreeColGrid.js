@@ -43,7 +43,7 @@ const CardLinks = styled.div`
 export default ({
   heading = "Meet These Up and Coming Graduates.",
   subheading = "Our Team",
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  description = " ",
   cards = [
     {
       imageSrc: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
@@ -51,15 +51,11 @@ export default ({
       name: "Jaden Cua",
       links: [
         {
-          url: "https://twitter.com",
-          icon: TwitterIcon,
-        },
-        {
           url: "https://linkedin.com",
           icon: LinkedinIcon,
         },
         {
-          url: "https://github.com",
+          url: "https://github.com/Jadencua",
           icon: GithubIcon,
         },
       ],
@@ -70,15 +66,11 @@ export default ({
       name: "Cesar Huizar",
       links: [
         {
-          url: "https://twitter.com",
-          icon: TwitterIcon,
-        },
-        {
           url: "https://linkedin.com",
           icon: LinkedinIcon,
         },
         {
-          url: "https://github.com",
+          url: "https://github.com/chuizar",
           icon: GithubIcon,
         },
       ],
@@ -89,15 +81,11 @@ export default ({
       name: "Ryan Baertlein",
       links: [
         {
-          url: "https://twitter.com",
-          icon: TwitterIcon,
-        },
-        {
           url: "https://linkedin.com",
           icon: LinkedinIcon,
         },
         {
-          url: "https://github.com",
+          url: "https://github.com/rdaniel58",
           icon: GithubIcon,
         },
       ],
@@ -108,15 +96,11 @@ export default ({
       name: "Jonathon Fiorini",
       links: [
         {
-          url: "https://twitter.com",
-          icon: TwitterIcon,
-        },
-        {
           url: "https://linkedin.com",
           icon: LinkedinIcon,
         },
         {
-          url: "https://github.com",
+          url: "https://github.com/Wolfy319",
           icon: GithubIcon,
         },
       ],
@@ -127,15 +111,11 @@ export default ({
       name: "Jose Rios",
       links: [
         {
-          url: "https://twitter.com",
-          icon: TwitterIcon,
-        },
-        {
           url: "https://linkedin.com",
           icon: LinkedinIcon,
         },
         {
-          url: "https://github.com",
+          url: "https://github.com/ylATeRTyl",
           icon: GithubIcon,
         },
       ],
@@ -147,15 +127,11 @@ export default ({
       name: "Diptanshu Giri",
       links: [
         {
-          url: "https://twitter.com",
-          icon: TwitterIcon,
-        },
-        {
           url: "https://linkedin.com",
           icon: LinkedinIcon,
         },
         {
-          url: "https://github.com",
+          url: "https://github.com/dgiri12",
           icon: GithubIcon,
         },
       ],
