@@ -12,6 +12,9 @@ const app = express();
 // the urlencoded extracts info from the POST and sends it to the request object
 app.use(bodyParser.urlencoded({extended: true}));
 
+const path = require('path');
+const options = {root: path.join(__dirname, "../backend")};
+
 //mongoDB middleware
 const MongoClient = require('mongodb').MongoClient;
 const connectionString = process.env.ATLAS_URI;
@@ -31,7 +34,7 @@ MongoClient.connect(connectionString, (err, database) => {
 
 // this is a route in express
 app.get('/',(req,res) => {
-	res.sendFile('./index.html');
+	res.sendFile('index.html', options);
 });
 
 // this is also a route in express
@@ -41,7 +44,7 @@ app.get('/route1',(req,res) => {
 //the following code responds to POST from client
 app.post('/routepost', (req, res) => {
 	console.log(req.body);
-	res.sendFile('./index.html');
+	res.sendFile('index.html', options);
 	// there is a sendFile because client freezes after sending POST, sendFile will refresh their page and also give them an empty form
 });
 
