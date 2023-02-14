@@ -15,11 +15,11 @@ router.get('/', (req,res) => {
 
 router.post('/', (req,res) => {
     const recipe = new Recipe(req.body);
-    recipe.save()
-    .then((result) => {
-        res.redirect('/recipes')
+    console.log(req.body)
+    recipe.save((err) => {
+        console.log(res.statusCode)
+        if (err) return handleError(err);
     })
-    .catch((err) => {console.log(err)})
 });
 
 router.get('/create', (req, res) => {
