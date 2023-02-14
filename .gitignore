@@ -10,7 +10,7 @@
 
 # production
 /build
-/Backend/.env
+*.env
 /Backend/node_modules
 
 # misc
