@@ -9,9 +9,9 @@
 ~/coverage
 
 # production
-~/build
-~/Backend/.env
-~/Backend/node_modules
+/build
+*.env
+/Backend/node_modules
 
 # misc
 .DS_Store
