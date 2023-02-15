@@ -18,7 +18,8 @@ const options = {root: path.join(__dirname, "../backend")};
 
 //mongoDB middleware
 const { MongoClient } = require("mongodb");
-const connectionString = process.env.ATLAS_URI;
+// const connectionString = process.env.ATLAS_URI;
+const connectionString = process.env.LOCAL_URI;
 const client = new MongoClient(connectionString, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
@@ -29,6 +30,7 @@ console.log(connectionString);
 //connect to MongoClient
 var db;
 client.connect(function (err, database) {
+	console.log("Connecting...");
 	if (err || !database){
 		console.log("Error");
 		console.log(err);
@@ -37,6 +39,8 @@ client.connect(function (err, database) {
 	console.log("Database connection successful");
 	database.close();
 });
+
+console.log(db);
 
 //'/' route for GET
 app.get('/',(req,res) => {
