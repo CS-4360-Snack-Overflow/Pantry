@@ -7,7 +7,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser")
 
-// Express app
+// Express app instance
 const app = express();
 
 //connect to db
@@ -20,9 +20,15 @@ mongoose.connect(process.env.MONGO_URI, {
 
 //some req data to console
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json())
+
+//lets server see front-end data 
+app.use(express.urlencoded({ extended: true}));
+
 // Handle test requests
 app.use('/test/', testRoutes);
-// Handle root requests
-app.use('/recipes', recipeRoutes);
+// redirect from local to /recipes
+app.get('/', (req,res) => {
+	res.redirect('/recipes');
+});
+
+app.use('/recipe', recipeRoutes);
