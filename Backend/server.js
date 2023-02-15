@@ -17,13 +17,23 @@ const path = require('path');
 const options = {root: path.join(__dirname, "../backend")};
 
 //mongoDB middleware
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient } = require("mongodb");
 const connectionString = process.env.ATLAS_URI;
+const client = new MongoClient(connectionString, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+});
+
+//debug to see if connectionstring is being received.
+console.log(connectionString);
 //connect to MongoClient
 var db;
-MongoClient.connect(connectionString, (err, database) => {
-	if (err) return console.log(err);
-	db = database; // get reference to the DB
+client.connect(function (err, database) {
+	if (err || !database){
+		console.log("Error");
+		console.log(err);
+	}
+	db = database.database("dgiri12db"); // get reference to the DB
 	console.log("Database connection successful");
 	database.close();
 });
