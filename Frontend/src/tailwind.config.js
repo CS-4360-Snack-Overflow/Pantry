@@ -17,15 +17,15 @@ module.exports = {
       white: '#fff',
 
       primary: {
-        100: '#a273ff',
-        200: '#935bff',
-        300: '#8344ff',
+        100: '#b3b3b3',
+        200: '#b3b3b3', //
+        300: '#ffa515', //More colored text on landing
         400: '#742cff',
-        500: '#6415FF',
+        500: '#ffa515', //Seems to be most highlighted text/button colors
         600: '#5a13e6',
-        700: '#5011cc',
+        700: '#cc8410', //More colored text on landing plus highlight on hover
         800: '#460fb3',
-        900: '#3c0d99',
+        900: '#ffa515', //login bg
       },
 
       secondary: {
