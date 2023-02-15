@@ -9,3 +9,4 @@
 - Wolfy Fiorini
 - Diptanshu Giri
 - Ryan Baertlein
+- Jose Rios
