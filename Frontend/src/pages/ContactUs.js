@@ -27,7 +27,7 @@ export default () => {
                   <AddressLine>890 Auraria Pkwy</AddressLine>
                   <AddressLine>Denver, CO 80204</AddressLine>
                 </Address>
-                <Email>jcua@msudenver.edu</Email>
+                <Email>ExampleEmail@msudenver.edu</Email>
                 <Phone>+1 (720) 867-5309</Phone>
               </>
             )

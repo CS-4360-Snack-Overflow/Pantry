@@ -53,7 +53,7 @@ export default () => {
       <Content>
         <FiveColumns>
           <Column>
-            <ColumnHeading>Main</ColumnHeading>
+            {/* <ColumnHeading>Main</ColumnHeading> */}
             <LinkList>
               <LinkListItem>
                 <Link href="#">Blog</Link>
