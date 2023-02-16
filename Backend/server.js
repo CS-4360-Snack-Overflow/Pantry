@@ -10,26 +10,27 @@ const bodyParser = require("body-parser")
 // Express app
 const app = express();
 
+//PLEASE DON'T CHANGE THIS PART
+//otherwise it will not work on my computer - DJ
+//--------------------------------------------
 mongoose.set('strictQuery', false);
-
 const mongoDB = process.env.MONGO_URI;
-
 main().catch(err => console.log(err));
 async function main() {
+	//the following three statements are executed in order,
+	//but the function main() is asynchronous from 
+	//the rest of the code.
+	//mongoose.connect() doesn't run if not explicitly
+	//stated as asynchronous.
 	await mongoose.connect(mongoDB);
 	app.listen(process.env.PORT);
 	console.log("Connected to MongoDB via Mongoose");
 }
-
-/* mongoose.connect(process.env.MONGO_URI, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true
-})
-.then((result) => {app.listen(process.env.PORT)})
-.catch( (err) => {console.log(err)});
-*/
+//END---------------------------------------------------
 
 
+// this is test code to see if CRUD works
+// can be changed if wished -----------------
 const Schema = mongoose.Schema;
 
 const SomeModelSchema = new Schema({
@@ -43,10 +44,9 @@ const instance01 = new SomeModel({ name: "awesome" });
 
 instance01.save((err) => {
 	if (err) return handleError(err);
-	//saved
+	//creates a collection 'SomeModel' inside database 'test'
 });
-
-
+//END-------------------------------------------j
 
 
 //some req data to console
