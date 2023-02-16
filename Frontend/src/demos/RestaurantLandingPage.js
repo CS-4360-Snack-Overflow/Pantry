@@ -98,7 +98,7 @@ export default () => {
       />
       <MainFeature2
         subheading={<Subheading>A Reputed Brand</Subheading>}
-        heading={<>Why <HighlightedText>Choose Us ?</HighlightedText></>}
+        heading={<>Why <HighlightedText>Choose Us?</HighlightedText></>}
         statistics={[
           {
             key: "Orders",
@@ -125,7 +125,7 @@ export default () => {
       />
       <Testimonial
         subheading=""
-        heading={<>novice chefs <HighlightedText>Love Us.</HighlightedText></>}
+        heading={<>Novice chefs <HighlightedText>Love Us.</HighlightedText></>}
       />
       <DownloadApp
         text={<>People around you are cooking delicious meals using the <HighlightedTextInverse>Pantry App.</HighlightedTextInverse></>}
