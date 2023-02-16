@@ -21,7 +21,7 @@ module.exports = {
         200: '#b3b3b3', //
         300: '#ffa515', //More colored text on landing
         400: '#742cff',
-        500: '#ffa515', //Seems to be most highlighted text/button colors
+        500: '#F58023', //Seems to be most highlighted text/button colors
         600: '#5a13e6',
         700: '#cc8410', //More colored text on landing plus highlight on hover
         800: '#460fb3',
