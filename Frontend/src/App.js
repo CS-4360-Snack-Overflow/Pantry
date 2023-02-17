@@ -86,23 +86,23 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 // import HotelTravelLandingPage from "demos/HotelTravelLandingPage.js";
 // import AgencyLandingPage from "demos/AgencyLandingPage.js";
 // import SaaSProductLandingPage from "demos/SaaSProductLandingPage.js";
-// import RestaurantLandingPage from "demos/RestaurantLandingPage.js";
-// import ServiceLandingPage from "demos/ServiceLandingPage.js";
+import RestaurantLandingPage from "demos/RestaurantLandingPage.js";
+import ServiceLandingPage from "demos/ServiceLandingPage.js";
 // import HostingCloudLandingPage from "demos/HostingCloudLandingPage.js";
 
 /* Inner Pages */
-// import LoginPage from "pages/Login.js";
-// import SignupPage from "pages/Signup.js";
-// import PricingPage from "pages/Pricing.js";
-// import AboutUsPage from "pages/AboutUs.js";
-// import ContactUsPage from "pages/ContactUs.js";
-// import BlogIndexPage from "pages/BlogIndex.js";
-// import TermsOfServicePage from "pages/TermsOfService.js";
-// import PrivacyPolicyPage from "pages/PrivacyPolicy.js";
+import LoginPage from "pages/Login.js";
+import SignupPage from "pages/Signup.js";
+import PricingPage from "pages/Pricing.js";
+import AboutUsPage from "pages/AboutUs.js";
+import ContactUsPage from "pages/ContactUs.js";
+//import BlogIndexPage from "pages/BlogIndex.js";
+import TermsOfServicePage from "pages/TermsOfService.js";
+import PrivacyPolicyPage from "pages/PrivacyPolicy.js";
 
 import ComponentRenderer from "ComponentRenderer.js";
-import MainLandingPage from "MainLandingPage.js";
-import ThankYouPage from "ThankYouPage.js";
+//import MainLandingPage from "MainLandingPage.js";
+//import ThankYouPage from "ThankYouPage.js";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -118,8 +118,16 @@ export default function App() {
         <Routes>
           <Route path="/components/:type/:subtype/:name" element={<ComponentRenderer />} />
           <Route path="/components/:type/:name" element={<ComponentRenderer />} />
-          <Route path="/thank-you" element={<ThankYouPage />} />
-          <Route path="/" element={<MainLandingPage />} />
+          {/* <Route path="/thank-you" element={<ThankYouPage />} /> */}
+          <Route path="/" element={<RestaurantLandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/about" element={<AboutUsPage />} />
+          <Route path="/contact" element={<ContactUsPage />} />
+          <Route path="/terms" element={<TermsOfServicePage />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          <Route path="/recipes" element={<ServiceLandingPage />} />
         </Routes>
       </Router>
     </>

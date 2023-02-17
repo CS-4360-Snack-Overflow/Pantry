@@ -24,34 +24,33 @@ export default () => {
   return (
     <AnimationRevealPage>
       <Hero
-        heading={<>Delicious & Affordable <HighlightedText>Meals Near You.</HighlightedText></>}
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        heading={<>Delicious Recipes <HighlightedText>Meals Made easy.</HighlightedText></>}
+        description="Tired of not knowing what to make or having to shop to make your meal. Look no further, make delicious food with what you have in your pantry"
         imageSrc="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
         imageCss={imageCss}
         imageDecoratorBlob={true}
-        primaryButtonText="Order Now"
-        watchVideoButtonText="Meet The Chefs"
+        primaryButtonText="Search Now"
+        watchVideoButtonText="Quick Recipes"
       />
       <MainFeature
-        subheading={<Subheading>Established Since 2014</Subheading>}
+        subheading={<Subheading>Established 2023</Subheading>}
         heading={
           <>
-            We've been serving for
-            <wbr /> <HighlightedText>over 5 years.</HighlightedText>
+            Find the recipe for these delicious home cooked
+            <wbr /> <HighlightedText>Meals.</HighlightedText>
           </>
         }
         description={
           <Description>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
+            Learn about the history about how these dishes were made and their importance
             <br />
             <br />
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            and see how these traditonal dishes continue to be passed down.
           </Description>
         }
         buttonRounded={false}
         textOnLeft={false}
-        primaryButtonText="Latest Offers"
+        primaryButtonText="Find out more."
         imageSrc={
           "https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
         }
@@ -63,7 +62,7 @@ export default () => {
       <TabGrid
         heading={
           <>
-            Checkout our <HighlightedText>menu.</HighlightedText>
+            Checkout some of our <HighlightedText>recipes.</HighlightedText>
           </>
         }
       />
@@ -76,20 +75,20 @@ export default () => {
         cards={[
           {
             imageSrc: shopIconImageSrc,
-            title: "230+ Locations",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
+            title: "230+ Resturant Recipes",
+            description: "Resturant meals, home cooked, same taste",
             url: "https://google.com"
           },
           {
             imageSrc: chefIconImageSrc,
             title: "Professional Chefs",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
+            description: "Learn how the pro's make their food",
             url: "https://timerse.com"
           },
           {
             imageSrc: celebrationIconImageSrc,
-            title: "Birthday Catering",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
+            title: "Celebrations",
+            description: "Meals made for the best occasions",
             url: "https://reddit.com"
           }
         ]}
@@ -114,7 +113,7 @@ export default () => {
             value: "1500+"
           }
         ]}
-        primaryButtonText="Order Now"
+        primaryButtonText="Learn More"
         primaryButtonUrl="https://order.now.com"
         imageInsideDiv={false}
         imageSrc="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzI2fQ&auto=format&fit=crop&w=768&q=80"
@@ -126,10 +125,10 @@ export default () => {
       />
       <Testimonial
         subheading=""
-        heading={<>Customers <HighlightedText>Love Us.</HighlightedText></>}
+        heading={<>novice chefs <HighlightedText>Love Us.</HighlightedText></>}
       />
       <DownloadApp
-        text={<>People around you are ordering delicious meals using the <HighlightedTextInverse>Treact App.</HighlightedTextInverse></>}
+        text={<>People around you are cooking delicious meals using the <HighlightedTextInverse>Pantry App.</HighlightedTextInverse></>}
       />
       <Footer />
     </AnimationRevealPage>

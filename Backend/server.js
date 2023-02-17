@@ -1,85 +1,59 @@
-//.env file reader package
-require('dotenv').config({path: './.env'})
-
-// import express
+// Import dependencies
+require('dotenv').config();
 const express = require('express');
+const testRoutes = require('./routes/testroutes');
+const recipeRoutes = require('./routes/recipeRoutes');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
+const bodyParser = require("body-parser")
 
-//import body-parser
-const bodyParser = require('body-parser');
+// Express app
 const app = express();
 
-//url encoded extracts info from the POST
-app.use(bodyParser.urlencoded({extended: true}));
+//PLEASE DON'T CHANGE THIS PART
+//otherwise it will not work on my computer - DJ
+//--------------------------------------------
+mongoose.set('strictQuery', false);
+const mongoDB = process.env.MONGO_URI;
+main().catch(err => console.log(err));
+async function main() {
+	//the following three statements are executed in order,
+	//but the function main() is asynchronous from 
+	//the rest of the code.
+	//mongoose.connect() doesn't run if not explicitly
+	//stated as asynchronous.
+	await mongoose.connect(mongoDB);
+	app.listen(process.env.PORT);
+	console.log("Connected to MongoDB via Mongoose");
+}
+//END---------------------------------------------------
 
-//to have relative paths instead of absolute paths
-const path = require('path');
-//give path for backend folder
-const options = {root: path.join(__dirname, "../backend")};
 
-//mongoDB middleware
-const { MongoClient } = require("mongodb");
-// const connectionString = process.env.ATLAS_URI;
-const connectionString = process.env.LOCAL_URI;
-const client = new MongoClient(connectionString, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true
+// this is test code to see if CRUD works
+// can be changed if wished -----------------
+const Schema = mongoose.Schema;
+
+const SomeModelSchema = new Schema({
+	a_string: String,
+	a_date: Date,
 });
 
-//debug to see if connectionstring is being received.
-console.log(connectionString);
-//connect to MongoClient
-var db;
-client.connect(function (err, database) {
-	console.log("Connecting...");
-	if (err || !database){
-		console.log("Error");
-		console.log(err);
-	}
-	db = database.database("dgiri12db"); // get reference to the DB
-	console.log("Database connection successful");
-	database.close();
+const SomeModel = mongoose.model("SomeModel", SomeModelSchema);
+
+const instance01 = new SomeModel({ name: "awesome" });
+
+instance01.save((err) => {
+	if (err) return handleError(err);
+	//creates a collection 'SomeModel' inside database 'test'
 });
-
-console.log(db);
-
-//'/' route for GET
-app.get('/',(req,res) => {
-	res.sendFile('index.html', options); //options is just making relative path for us.
-});
-
-//'route1' route for GET
-app.get('/route1',(req,res) => {
-	res.send("Welp! Looks like you activated a route bruv!")});
-
-// a POST route called 'routepost'
-app.post('/routepost', (req, res) => {
-	console.log(req.body); //receive data from POST
-	res.sendFile('index.html', options);
-});
+//END-------------------------------------------j
 
 
-//implementing POST crud to MongoDB
-
-//this is Create function
-app.post('/crudpost', (req, res) => {
-	db.collection('recipes').save(req.body, (err, result) => { 
-		if (err) return console.log(err)
-	});
-	// here goes another method
-	console.log('saved to database');
-	res.redirect('/');
-});
-
-//this is Read function
-app.get('/readDB', (req, res) => {
-	var cursor = db.collection('recipes').find()
-	.toArray(function (err, results) {
-		console.log(results);
-	}
-	);
-});
-//toArray() function retrieves data from MongoDB.
-
-app.listen(4000, ()=>{
-	console.log("Listening to port 4000");
-});
+//some req data to console
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json())
+// Handle test requests
+app.use('/test/', testRoutes);
+// Handle root requests
+app.use('/recipes', recipeRoutes);
