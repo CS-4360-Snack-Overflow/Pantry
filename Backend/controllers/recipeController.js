@@ -2,20 +2,17 @@ const Recipe = require('../models/recipe');
 
 const recipe_index = (req, res) => {
     Recipe.find().sort({createdAt: -1}).then((result) => {
-        // render from front-end here, (e.g)
-        //res.render('index', {title: 'All Recipes', recipes: result})
+        res.send(result);
     })
     .catch((err) => {
-        console.log(err)
+        console.log(err);
     });
 };
 const recipe_details = (req, res) => {
     const id = req.params.id;
     Recipe.findById(id)
     .then((result) => {
-        console.log(result);
-        //render from front-end here. (e.g)
-        //res.render('details', {recipe: result, title: 'Details'});
+        res.send(result);
     }).catch((err) => {
         console.log(err);
     });
@@ -35,7 +32,7 @@ const recipe_create_post = (req, res) => {
 };
 const recipe_delete = (req, res) => {
     const id = req.params.id;
-    Recipe.findByIdAndDelete(id)
+    Recipe.findByIdAndRemove({_id: id})
     .then((result) => {
         //ajax request from browser, js not web form, so no redirect
         //send back json to browser
@@ -46,7 +43,14 @@ const recipe_delete = (req, res) => {
     });
 };
 const recipe_patch = (req, res) => {
-    //still need this
+    const id = req.params.id;
+    Recipe.findOneAndUpdate({_id: id}, {title: req.body.title, snippet: req.body.snippet, body: req.body.body}, {new: true})
+    .then((result) => {
+        res.send(result);
+    })
+    .catch((err) => {
+        console.log(err)
+    });
 };
 
 module.exports = {
