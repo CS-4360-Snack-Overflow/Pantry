@@ -100,21 +100,21 @@ export default () => {
         subheading={<Subheading>A Reputed Brand</Subheading>}
         heading={<>Why <HighlightedText>Choose Us?</HighlightedText></>}
         statistics={[
-          {
-            key: "Orders",
-            value: "94000+",
-          },
-          {
-            key: "Customers",
-            value: "11000+"
-          },
-          {
-            key: "Chefs",
-            value: "1500+"
-          }
+          // {
+          //   key: "Orders",
+          //   value: "94000+",
+          // },
+          // {
+          //   key: "Customers",
+          //   value: "11000+"
+          // },
+          // {
+          //   key: "Chefs",
+          //   value: "1500+"
+          // }
         ]}
         primaryButtonText="Learn More"
-        primaryButtonUrl="https://order.now.com"
+        primaryButtonUrl="/about"
         imageInsideDiv={false}
         imageSrc="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzI2fQ&auto=format&fit=crop&w=768&q=80"
         imageCss={Object.assign(tw`bg-cover`, imageCss)}
