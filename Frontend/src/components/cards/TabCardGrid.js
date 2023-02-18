@@ -65,7 +65,7 @@ export default ({
       {
         imageSrc:
           "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Veg Mixer",
+        title: "Vege Mixer",
         content: "Tomato Salad & Carrot",
         // price: "$5.99",
         rating: "5.0",
@@ -75,8 +75,8 @@ export default ({
       {
         imageSrc:
           "https://images.unsplash.com/photo-1432139555190-58524dae6a55?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Macaroni",
-        content: "Cheese Pizza",
+        title: "Tony's Famous Porkchop",
+        content: "Grilled Porkchop with Apple Compote",
         // price: "$2.99",
         rating: "4.8",
         reviews: "32",
@@ -85,8 +85,8 @@ export default ({
       {
         imageSrc:
           "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327??ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Nelli",
-        content: "Hamburger & Fries",
+        title: "Crispy Mozz",
+        content: "Mozzarella Sticks",
         // price: "$7.99",
         rating: "4.9",
         reviews: "89",
@@ -95,8 +95,8 @@ export default ({
       {
         imageSrc:
           "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Jalapeno Poppers",
-        content: "Crispy Soyabeans",
+        title: "Nell's Signature Soup",
+        content: "Spicy Thai Soup",
         // price: "$8.99",
         rating: "4.6",
         reviews: "12",
@@ -105,8 +105,8 @@ export default ({
       {
         imageSrc:
           "https://images.unsplash.com/photo-1473093226795-af9932fe5856?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Cajun Chicken",
-        content: "Roasted Chicken & Egg",
+        title: "Cajun Chicken Pasta",
+        content: "Roasted Chicken, Noodles, & Spinach",
         // price: "$7.99",
         rating: "4.2",
         reviews: "19",
@@ -115,8 +115,8 @@ export default ({
       {
         imageSrc:
           "https://images.unsplash.com/photo-1550461716-dbf266b2a8a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Chillie Cake",
-        content: "Deepfried Chicken",
+        title: "Carribean Soup",
+        content: "Plantain Bisque",
         // price: "$2.99",
         rating: "5.0",
         reviews: "61",
@@ -125,8 +125,8 @@ export default ({
       {
         imageSrc:
           "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Guacamole Mex",
-        content: "Mexican Chilli",
+        title: "Gyoza Three Ways",
+        content: "Japanese Gyoza",
         // price: "$3.99",
         rating: "4.2",
         reviews: "95",
@@ -135,8 +135,8 @@ export default ({
       {
         imageSrc:
           "https://images.unsplash.com/photo-1565310022184-f23a884f29da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Carnet Nachos",
-        content: "Chilli Crispy Nachos",
+        title: "Spicy Chicken Cutlets",
+        content: "Baked Chicken with Chiles",
         // price: "$3.99",
         rating: "3.9",
         reviews: "26",
