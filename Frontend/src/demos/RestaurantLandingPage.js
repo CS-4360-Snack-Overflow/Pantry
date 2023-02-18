@@ -77,19 +77,19 @@ export default () => {
             imageSrc: shopIconImageSrc,
             title: "230+ Resturant Recipes",
             description: "Resturant meals, home cooked, same taste",
-            url: "https://google.com"
+            url: "/about"
           },
           {
             imageSrc: chefIconImageSrc,
             title: "Professional Chefs",
             description: "Learn how the pro's make their food",
-            url: "https://timerse.com"
+            url: "/about"
           },
           {
             imageSrc: celebrationIconImageSrc,
             title: "Celebrations",
             description: "Meals made for the best occasions",
-            url: "https://reddit.com"
+            url: "/about"
           }
         ]}
 
