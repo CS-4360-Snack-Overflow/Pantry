@@ -56,7 +56,7 @@ export default ({
             <Heading>{heading}</Heading>
             {description && <Description>{description}</Description>}
             <Form action={formAction} method={formMethod}>
-              <Input type="email" name="search" placeholder="Search for recipes here ..." />
+              <Input type="search" name="search" placeholder="Search for recipes here ..." />
               <SubmitButton type="Search">{submitButtonText}</SubmitButton>
             </Form>
           </TextContent>
