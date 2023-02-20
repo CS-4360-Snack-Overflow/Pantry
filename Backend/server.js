@@ -7,53 +7,28 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser")
 
-// Express app
+// Express app instance
 const app = express();
 
-//PLEASE DON'T CHANGE THIS PART
-//otherwise it will not work on my computer - DJ
-//--------------------------------------------
-mongoose.set('strictQuery', false);
-const mongoDB = process.env.MONGO_URI;
-main().catch(err => console.log(err));
-async function main() {
-	//the following three statements are executed in order,
-	//but the function main() is asynchronous from 
-	//the rest of the code.
-	//mongoose.connect() doesn't run if not explicitly
-	//stated as asynchronous.
-	await mongoose.connect(mongoDB);
-	app.listen(process.env.PORT);
-	console.log("Connected to MongoDB via Mongoose");
-}
-//END---------------------------------------------------
-
-
-// this is test code to see if CRUD works
-// can be changed if wished -----------------
-const Schema = mongoose.Schema;
-
-const SomeModelSchema = new Schema({
-	a_string: String,
-	a_date: Date,
-});
-
-const SomeModel = mongoose.model("SomeModel", SomeModelSchema);
-
-const instance01 = new SomeModel({ name: "awesome" });
-
-instance01.save((err) => {
-	if (err) return handleError(err);
-	//creates a collection 'SomeModel' inside database 'test'
-});
-//END-------------------------------------------j
-
+//connect to db
+mongoose.connect(process.env.MONGO_URI, { 
+	useNewUrlParser: true, 
+	useUnifiedTopology: true
+})
+.then((result) => {app.listen(process.env.PORT)})
+.catch( (err) => {console.log(err)});
 
 //some req data to console
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: true }));
+
+//lets server see front-end data 
+app.use(express.urlencoded({ extended: true}));
 app.use(express.json())
 // Handle test requests
 app.use('/test/', testRoutes);
-// Handle root requests
+// redirect from local to /recipes
+app.get('/', (req,res) => {
+	res.redirect('/recipes');
+});
+
 app.use('/recipes', recipeRoutes);
