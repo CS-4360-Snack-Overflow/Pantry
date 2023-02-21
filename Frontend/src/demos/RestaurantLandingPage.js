@@ -25,7 +25,7 @@ export default () => {
   return (
     <AnimationRevealPage>
       <Hero
-        heading={<>Delicious Recipes <HighlightedText>Meals Made easy.</HighlightedText></>}
+        heading={<>Delicious Recipes <HighlightedText>Meals Made easy</HighlightedText></>}
         description="Tired of not knowing what to make or having to shop to make your meal? Look no further, make delicious food with what you have in your pantry!"
         imageSrc="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
         imageCss={imageCss}
@@ -37,12 +37,12 @@ export default () => {
       {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
       <TabGrid
         heading={
-          <>Checkout our<HighlightedText>trending</HighlightedText>recipes.</>
+          <>Checkout our <HighlightedText>trending</HighlightedText> recipes</>
         }
       />
       <Features
         heading={
-          <>Amazing <HighlightedText>Services.</HighlightedText></>
+          <>Amazing <HighlightedText>Services</HighlightedText></>
         }
         cards={[
           {
@@ -120,7 +120,7 @@ export default () => {
       />
       <Testimonial
         subheading=""
-        heading={<>Novice chefs <HighlightedText>Love Us.</HighlightedText></>}
+        heading={<>Novice Chefs <HighlightedText>Love Us</HighlightedText></>}
       />
       {/* <DownloadApp
         text={<>People around you are cooking delicious meals using the <HighlightedTextInverse>Pantry App.</HighlightedTextInverse></>}
