@@ -5,6 +5,8 @@ node_modules
 .cache
 .bin
 .pnp
+*/node_modules
+/.pnp
 .pnp.js
 
 # testing
@@ -12,6 +14,7 @@ coverage
 
 # production
 build
+*/build
 *.env
 
 # misc

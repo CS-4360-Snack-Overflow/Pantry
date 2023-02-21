@@ -1,3 +1,5 @@
+![Build Status](http://ec2-54-236-45-82.compute-1.amazonaws.com:8080/buildStatus/icon?job=Pantry+CI+CD)
+
 # Pantry
 ## The Recipe Web Application
 ## Built by team Snack Overflow
