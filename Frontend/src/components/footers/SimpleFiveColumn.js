@@ -44,7 +44,7 @@ export default () => {
             <LogoText>Treact Inc.</LogoText>
           </LogoContainer>
           <CompanyDescription>
-            Treact is an Internet Technology company providing design resources such as website templates and themes.
+            Pantry is a recipe solution space for everyday folks.
           </CompanyDescription>
           <SocialLinksContainer>
             <SocialLink href="https://facebook.com">
@@ -93,9 +93,9 @@ export default () => {
           </LinkList>
         </Column>
         <Column>
-          <ColumnHeading>Legal</ColumnHeading>
+          {/* <ColumnHeading>Legal</ColumnHeading> */}
           <LinkList>
-            <LinkListItem>
+            {/* <LinkListItem>
               <Link href="#">GDPR</Link>
             </LinkListItem>
             <LinkListItem>
@@ -103,7 +103,7 @@ export default () => {
             </LinkListItem>
             <LinkListItem>
               <Link href="#">Terms of Service</Link>
-            </LinkListItem>
+            </LinkListItem> */}
             <LinkListItem>
               <Link href="#">Disclaimer</Link>
             </LinkListItem>

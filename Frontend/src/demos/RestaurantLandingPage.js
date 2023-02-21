@@ -8,7 +8,7 @@ import MainFeature from "components/features/TwoColWithButton.js";
 import MainFeature2 from "components/features/TwoColSingleFeatureWithStats2.js";
 import TabGrid from "components/cards/TabCardGrid.js";
 import Testimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
-import DownloadApp from "components/cta/DownloadApp.js";
+//import DownloadApp from "components/cta/DownloadApp.js";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
 
 import chefIconImageSrc from "images/chef-icon.svg";
@@ -18,18 +18,19 @@ import shopIconImageSrc from "images/shop-icon.svg";
 export default () => {
   const Subheading = tw.span`tracking-wider text-sm font-medium`;
   const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
-  const HighlightedTextInverse = tw.span`bg-gray-100 text-primary-500 px-4 transform -skew-x-12 inline-block`;
+  //  const HighlightedTextInverse = tw.span`bg-gray-100 text-primary-500 px-4 transform -skew-x-12 inline-block`;
   const Description = tw.span`inline-block mt-8`;
   const imageCss = tw`rounded-4xl`;
   return (
     <AnimationRevealPage>
       <Hero
         heading={<>Delicious Recipes <HighlightedText>Meals Made easy.</HighlightedText></>}
-        description="Tired of not knowing what to make or having to shop to make your meal. Look no further, make delicious food with what you have in your pantry"
+        description="Tired of not knowing what to make or having to shop to make your meal? Look no further, make delicious food with what you have in your pantry!"
         imageSrc="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
         imageCss={imageCss}
         imageDecoratorBlob={true}
         primaryButtonText="Search Now"
+        primaryButtonUrl="/recipes"
         watchVideoButtonText="Quick Recipes"
       />
       <MainFeature
@@ -77,19 +78,19 @@ export default () => {
             imageSrc: shopIconImageSrc,
             title: "230+ Resturant Recipes",
             description: "Resturant meals, home cooked, same taste",
-            url: "https://google.com"
+            url: "/about"
           },
           {
             imageSrc: chefIconImageSrc,
             title: "Professional Chefs",
             description: "Learn how the pro's make their food",
-            url: "https://timerse.com"
+            url: "/about"
           },
           {
             imageSrc: celebrationIconImageSrc,
             title: "Celebrations",
             description: "Meals made for the best occasions",
-            url: "https://reddit.com"
+            url: "/about"
           }
         ]}
 
@@ -98,23 +99,23 @@ export default () => {
       />
       <MainFeature2
         subheading={<Subheading>A Reputed Brand</Subheading>}
-        heading={<>Why <HighlightedText>Choose Us ?</HighlightedText></>}
+        heading={<>Why <HighlightedText>Choose Us?</HighlightedText></>}
         statistics={[
-          {
-            key: "Orders",
-            value: "94000+",
-          },
-          {
-            key: "Customers",
-            value: "11000+"
-          },
-          {
-            key: "Chefs",
-            value: "1500+"
-          }
+          // {
+          //   key: "Orders",
+          //   value: "94000+",
+          // },
+          // {
+          //   key: "Customers",
+          //   value: "11000+"
+          // },
+          // {
+          //   key: "Chefs",
+          //   value: "1500+"
+          // }
         ]}
         primaryButtonText="Learn More"
-        primaryButtonUrl="https://order.now.com"
+        primaryButtonUrl="/about"
         imageInsideDiv={false}
         imageSrc="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzI2fQ&auto=format&fit=crop&w=768&q=80"
         imageCss={Object.assign(tw`bg-cover`, imageCss)}
@@ -125,11 +126,11 @@ export default () => {
       />
       <Testimonial
         subheading=""
-        heading={<>novice chefs <HighlightedText>Love Us.</HighlightedText></>}
+        heading={<>Novice chefs <HighlightedText>Love Us.</HighlightedText></>}
       />
-      <DownloadApp
+      {/* <DownloadApp
         text={<>People around you are cooking delicious meals using the <HighlightedTextInverse>Pantry App.</HighlightedTextInverse></>}
-      />
+      /> */}
       <Footer />
     </AnimationRevealPage>
   );
