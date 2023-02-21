@@ -25,11 +25,12 @@ export default () => {
     <AnimationRevealPage>
       <Hero
         heading={<>Delicious Recipes <HighlightedText>Meals Made easy.</HighlightedText></>}
-        description="Tired of not knowing what to make or having to shop to make your meal. Look no further, make delicious food with what you have in your pantry"
+        description="Tired of not knowing what to make or having to shop to make your meal? Look no further, make delicious food with what you have in your pantry!"
         imageSrc="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
         imageCss={imageCss}
         imageDecoratorBlob={true}
         primaryButtonText="Search Now"
+        primaryButtonUrl="/recipes"
         watchVideoButtonText="Quick Recipes"
       />
       <MainFeature
