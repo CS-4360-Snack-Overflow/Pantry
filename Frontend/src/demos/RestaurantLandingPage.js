@@ -9,7 +9,14 @@ import MainFeature2 from "components/features/TwoColSingleFeatureWithStats2.js";
 import TabGrid from "components/cards/TabCardGrid.js";
 import Testimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
 //import DownloadApp from "components/cta/DownloadApp.js";
-import Footer from "components/footers/FiveColumnWithInputForm.js";
+
+//Trying out different footer options to see which looks best
+//import Footer from "components/footers/FiveColumnWithInputForm.js";
+//import Footer from "components/footers/FiveColumnDark.js";
+//import Footer from "components/footers/FiveColumnWithBackground";
+import Footer from "components/footers/MiniCenteredFooter";
+//import Footer from "components/footers/SimpleFiveColumn";
+
 
 import chefIconImageSrc from "images/chef-icon.svg";
 import celebrationIconImageSrc from "images/celebration-icon.svg";
