@@ -27,8 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "yarn build && netlify deploy --prod --dir=build",
-    "proxy": "http://localhost:8080"
+    "deploy": "yarn build && netlify deploy --prod --dir=build"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -54,5 +53,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:8080"
 }
