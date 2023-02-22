@@ -27,7 +27,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "yarn build && netlify deploy --prod --dir=build"
+    "deploy": "yarn build && netlify deploy --prod --dir=build",
+    "proxy": "http://localhost:8080"
   },
   "eslintConfig": {
     "extends": "react-app",
