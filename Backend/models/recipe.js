@@ -6,16 +6,29 @@ the thing a model wraps around
 */
 const recipeSchema = new Schema({
     //properties of recipe docs
-    title: {
+    recipeName: {
         type: String, 
         required: true
     }, 
-    snippet: {
+    author: {
         type: String, 
         required: true
     }, 
-    body: {
-        type: String, 
+    review: {
+        type: Number, 
+        required: false
+    }, 
+    imUrl: {
+        type: String,
+        required: false
+    },
+    ingredients: {
+        type: [String],
+        required: true,
+        validate: [hasIngredients, "Recipe must contain at least one ingredient"]
+    },
+    directions: {
+        type: String,
         required: true
     }
 }, {timestamps: true})
@@ -23,7 +36,9 @@ const recipeSchema = new Schema({
 model sourounds that and provides an interface with a db collection for that document
 type
 */
-
+function hasIngredients(array) {
+    return array.length >= 1;
+}
 /* the name is important becuase it will be pluralized and looked for in db
 model name convention (capitalized), same with schema constructor
 */
