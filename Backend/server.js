@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const testRoutes = require('./routes/testroutes');
 const recipeRoutes = require('./routes/recipeRoutes');
+const userRoutes = require('./routes/userRoutes');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser")
@@ -27,8 +28,12 @@ app.use(express.json())
 // Handle test requests
 app.use('/test/', testRoutes);
 // redirect from local to /recipes
-app.get('/', (req,res) => {
+/*app.get('/', (req,res) => {
 	res.redirect('/recipes');
+});*/
+app.get('/', (req,res) => {
+	res.sendFile('/Users/diptanshugiri1/On\ This\ Mac/github/Team-Project/backend/index.html');
 });
 
 app.use('/recipes', recipeRoutes);
+app.use('/user', userRoutes);

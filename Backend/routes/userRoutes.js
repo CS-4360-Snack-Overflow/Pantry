@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/userCredentials');
+const User = require('../models/user');
 
 // Create a new user
-router.post('/', async (req, res) => {
+router.post('/userCreate', async (req, res) => {
   try {
     const user = new User({
       fullName: req.body.fullName,
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get all users
-router.get('/', async (req, res) => {
+router.get('/userRead', async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
