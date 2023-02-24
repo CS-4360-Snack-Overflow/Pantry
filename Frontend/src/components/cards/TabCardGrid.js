@@ -9,7 +9,7 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
-import {getRecipes} from "../../helpers/RecipeService.js"
+// import {getRecipes} from "../../helpers/RecipeService.js"
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
@@ -58,23 +58,19 @@ const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
 const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
   ${tw`pointer-events-none -z-20 absolute left-0 bottom-0 h-80 w-80 opacity-15 transform -translate-x-2/3 text-primary-500`}
 `;
-const recipeList = getRecipes()
-console.log(recipeList)
-
-
 
 export default (
   {
-    
   heading = "Checkout the Menu",
   tabs = {
-    Featured: recipeList,
-    Breakfast: recipeList,
-    Lunch: recipeList,
-    Dinner: recipeList,
-    Dessert: recipeList
+    Featured: [],
+    Breakfast: [],
+    Lunch: [],
+    Dinner: [],
+    Dessert: []
   }
 }) => {
+  
   /*
    * To customize the tabs, pass in data using the `tabs` prop. It should be an object which contains the name of the tab
    * as the key and value of the key will be its content (as an array of objects).
@@ -82,7 +78,16 @@ export default (
    */
   const tabsKeys = Object.keys(tabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
-  console.log(tabsKeys)
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    async function load() {
+      setRecipes(await getRecipes())
+      tabs[activeTab] = recipes
+    }
+    load();
+  }, [activeTab])
+
   return (
     <Container>
       <ContentWithPaddingXl>
@@ -116,8 +121,9 @@ export default (
             initial={activeTab === tabKey ? "current" : "hidden"}
             animate={activeTab === tabKey ? "current" : "hidden"}
           > 
-            {tabs..map((recipe, index) => (
+            {tabs[tabKey].map((recipe, index) => (
               <CardContainer key={index}>
+              <p>{recipe}</p>
                 <Card className="group" href={recipe.imUrl} initial="rest" whileHover="hover" animate="rest">
                   <CardImageContainer imageSrc={recipe.imUrl}>
                     <CardRatingContainer>
@@ -160,21 +166,36 @@ export default (
   );
 };
 
-/* This function is only there for demo purposes. It populates placeholder cards */
-const getRandomCards = () => {
-  const cards = [
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1473093226795-af9932fe5856?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Cajun Chicken",
-      content: "Roasted Chicken & Egg",
-      price: "$7.99",
-      rating: "4.2",
-      reviews: "19",
-      url: "#"
-    }
-  ];
+async function getRecipes () {
+  let recipes = []
+	await fetch("/recipes")
+  .then((res) => {
+    recipes = res.json()
+    console.log(recipes)
+  })
+	return recipes
 
-  // Shuffle array
-  return cards.sort(() => Math.random() - 0.5);
-};
+}
+
+/* This function is only there for demo purposes. It populates placeholder cards */
+// const setRecipeCards = (tabKey) => {
+//   tabs[tabKey] = recipes
+//   tabs[tabKey].map((recipe, index) => {
+//   })}
+
+//   const cards = [
+//     {
+//       imageSrc:
+//         "https://images.unsplash.com/photo-1473093226795-af9932fe5856?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
+//       title: "Cajun Chicken",
+//       content: "Roasted Chicken & Egg",
+//       price: "$7.99",
+//       rating: "4.2",
+//       reviews: "19",
+//       url: "#"
+//     }
+//   ];
+
+//   // Shuffle array
+//   return cards.sort(() => Math.random() - 0.5);
+// };
