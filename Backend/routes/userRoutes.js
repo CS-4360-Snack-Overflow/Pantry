@@ -31,5 +31,18 @@ router.get('/userRead', async (req, res) => {
   }
 });
 
+router.get('/userSearch', async (req, res) => {
+	try {
+		const user = await User.findOne({ username: req.query.username });
+		if (user) {
+			res.json(user);
+		} else {
+			res.status(404).json({ message: "User not found" });
+		}
+	}catch (err) {
+		res.status(500).json({message: err.message});
+	}
+});
+
 module.exports = router;
 

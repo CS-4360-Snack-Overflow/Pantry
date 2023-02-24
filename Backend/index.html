@@ -36,7 +36,7 @@
         usersList.innerHTML = '';
         for (const user of users) {
           const userItem = document.createElement('li');
-          userItem.textContent = `${user.fullName}, ${user.emailAddress}`;
+		userItem.textContent = `${user.fullName}, ${user.username}, ${user.emailAddress}`;
           usersList.appendChild(userItem);
         }
       }
@@ -44,6 +44,14 @@
       // Call fetchUsers when the page is loaded
       window.addEventListener('load', fetchUsers);
     </script>
+
+    <h1> Search for users!:</h1>
+    <form action="/user/userSearch" method="get">
+	  <label for="username">Username:</label>
+	  <input type="text" id="username" name="username" required>
+	  <button type="submit">Search</button>
+	</form>
+
   </body>
 </html>
 
