@@ -59,7 +59,7 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
   ${tw`pointer-events-none -z-20 absolute left-0 bottom-0 h-80 w-80 opacity-15 transform -translate-x-2/3 text-primary-500`}
 `;
 const recipeList = getRecipes()
-
+console.log(recipeList)
 
 
 
@@ -82,7 +82,7 @@ export default (
    */
   const tabsKeys = Object.keys(tabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
-
+  console.log(tabsKeys)
   return (
     <Container>
       <ContentWithPaddingXl>
@@ -116,7 +116,7 @@ export default (
             initial={activeTab === tabKey ? "current" : "hidden"}
             animate={activeTab === tabKey ? "current" : "hidden"}
           > 
-            {tabs[tabKey].map((recipe, index) => (
+            {tabs..map((recipe, index) => (
               <CardContainer key={index}>
                 <Card className="group" href={recipe.imUrl} initial="rest" whileHover="hover" animate="rest">
                   <CardImageContainer imageSrc={recipe.imUrl}>

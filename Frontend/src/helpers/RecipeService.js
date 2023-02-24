@@ -3,9 +3,8 @@ export async function getRecipes () {
 	let recipes = []
 	fetch("/recipes")
 	.then((res) => {
-		res.json();
-		recipes = res;
-		console.log(res)})
+		recipes = res.json();
+	})
 	.catch((err) => {
 		console.log(err)
 	})
