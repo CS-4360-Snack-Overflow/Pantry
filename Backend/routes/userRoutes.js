@@ -31,6 +31,7 @@ router.get('/userRead', async (req, res) => {
   }
 });
 
+// user search route
 router.get('/userSearch', async (req, res) => {
 	try {
 		const user = await User.findOne({ username: req.query.username });
@@ -41,6 +42,25 @@ router.get('/userSearch', async (req, res) => {
 		}
 	}catch (err) {
 		res.status(500).json({message: err.message});
+	}
+});
+
+//user update
+router.put('/userUpdate', async (req, res) => {
+	try {
+		const username = req.query.username;
+		const updates = req.body;
+
+		const updatedUser = await User.findOneAndUpdate({ username }, updates, { new: true
+		});
+
+		if (updatedUser) {
+			res.json(updatesUser);
+		} else {
+			res.status(404).json({ message: 'User not found' });
+		}
+	} catch (err) {
+		res.status(500).json({ message: err.message });
 	}
 });
 
