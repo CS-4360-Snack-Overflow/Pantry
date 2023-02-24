@@ -29,7 +29,7 @@
     <script>
       // Fetch all users from the server and display them in a list
       async function fetchUsers() {
-        const response = await fetch('/users');
+        const response = await fetch('/user/userRead');
         const users = await response.json();
 
         const usersList = document.getElementById('users-list');
