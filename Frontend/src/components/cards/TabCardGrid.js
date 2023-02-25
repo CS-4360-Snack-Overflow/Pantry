@@ -79,15 +79,19 @@ export default (
   const tabsKeys = Object.keys(tabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
   const [recipes, setRecipes] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function load() {
-      setRecipes(await getRecipes())
-      tabs[activeTab] = recipes
-    }
-    load();
+    getRecipes()
+    .then((result) => {
+      setRecipes(result);
+      setLoading(false);
+    });
   }, [activeTab])
 
+  if(isLoading) {
+    return <p>loading...</p>
+  }
   return (
     <Container>
       <ContentWithPaddingXl>
@@ -121,41 +125,39 @@ export default (
             initial={activeTab === tabKey ? "current" : "hidden"}
             animate={activeTab === tabKey ? "current" : "hidden"}
           > 
-            {tabs[tabKey].map((recipe, index) => (
-              <CardContainer key={index}>
-              <p>{recipe}</p>
-                <Card className="group" href={recipe.imUrl} initial="rest" whileHover="hover" animate="rest">
-                  <CardImageContainer imageSrc={recipe.imUrl}>
-                    <CardRatingContainer>
-                      <CardRating>
-                        <StarIcon />
-                        {/* {card.rating} */}
-                      </CardRating>
-                      <CardReview>({recipe.review})</CardReview>
-                    </CardRatingContainer>
-                    <CardHoverOverlay
-                      variants={{
-                        hover: {
-                          opacity: 1,
-                          height: "auto"
-                        },
-                        rest: {
-                          opacity: 0,
-                          height: 0
-                        }
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <CardButton>See Recipe</CardButton>
-                    </CardHoverOverlay>
-                  </CardImageContainer>
-                  <CardText>
-                    <CardTitle>{recipe.recipeName}</CardTitle>
-                    <CardContent>{recipe.author}</CardContent>
-                    {/* <CardPrice>{card.price}</CardPrice> */}
-                  </CardText>
-                </Card>
-              </CardContainer>
+            {Object.keys(recipes).map((key, index) => (
+                <CardContainer key={index}>
+                  <Card className="group" href={recipes[key].imUrl} initial="rest" whileHover="hover" animate="rest">
+                    <CardImageContainer imageSrc={recipes[key].imUrl}>
+                      <CardRatingContainer>
+                        <CardRating>
+                          <StarIcon />
+                        </CardRating>
+                        <CardReview>({recipes[key].review})</CardReview>
+                      </CardRatingContainer>
+                      <CardHoverOverlay
+                        variants={{
+                          hover: {
+                            opacity: 1,
+                            height: "auto"
+                          },
+                          rest: {
+                            opacity: 0,
+                            height: 0
+                          }
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <CardButton>See Recipe</CardButton>
+                      </CardHoverOverlay>
+                    </CardImageContainer>
+                    <CardText>
+                      <CardTitle>{recipes[key].recipeName}</CardTitle>
+                      <CardContent>{recipes[key].author}</CardContent>
+                    </CardText>
+                  </Card>
+                </CardContainer>
+              
             ))}
           </TabContent>
         ))}
@@ -171,31 +173,6 @@ async function getRecipes () {
 	await fetch("/recipes")
   .then((res) => {
     recipes = res.json()
-    console.log(recipes)
   })
 	return recipes
-
 }
-
-/* This function is only there for demo purposes. It populates placeholder cards */
-// const setRecipeCards = (tabKey) => {
-//   tabs[tabKey] = recipes
-//   tabs[tabKey].map((recipe, index) => {
-//   })}
-
-//   const cards = [
-//     {
-//       imageSrc:
-//         "https://images.unsplash.com/photo-1473093226795-af9932fe5856?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-//       title: "Cajun Chicken",
-//       content: "Roasted Chicken & Egg",
-//       price: "$7.99",
-//       rating: "4.2",
-//       reviews: "19",
-//       url: "#"
-//     }
-//   ];
-
-//   // Shuffle array
-//   return cards.sort(() => Math.random() - 0.5);
-// };
