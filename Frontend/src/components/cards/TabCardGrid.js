@@ -9,7 +9,7 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
-// import {getRecipes} from "../../helpers/RecipeService.js"
+import {getRecipes} from "../../helpers/RecipeService.js"
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
@@ -64,10 +64,8 @@ export default (
   heading = "Checkout the Menu",
   tabs = {
     Featured: [],
-    Breakfast: [],
-    Lunch: [],
-    Dinner: [],
-    Dessert: []
+    Popular: [],
+    Recent: [],
   }
 }) => {
   
@@ -168,11 +166,4 @@ export default (
   );
 };
 
-async function getRecipes () {
-  let recipes = []
-	await fetch("/recipes")
-  .then((res) => {
-    recipes = res.json()
-  })
-	return recipes
-}
+
