@@ -9,19 +9,16 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
+//import RecipeSearchBar from "components/forms/SearchBarWithIllustration";
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
+const UpperTabsControl = tw.div`flex flex-wrap bg-white px-2 py-2 rounded leading-none mt-12 xl:mt-0`;
 const TabsControl = tw.div`flex flex-wrap bg-gray-200 px-2 py-2 rounded leading-none mt-12 xl:mt-0`;
 
-const TabControl = styled.div`
-  ${tw`cursor-pointer px-6 py-3 mt-2 sm:mt-0 sm:mr-2 last:mr-0 text-gray-600 font-medium rounded-sm transition duration-300 text-sm sm:text-base w-1/2 sm:w-auto text-center`}
-  &:hover {
-    ${tw`bg-gray-300 text-gray-700`}
-  }
-  ${props => props.active && tw`bg-primary-500! text-gray-100!`}
-  }
-`;
+
+
+
 
 const TabContent = tw(motion.div)`mt-6 flex flex-wrap sm:-mr-10 md:-mr-6 lg:-mr-12`;
 const CardContainer = tw.div`mt-10 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md:pr-6 lg:pr-12`;
@@ -30,13 +27,6 @@ const CardImageContainer = styled.div`
   ${props => css`background-image: url("${props.imageSrc}");`}
   ${tw`h-56 xl:h-64 bg-center bg-cover relative rounded-t`}
 `;
-const CardRatingContainer = tw.div`leading-none absolute inline-flex bg-gray-100 bottom-0 left-0 ml-4 mb-4 rounded-full px-5 py-2 items-end`;
-const CardRating = styled.div`
-  ${tw`mr-1 text-sm font-bold flex items-end`}
-  svg {
-    ${tw`w-4 h-4 fill-current text-orange-400 mr-1`}
-  }
-`;
 
 const CardHoverOverlay = styled(motion.div)`
   background-color: rgba(255, 255, 255, 0.5);
@@ -44,7 +34,7 @@ const CardHoverOverlay = styled(motion.div)`
 `;
 const CardButton = tw(PrimaryButtonBase)`text-sm`;
 
-const CardReview = tw.div`font-medium text-xs text-gray-600`;
+
 
 const CardText = tw.div`p-4 text-gray-900`;
 const CardTitle = tw.h5`text-lg font-semibold group-hover:text-primary-500`;
@@ -58,95 +48,46 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
   ${tw`pointer-events-none -z-20 absolute left-0 bottom-0 h-80 w-80 opacity-15 transform -translate-x-2/3 text-primary-500`}
 `;
 
-
 export default ({
   heading = "Checkout the Menu",
+  
   tabs = {
-    Starters: [
+    Breakfast: [
       {
         imageSrc:
-          "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Vege Mixer",
-        content: "Tomato Salad & Carrot",
+          "https://static.vecteezy.com/system/resources/previews/007/742/645/original/cooking-book-cartoon-book-icon-with-orange-color-free-vector.jpg",
+        title: "Recipes",
+        content: "Search and Create",
         // price: "$5.99",
-        rating: "5.0",
-        reviews: "87",
-        url: "#"
+        //rating: "5.0",
+        //reviews: "87",
+        url: "/recipes"
       },
       {
         imageSrc:
-          "https://images.unsplash.com/photo-1432139555190-58524dae6a55?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Tony's Famous Porkchop",
-        content: "Grilled Porkchop with Apple Compote",
+          "https://thumbs.dreamstime.com/b/our-services-symbol-words-appearing-behind-torn-orange-paper-beautiful-background-business-service-concept-203604584.jpg",
+        title: "About Us",
+        content: "Learn more about the team",
         // price: "$2.99",
-        rating: "4.8",
-        reviews: "32",
-        url: "#"
+        //rating: "4.8",
+        //reviews: "32",
+        url: "/about"
       },
       {
         imageSrc:
-          "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327??ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Crispy Mozz",
-        content: "Mozzarella Sticks",
+          "https://media.istockphoto.com/id/1026443406/vector/stmprnd2blue.jpg?s=612x612&w=0&k=20&c=-5pcu4-fS-7_Td4iHA8wSiqh2lq-RCzqlciVKzsvTWs=",
+        title: "Contact Us",
+        content: "Let us help you",
         // price: "$7.99",
-        rating: "4.9",
-        reviews: "89",
-        url: "#"
+        //rating: "4.9",
+        //reviews: "89",
+        url: "/contact"
       },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Nell's Signature Soup",
-        content: "Spicy Thai Soup",
-        // price: "$8.99",
-        rating: "4.6",
-        reviews: "12",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1473093226795-af9932fe5856?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Cajun Chicken Pasta",
-        content: "Roasted Chicken, Noodles, & Spinach",
-        // price: "$7.99",
-        rating: "4.2",
-        reviews: "19",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1550461716-dbf266b2a8a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Carribean Soup",
-        content: "Plantain Bisque",
-        // price: "$2.99",
-        rating: "5.0",
-        reviews: "61",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Gyoza Three Ways",
-        content: "Japanese Gyoza",
-        // price: "$3.99",
-        rating: "4.2",
-        reviews: "95",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1565310022184-f23a884f29da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Spicy Chicken Cutlets",
-        content: "Baked Chicken with Chiles",
-        // price: "$3.99",
-        rating: "3.9",
-        reviews: "26",
-        url: "#"
-      }
+      
     ],
-    Main: getRandomCards(),
-    Soup: getRandomCards(),
-    Desserts: getRandomCards()
+    Lunch: getRandomCards(),
+    Dinner: getRandomCards(),
+    Dessert: getRandomCards(),
   }
 }) => {
   /*
@@ -157,18 +98,15 @@ export default ({
   const tabsKeys = Object.keys(tabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
 
+  //<RecipeSearchBar/> added after context with padding below
   return (
     <Container>
       <ContentWithPaddingXl>
+        
+      
         <HeaderRow>
           <Header>{heading}</Header>
-          <TabsControl>
-            {Object.keys(tabs).map((tabName, index) => (
-              <TabControl key={index} active={activeTab === tabName} onClick={() => setActiveTab(tabName)}>
-                {tabName}
-              </TabControl>
-            ))}
-          </TabsControl>
+          
         </HeaderRow>
 
         {tabsKeys.map((tabKey, index) => (
@@ -194,13 +132,7 @@ export default ({
               <CardContainer key={index}>
                 <Card className="group" href={card.url} initial="rest" whileHover="hover" animate="rest">
                   <CardImageContainer imageSrc={card.imageSrc}>
-                    <CardRatingContainer>
-                      <CardRating>
-                        <StarIcon />
-                        {card.rating}
-                      </CardRating>
-                      <CardReview>({card.reviews})</CardReview>
-                    </CardRatingContainer>
+                    
                     <CardHoverOverlay
                       variants={{
                         hover: {
@@ -214,7 +146,7 @@ export default ({
                       }}
                       transition={{ duration: 0.3 }}
                     >
-                      <CardButton>See Recipe</CardButton>
+                      <CardButton>Search</CardButton>
                     </CardHoverOverlay>
                   </CardImageContainer>
                   <CardText>
@@ -322,5 +254,3 @@ const getRandomCards = () => {
   // Shuffle array
   return cards.sort(() => Math.random() - 0.5);
 };
-
-

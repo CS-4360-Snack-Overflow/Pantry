@@ -9,10 +9,21 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
+import RecipeSearchBar from "components/forms/SearchBarWithIllustration";
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
+const UpperTabsControl = tw.div`flex flex-wrap bg-white px-2 py-2 rounded leading-none mt-12 xl:mt-0`;
 const TabsControl = tw.div`flex flex-wrap bg-gray-200 px-2 py-2 rounded leading-none mt-12 xl:mt-0`;
+
+const UpperTabControl = styled.div`
+  ${tw`cursor-pointer px-6 py-3 mt-2 sm:mt-0 sm:mr-2 last:mr-0 text-gray-600 font-medium rounded-sm transition duration-300 text-sm sm:text-base w-1/2 sm:w-auto text-center`}
+  &:hover {
+    ${tw`bg-gray-300 text-gray-700`}
+  }
+  ${props => props.active && tw`bg-primary-500! text-gray-100!`}
+  }
+`;
 
 const TabControl = styled.div`
   ${tw`cursor-pointer px-6 py-3 mt-2 sm:mt-0 sm:mr-2 last:mr-0 text-gray-600 font-medium rounded-sm transition duration-300 text-sm sm:text-base w-1/2 sm:w-auto text-center`}
@@ -58,11 +69,26 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
   ${tw`pointer-events-none -z-20 absolute left-0 bottom-0 h-80 w-80 opacity-15 transform -translate-x-2/3 text-primary-500`}
 `;
 
-
 export default ({
   heading = "Checkout the Menu",
+  upperTabs = {
+    Recent: [
+      {
+        imageSrc:
+          "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
+        title: "Vege Mixer",
+        content: "Tomato Salad & Carrot",
+        // price: "$5.99",
+        rating: "5.0",
+        reviews: "87",
+        url: "#"
+      },
+    ],
+    Trending: getRandomCards(),
+    Everything: getRandomCards(),
+  },
   tabs = {
-    Starters: [
+    Breakfast: [
       {
         imageSrc:
           "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
@@ -142,11 +168,11 @@ export default ({
         rating: "3.9",
         reviews: "26",
         url: "#"
-      }
+      },
     ],
-    Main: getRandomCards(),
-    Soup: getRandomCards(),
-    Desserts: getRandomCards()
+    Lunch: getRandomCards(),
+    Dinner: getRandomCards(),
+    Dessert: getRandomCards(),
   }
 }) => {
   /*
@@ -160,6 +186,14 @@ export default ({
   return (
     <Container>
       <ContentWithPaddingXl>
+        <RecipeSearchBar/> 
+        <UpperTabsControl>
+            {Object.keys(upperTabs).map((tabName, index) => (
+              <UpperTabControl key={index} active={activeTab === tabName} onClick={() => setActiveTab(tabName)}>
+                {tabName}
+              </UpperTabControl>
+            ))}
+          </UpperTabsControl>
         <HeaderRow>
           <Header>{heading}</Header>
           <TabsControl>
@@ -322,5 +356,3 @@ const getRandomCards = () => {
   // Shuffle array
   return cards.sort(() => Math.random() - 0.5);
 };
-
-
