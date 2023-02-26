@@ -2,6 +2,7 @@ const Recipe = require('../models/recipe');
 
 const recipe_index = (req, res) => {
     Recipe.find().sort({createdAt: -1}).then((result) => {
+        console.log(result)
         res.send(result);
     })
     .catch((err) => {
