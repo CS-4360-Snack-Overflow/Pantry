@@ -45,7 +45,7 @@ const recipe_delete = (req, res) => {
 };
 const recipe_patch = (req, res) => {
     const id = req.params.id;
-    Recipe.findOneAndUpdate({_id: id}, {title: req.body.title, snippet: req.body.snippet, body: req.body.body}, {new: true})
+    Recipe.findOneAndUpdate({_id: id}, req.body, {new: true})
     .then((result) => {
         res.send(result);
     })

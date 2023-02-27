@@ -5,14 +5,14 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import Header from "components/headers/light.js";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
 import RecipeSearchBar from "components/forms/SearchBarWithIllustration";
-import TabCardGrid from "components/cards/TabCardGrid.js";
+import TabCardRecipeGrid from "components/cards/TabCardRecipeGrid.js";
 
 export default () => {
   return (
     <AnimationRevealPage>
       <Header />
       <RecipeSearchBar />
-      <TabCardGrid />
+      <TabCardRecipeGrid />
       <Footer />
     </AnimationRevealPage>
   );
