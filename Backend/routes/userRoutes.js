@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require('../models/user');
 
 // Create a new user
+// the method="POST" in the html form needs to be capital,
+// POST not post
 router.post('/userCreate', async (req, res) => {
   try {
     const user = new User({
@@ -14,23 +16,8 @@ router.post('/userCreate', async (req, res) => {
       gender: req.body.gender,
       countryRegion: req.body.countryRegion
     });
-    // check here if the above username exists, if so only update, don't create new entry
-
-    // first access the username attribute from the model
-    const username = user.username;
-    console.log(`user.username=${username}`);
-    const updates = req.body;
-
-    const updatedUser = await User.findOneAndUpdate({ username }, updates, { new: true});
-
-    // if update was successful, there's that
-    // if not, create new user instead
-    if (updatedUser) {
-      res.json(updatedUser);
-    } else {
       const savedUser = await user.save();
       res.status(201).json(savedUser);
-    }
 
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -62,20 +49,30 @@ router.get('/userSearch', async (req, res) => {
   }
 });
 
-// DELETE user by username
-
-/*router.post('/userDelete', async (req, res) => {
+// need to make update and create seperate routes instead
+// update route
+router.post('/userUpdate', async (req, res) => {
   try {
-    const deletedUser = await User.findOneAndDelete({ username: req.query.username });
-    if (!deletedUser) {
-      return res.status(404).json({ message: 'User not found' });
+
+    // first access the username attribute from the model
+    const username = req.body.username;
+    console.log(`user.username=${username}`);
+    const updates = req.body;
+
+    const updatedUser = await User.findOneAndUpdate({ username }, updates, { new: true});
+
+    // if update was successful, there's that
+    if (updatedUser) {
+      res.json(updatedUser);
+    } else {
+      res.status(404).json( { message: 'User not found' });
     }
-    res.json({ message: 'User deleted successfully' });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(400).json({ message: err.message });
   }
-});*/
+});
+
 
 // DELETE user by username
 router.post('/userDelete', async (req, res) => {
