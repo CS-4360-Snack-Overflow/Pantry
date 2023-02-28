@@ -32,7 +32,7 @@ app.use('/test/', testRoutes);
 	res.redirect('/recipes');
 });*/
 app.get('/', (req,res) => {
-	res.sendFile('/Users/diptanshugiri1/On\ This\ Mac/github/Team-Project/backend/index.html');
+	res.sendFile('./index.html', { root: __dirname });
 });
 
 app.use('/recipes', recipeRoutes);

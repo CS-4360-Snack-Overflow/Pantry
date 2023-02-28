@@ -88,6 +88,11 @@ router.post('/userDelete', async (req, res) => {
   }
 });
 
+// route to display login page
+router.get('/userLogin', (req, res) => {
+  res.sendFile('./login.html', { root: __dirname } ); 
+});
+// the root directory for this file isn't '/routes', it's the directory the server file that calls this function in.
 
 module.exports = router;
 
