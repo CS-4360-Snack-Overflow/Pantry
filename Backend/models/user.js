@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 // Define the user schema using the Mongoose.Schema constructor
 const userSchema = new mongoose.Schema({
@@ -33,6 +34,28 @@ const userSchema = new mongoose.Schema({
     required: true
   }
 }, {timestamps: true});
+
+// modify the save function and the findOneAndUpdate function of 'User' model, so that password can be saved in a hashed form using 'bcrypt'
+userSchema.pre('save', async function(next) {
+  // only hash the password if it has been modified (or is new)
+  if (!this.isModified('password')) {
+    return next();
+  }
+
+  try {
+    // generate a salt with a complexity of 10
+    const salt = await bcrypt.genSalt(10);
+    // hash the password with the salt
+    const hash = await bcrypt.hash(this.password, salt);
+    // replace the plaintext password with the hash
+    this.password = hash;
+    next();
+  }
+  catch (error) {
+    next(error);
+  }
+});
+//findOneAndUpdate
 
 // Create a Mongoose model based on the schema
 const User = mongoose.model('User', userSchema);

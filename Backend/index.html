@@ -4,6 +4,10 @@
     <title>User Form</title>
   </head>
   <body>
+    <h1> Login button:</h1>
+    <form action="/user/userLogin" method="GET">
+      <button type="submit"> Log In</button>
+    </form>
     <h1>Create a new user</h1>
     <form action="/user/userCreate" method="POST">
       <label for="fullName">Full Name:</label>
@@ -29,16 +33,16 @@
     <script>
       // Fetch all users from the server and display them in a list
       async function fetchUsers() {
-        const response = await fetch('/user/userRead');
-        const users = await response.json();
+	const response = await fetch('/user/userRead');
+	const users = await response.json();
 
-        const usersList = document.getElementById('users-list');
-        usersList.innerHTML = '';
-        for (const user of users) {
-          const userItem = document.createElement('li');
-		userItem.textContent = `${user.fullName}, ${user.username}, ${user.emailAddress}`;
-          usersList.appendChild(userItem);
-        }
+	const usersList = document.getElementById('users-list');
+	usersList.innerHTML = '';
+	for (const user of users) {
+	  const userItem = document.createElement('li');
+	  userItem.textContent = `${user.fullName}, ${user.username}, ${user.emailAddress}`;
+	  usersList.appendChild(userItem);
+	}
       }
 
       // Call fetchUsers when the page is loaded
@@ -47,10 +51,10 @@
 
     <h1> Search for users!:</h1>
     <form action="/user/userSearch" method="get">
-	  <label for="username">Username:</label>
-	  <input type="text" id="username" name="username" required>
-	  <button type="submit">Search</button>
-	</form>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <button type="submit">Search</button>
+    </form>
 
     <h1>Update user data:</h1>
     <form action="/user/userUpdate" method="POST">
@@ -70,18 +74,13 @@
       <input type="text" id="countryRegion" name="countryRegion" required><br>
       <button type="submit">Update User</button>
     </form>
-	
+
     <h1> Delete users!:</h1>
     <form action="/user/userDelete" method="POST">
-	  <label for="username">Username:</label>
-	  <input type="text" id="username" name="username" required>
-	  <button type="submit">Delete Forever</button>
-	</form>
-	<h1> Login button:</h1>
-	<form action="/user/userLogin" method="GET">
-	  <button type="submit"> Log In</button>
-	</form>
-
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <button type="submit">Delete Forever</button>
+    </form>
   </body>
 </html>
 

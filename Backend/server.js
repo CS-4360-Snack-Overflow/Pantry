@@ -7,12 +7,14 @@ const userRoutes = require('./routes/userRoutes');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser")
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 // Express app instance
 const app = express();
 
 //connect to db
-mongoose.connect(process.env.MONGO_URI, { 
+mongoose.connect(process.env.LOCAL_URI, { //remember to change it back to MONGO_URI in two places 
 	useNewUrlParser: true, 
 	useUnifiedTopology: true
 })
@@ -25,12 +27,31 @@ app.use(morgan('dev'));
 //lets server see front-end data 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json())
+
+//set the session middleware up
+//first make mongoStore instance
+
+const store = MongoStore.create({ //'MongoStore' needs to be capital just like that, for some reason
+  mongoUrl: process.env.LOCAL_URI,
+  ttl: 14 * 24 * 60 * 60, //session will expire in 14 days
+});
+
+// now pass the connect-mongo object into the express-session object
+app.use(session({
+  secret: 'my-secret',
+  resave: false,
+  saveUninitialized: false,
+  store: store,
+}));
+
 // Handle test requests
 app.use('/test/', testRoutes);
+
 // redirect from local to /recipes
 /*app.get('/', (req,res) => {
 	res.redirect('/recipes');
 });*/
+
 app.get('/', (req,res) => {
 	res.sendFile('./index.html', { root: __dirname });
 });

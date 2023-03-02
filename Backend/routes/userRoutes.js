@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
 
 // Create a new user
 // the method="POST" in the html form needs to be capital,
@@ -93,6 +95,34 @@ router.get('/userLogin', (req, res) => {
   res.sendFile('./login.html', { root: __dirname } ); 
 });
 // the root directory for this file isn't '/routes', it's the directory the server file that calls this function in.
+
+router.post('/userLoginProc', async (req, res) => {
+  const { username, password } = req.body;
+
+  //find the user by username
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    // user not found
+    return res.status(401).json({ error: 'Invalid credentials' });
+  }
+
+  //check if the password is correct
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordCorrect) {
+    // password is incorrect
+    return res.status(401).json({ error: 'Invalid credentials' });
+  }
+
+  //save the user ID in the session
+  req.session.userId = user._id;
+
+  res.redirect('/');
+});
+  
+
+
 
 module.exports = router;
 
