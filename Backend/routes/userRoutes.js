@@ -4,6 +4,14 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 
+// function to protect routes that require authentication
+const requireAuth = (req, res, next) => {
+  if (!req.session.userId) {
+    return res.redirect('/user/userLogin');
+  }
+  next();
+};
+
 // Create a new user
 // the method="POST" in the html form needs to be capital,
 // POST not post
@@ -77,7 +85,7 @@ router.post('/userUpdate', async (req, res) => {
 
 
 // DELETE user by username
-router.post('/userDelete', async (req, res) => {
+router.post('/userDelete', requireAuth, async (req, res) => {
   try {
     const deletedUser = await User.findOneAndDelete({ username: req.body.username });
     if (!deletedUser) {
@@ -120,7 +128,6 @@ router.post('/userLoginProc', async (req, res) => {
 
   res.redirect('/');
 });
-  
 
 
 
