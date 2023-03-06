@@ -55,6 +55,12 @@ app.use('/test/', testRoutes);
 app.get('/', (req,res) => {
 	res.sendFile('./index.html', { root: __dirname });
 });
+// route to display login page
+app.get('/login', (req, res) => {
+  res.sendFile('./login.html', { root: __dirname } );
+});
+// this route isn't inside userRoutes.js because login.html is in root folder
+
 
 app.use('/recipes', recipeRoutes);
 app.use('/user', userRoutes);

@@ -98,12 +98,6 @@ router.post('/userDelete', requireAuth, async (req, res) => {
   }
 });
 
-// route to display login page
-router.get('/userLogin', (req, res) => {
-  res.sendFile('./login.html', { root: __dirname } ); 
-});
-// the root directory for this file isn't '/routes', it's the directory the server file that calls this function in.
-
 router.post('/userLoginProc', async (req, res) => {
   const { username, password } = req.body;
 
