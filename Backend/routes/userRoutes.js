@@ -128,6 +128,14 @@ router.get('/testAuth', requireAuth, async (req, res) => {
 });
 
 
+router.get('/logout', requireAuth, async (req, res) => {
+  req.session.destroy(function(err) {
+    if (err) {
+      console.error('Error destroying session:', err);
+    }
+    res.redirect('/');
+  });
+});
 
 module.exports = router;
 
