@@ -123,6 +123,10 @@ router.post('/userLoginProc', async (req, res) => {
   res.redirect('/');
 });
 
+router.get('/testAuth', requireAuth, async (req, res) => {
+  res.send('Logged in');
+});
+
 
 
 module.exports = router;
