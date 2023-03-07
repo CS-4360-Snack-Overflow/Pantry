@@ -33,6 +33,7 @@ router.post('/userCreate', async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+//TODO: this route is accessed from the signup.html. after user is created, automatically log him in, then direct them to their user profile page.
 
 // Get all users
 router.get('/userRead', async (req, res) => {
@@ -128,8 +129,10 @@ router.get('/testAuth', requireAuth, async (req, res) => {
 });
 
 
+// even logging out runs 'requireAuth' function, so if this route is accessed, you get sent to login page
 router.get('/logout', requireAuth, async (req, res) => {
   req.session.destroy(function(err) {
+    // express-session is linked to connect-mongo, so when this session.destroy() function is executed, it deletes the relevant entry from mongodb, and that signals the end of session
     if (err) {
       console.error('Error destroying session:', err);
     }

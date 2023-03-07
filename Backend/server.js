@@ -70,5 +70,9 @@ app.get('/user-id', (req, res) => {
   res.json({ userId: req.session.userId });
 });
 
+app.get('/signup', (req, res) => {
+  res.sendFile('./signup.html', { root: __dirname } );
+  });
+
 app.use('/recipes', recipeRoutes);
 app.use('/user', userRoutes);
