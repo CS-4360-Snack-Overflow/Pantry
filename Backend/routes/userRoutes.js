@@ -7,7 +7,7 @@ const session = require('express-session');
 // function to protect routes that require authentication
 const requireAuth = (req, res, next) => {
   if (!req.session.userId) {
-    return res.redirect('/user/userLogin');
+    return res.redirect('/login');
   }
   next();
 };

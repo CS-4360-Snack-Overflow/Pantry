@@ -57,13 +57,18 @@ app.get('/', (req,res) => {
 });
 // route to display login page
 app.get('/login', (req, res) => {
-  res.sendFile('./login.html', { root: __dirname } );
+  if (!req.session.userId){ // if user is already logged in, redirect to '/'
+    res.sendFile('./login.html', { root: __dirname } );
+  } else {
+    res.redirect('/');
+  }
+
 });
 // this route isn't inside userRoutes.js because login.html is in root folder
 
 app.get('/user-id', (req, res) => {
   res.json({ userId: req.session.userId });
-  });
+});
 
 app.use('/recipes', recipeRoutes);
 app.use('/user', userRoutes);
