@@ -1,12 +1,17 @@
-const index = require('../routes/index');
-const testroute = require('../routes/testroutes');
+const testRoutes = require('../routes/testroutes');
 
-const request = require('supertest');
+const supertest = require('supertest');
 const express = require('express');
 const app = express();
+const request = supertest(app);
 
-app.use('/', index);
-app.use('/test/', testroute)
+app.use('test/', recipeRoute);
+
+describe('Router tests', () => {
+	it('tests router GET all function', () => {
+		request.get('recipes/')
+	})
+})
 
 test('index route works', done => {
 	request(app)
