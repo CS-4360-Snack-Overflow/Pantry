@@ -19,6 +19,7 @@ const TextColumn = styled(Column)(props => [
 //   `background-image: url("${props.imageSrc}");`,
 //   tw`rounded bg-contain bg-no-repeat bg-center h-full`,
 // ]);
+
 const TextContent = tw.div`lg:py-8 text-center md:text-left`;
 
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
@@ -44,9 +45,8 @@ export default ({
   return (
     <Container>
       <TwoColumn>
-        {/* <ImageColumn>
-          <Image imageSrc={EmailIllustrationSrc} />
-        </ImageColumn> */}
+        <Column>
+        </Column>
         <TextColumn textOnLeft={textOnLeft}>
           <TextContent>
             {subheading && <Subheading>{subheading}</Subheading>}
@@ -60,5 +60,24 @@ export default ({
         </TextColumn>
       </TwoColumn>
     </Container>
+
+    // {/* <Container>
+    // <TwoColumn>
+    //   <ImageColumn>
+    //     <Image imageSrc={EmailIllustrationSrc} />
+    //   </ImageColumn>
+    //   <TextColumn textOnLeft={textOnLeft}>
+    //     <TextContent>
+    //       {subheading && <Subheading>{subheading}</Subheading>}
+    //       <Heading>{heading}</Heading>
+    //       <Description>{description}</Description>
+    //       <Form action={formAction} method={formMethod}>
+    //         <Input type="email" name="email" placeholder="Placeholder text" />
+    //         <SubmitButton type="submit">{submitButtonText}</SubmitButton>
+    //       </Form>
+    //     </TextContent>
+    //   </TextColumn>
+    // </TwoColumn>
+    // </Container> */}
   );
 };
