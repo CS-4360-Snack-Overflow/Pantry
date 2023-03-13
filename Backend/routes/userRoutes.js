@@ -44,8 +44,10 @@ router.post('/userCreate', async (req, res) => {
       gender: req.body.gender,
       countryRegion: req.body.countryRegion
     });
-      const savedUser = await user.save();
-      res.status(201).json(savedUser);
+    const savedUser = await user.save();
+    //res.status(201).json(savedUser);
+    await loginUser(req.body, req.session);
+    res.redirect('/'); //might wanna direct users to profile page later
 
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -142,5 +144,5 @@ router.get('/logout', requireAuth, async (req, res) => {
   });
 });
 
-  module.exports = router;
+module.exports = router;
 
