@@ -12,6 +12,24 @@ const requireAuth = (req, res, next) => {
   next();
 };
 
+//function to login user
+async function loginUser(credentials, session) {
+  const { username, password } = credentials;
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    throw new Error('Invalid credentials');
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordCorrect){
+    throw new Error('Invalid credentials');
+  }
+
+  session.userId = user._id;
+}
+
 // Create a new user
 // the method="POST" in the html form needs to be capital,
 // POST not post
@@ -100,28 +118,12 @@ router.post('/userDelete', requireAuth, async (req, res) => {
 });
 
 router.post('/userLoginProc', async (req, res) => {
-  const { username, password } = req.body;
-
-  //find the user by username
-  const user = await User.findOne({ username });
-
-  if (!user) {
-    // user not found
-    return res.status(401).json({ error: 'Invalid credentials' });
+  try{
+    await loginUser(req.body, req.session);
+    res.redirect('/');
+  } catch (error) {
+    res.status(401).json({ error: error.message });
   }
-
-  //check if the password is correct
-  const isPasswordCorrect = await bcrypt.compare(password, user.password);
-
-  if (!isPasswordCorrect) {
-    // password is incorrect
-    return res.status(401).json({ error: 'Invalid credentials' });
-  }
-
-  //save the user ID in the session
-  req.session.userId = user._id;
-
-  res.redirect('/');
 });
 
 router.get('/testAuth', requireAuth, async (req, res) => {
@@ -140,5 +142,5 @@ router.get('/logout', requireAuth, async (req, res) => {
   });
 });
 
-module.exports = router;
+  module.exports = router;
 
