@@ -15,7 +15,7 @@ const RowForm = tw.form`flex justify-center pt-2 mt-8 md:mt-10 text-base flex`
 const ColForm = tw.form`mt-8 md:mt-10 p-2 w-1/2 text-sm flex flex-col`
 const Input = tw.input`mt-6 first:mt-0 border-b-2 py-3 w-full focus:outline-none font-medium transition duration-300 hocus:border-primary-500`
 const Textarea = styled(Input).attrs({as: "textarea"})`${tw`h-24`}`
-const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8`
+const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8 w-1/6`
 
 export default ({
   heading = <>Feel free to <span tw="text-primary-500">get in touch</span><wbr/> with us.</>,
@@ -39,10 +39,11 @@ export default ({
           <Input type="text" name="name" placeholder="Your Full Name" />
           <Input type="text" name="subject" placeholder="Email Subject" />
           <Textarea name="message" placeholder="Your Message Here" />
-          <SubmitButton type="submit">{submitButtonText}</SubmitButton>
         </ColForm>
       </Column>
-
+      <RowForm>
+        <SubmitButton type="submit">{submitButtonText}</SubmitButton>
+      </RowForm>
 
       <TwoColumn>
       </TwoColumn>
