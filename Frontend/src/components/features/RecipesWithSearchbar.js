@@ -13,44 +13,40 @@ export default () => {
 
     
     useEffect(() => {
-        getRecipes(url)
-        .then((result) => {
-            setRecipes(result);
-            setLoading(false);
-            console.log(recipes)
-        })
+        loadRecipes([], "All");
     }, [])
 
-    const sortRecipes = (recipes, activeTab) => {
-        switch(activeTab){
-            case "Popular":
-                return
-            default:
-                return
-        }
-    }
+    // const sortRecipes = (recipes, activeTab) => {
+    //     switch(activeTab){
+    //         case "Popular":
+    //             return
+    //         default:
+    //             return
+    //     }
+    // }
 
-    const searchRecipes = (ingredients) => {
-        setUrl(new URLSearchParams(ingredients.map(value => ['ingredients', value])).toString());
-        getRecipes(url).then((result) => {
+    const loadRecipes = (ingredients, filter) => {
+        if(ingredients.length !== 0){
+            setUrl(new URLSearchParams(ingredients.map(value => ['ingredients', value])).toString());
+        }
+        getRecipes(url, filter).then((result) => {
             setRecipes(result);
             setLoading(false);
-            console.log(recipes)
         })
     }
 
     if(loading) {
     return (
         <div>
-            <RecipeSearchBar searchFor={searchRecipes}/> 
+            <RecipeSearchBar searchFor={loadRecipes}/> 
             <SectionHeading>Loading...</SectionHeading>
         </div>
     );
     } else {
         return (
             <div>
-                <RecipeSearchBar searchFor={searchRecipes}/> 
-                <TabCardRecipeGrid sort={sortRecipes} recipes={recipes}/>
+                <RecipeSearchBar searchFor={loadRecipes}/> 
+                <TabCardRecipeGrid loadRecipes={loadRecipes} recipes={recipes}/>
             </div>
         );
     }    

@@ -78,7 +78,7 @@ export default ({
     Recent: []
   },
   recipes = [],
-  sort = () => {}
+  loadRecipes = () => {}
 }) => {
   /*
    * To customize the tabs, pass in data using the `tabs` prop. It should be an object which contains the name of the tab
@@ -90,11 +90,9 @@ export default ({
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    recipes = sort(recipes, activeTab)
+    recipes = loadRecipes([], activeTab)
     setLoading(false);
   }, [activeTab])
-
-
 
   return (
     <Container>
@@ -103,7 +101,15 @@ export default ({
           <Header>{heading}</Header>
           <TabsControl>
             {Object.keys(tabs).map((tabName, index) => (
-              <TabControl key={index} active={activeTab === tabName} onClick={() => {setActiveTab(tabName); sort(recipes, tabName)}}>
+              <TabControl key={index} 
+                  active={activeTab === tabName} 
+                    onClick={() => {
+                      setActiveTab(tabName);
+                      // Only retrieve recipes if current tab hasnt been loaded yet
+                      if(tabs[tabName].length === 0){
+                        recipes = loadRecipes([], tabName);
+                      }
+                    }}>
                 {tabName}
               </TabControl>
             ))}
