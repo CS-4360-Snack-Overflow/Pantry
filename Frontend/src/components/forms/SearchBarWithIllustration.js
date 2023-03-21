@@ -27,6 +27,8 @@ const Input = tw.input`mt-6 first:mt-0 border-b-2 py-3 focus:outline-none font-m
 const AddButton = tw(PrimaryButtonBase)`bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow basis-1/4`
 const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8`
 
+
+
 export default ({
   subheading = "Recipes",
   heading = <>Your one<span tw="text-primary-500"> stop shop for new</span><wbr/>and delicious recipes.</>,
@@ -39,11 +41,17 @@ export default ({
 }) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   const [ingredients, setIngredients] = useState([])
+  const [query, setQuery] = useState("")
 
-  const handleSubmit = event => {
-    const newValue = this.input.value;
-    setIngredients(prevArray => [...prevArray, newValue]);
-  };
+
+  const handleQuery = event => {
+    const newValue = event.target.value;
+    setQuery(newValue);
+  }
+
+  const addIngredient = () => {
+    setIngredients([...ingredients, query])
+  }
 
   return (
     <Container>
@@ -55,10 +63,9 @@ export default ({
             {subheading && <Subheading>{subheading}</Subheading>}
             <Heading>{heading}</Heading>
             {description && <Description>{description}</Description>}
-            <Search onSubmit = {this.handleSubmit}>
-                <Input type="ingredients" name="search" placeholder="Search for recipes here ..." ref={input => this.input = input}/>
-                <AddButton type="submit">{addButtonText}</AddButton>
-                <p>{ingredients}</p>
+            <Search>
+                <Input type="ingredients" name="search" placeholder="Search for recipes here ..." onChange={handleQuery}/>
+                <AddButton type="button" onClick={addIngredient}>{addButtonText}</AddButton>
             </Search>
             <Form action={formAction} method={formMethod}>
               <SubmitButton type="Search">{submitButtonText}</SubmitButton>
