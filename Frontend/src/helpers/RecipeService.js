@@ -1,6 +1,6 @@
-export async function getRecipes () {
+export async function getRecipes(url) {
 	let recipes = []
-	await fetch("/recipes")
+	await fetch("/recipes?" + url)
 	.then((res) => {
 	  recipes = res.json()
 	})

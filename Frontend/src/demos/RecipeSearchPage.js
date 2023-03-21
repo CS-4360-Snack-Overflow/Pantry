@@ -6,11 +6,13 @@ import Header from "components/headers/light.js";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
 import RecipeSearchBar from "components/forms/SearchBarWithIllustration";
 import TabCardRecipeGrid from "components/cards/TabCardRecipeGrid.js";
+import RecipesWithSearchbar from "components/features/RecipesWithSearchbar";
 
 export default () => {
   return (
     <AnimationRevealPage>
       <Header />
+      <RecipesWithSearchbar />
       <RecipeSearchBar />
       <TabCardRecipeGrid />
       <Footer />

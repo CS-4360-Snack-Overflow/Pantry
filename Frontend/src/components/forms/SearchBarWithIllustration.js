@@ -41,33 +41,35 @@ export default ({
   formAction = "#",
   formMethod = "get",
   textOnLeft = true,
+  searchFor
 }) => {
-  // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
-  const [ingredients, setIngredients] = useState([]);
+  const [parameters, setParameters] = useState([]);
   const [query, setQuery] = useState("");
   const ref = useRef(null);
 
-
+  // Update the search query while user types, and add it to search when enter is pressed
   const handleQuery = event => {
     const newValue = event.target.value;
     setQuery(newValue.toLowerCase());
     if(event.key === "Enter"){
-      addIngredient();
+      addParameter();
     }
   }
 
-  const addIngredient = () => {
-    const elements = new Set(ingredients);
+  // Add an parameter to filter the search by
+  const addParameter = () => {
+    const elements = new Set(parameters);
     if(!elements.has(query) && query !== ""){
-      setIngredients([...ingredients, query]);
+      setParameters([...parameters, query]);
       ref.current.value = ""
     }
   }
 
-  const removeIngredient = index => {
-    setIngredients([...ingredients.filter(ingredient => ingredients.indexOf(ingredient) !== index)])
+  // Remove an entered Parameter
+  const removeParameter = index => {
+    setParameters([...parameters.filter(parameter => parameters.indexOf(parameter) !== index)])
   }
-  
+
   return (
     <Container>
       <TwoColumn>
@@ -86,19 +88,18 @@ export default ({
                   ref={ref} 
                   placeholder="Search for recipes here ..." 
                   onKeyUp={handleQuery}/>
-                <AddButton type="button" onClick={addIngredient}>{addButtonText}</AddButton>
+                <AddButton type="button" onClick={addParameter}>{addButtonText}</AddButton>
             </Search>
             <TagContainer>
-              {ingredients.map((ingredient, index) => (
+              {parameters.map((parameter, index) => (
                 <Tag>
-                  <span>{ingredient}</span>
-                  <CloseIcon onClick={() => removeIngredient(index)}></CloseIcon>
+                  <span>{parameter}</span>
+                  <CloseIcon onClick={() => removeParameter(index)}></CloseIcon>
                 </Tag>
               ))}
             </TagContainer>
-
             <Form action={formAction} method={formMethod}>
-              <SubmitButton type="Search">{submitButtonText}</SubmitButton>
+              <SubmitButton type="Search" onClick={() => searchFor(parameters)}>{submitButtonText}</SubmitButton>
             </Form>
           </TextContent>
         </TextColumn>

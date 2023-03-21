@@ -76,7 +76,9 @@ export default ({
     All: [],
     Popular: [],
     Recent: []
-  }
+  },
+  recipes = [],
+  sort = () => {}
 }) => {
   /*
    * To customize the tabs, pass in data using the `tabs` prop. It should be an object which contains the name of the tab
@@ -85,22 +87,14 @@ export default ({
    */
   const tabsKeys = Object.keys(tabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
-  const [recipes, setRecipes] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    // setLoading(true)
-    getRecipes()
-    .then((result) => {
-        const sorted = result.sort(() => Math.random() - 0.5)
-        setRecipes(sorted);
-        setLoading(false);
-      })
+    recipes = sort(recipes, activeTab)
+    setLoading(false);
   }, [activeTab])
 
-  if(isLoading) {
-    return <Header>Loading...</Header>
-  }
+
 
   return (
     <Container>
@@ -109,7 +103,7 @@ export default ({
           <Header>{heading}</Header>
           <TabsControl>
             {Object.keys(tabs).map((tabName, index) => (
-              <TabControl key={index} active={activeTab === tabName} onClick={() => setActiveTab(tabName)}>
+              <TabControl key={index} active={activeTab === tabName} onClick={() => {setActiveTab(tabName); sort(recipes, tabName)}}>
                 {tabName}
               </TabControl>
             ))}
