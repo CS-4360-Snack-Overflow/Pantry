@@ -33,7 +33,8 @@ app.use(express.json())
 
 const store = MongoStore.create({ //'MongoStore' needs to be capital just like that, for some reason
   mongoUrl: process.env.LOCAL_URI,
-  ttl: 14 * 24 * 60 * 60, //session will expire in 14 days
+  /* ttl: 14 * 24 * 60 * 60, //session will expire in 14 days*/
+  ttl: 10 * 60, //session will expire in 10 minutes
 });
 
 // now pass the connect-mongo object into the express-session object

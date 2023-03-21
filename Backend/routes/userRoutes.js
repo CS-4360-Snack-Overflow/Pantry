@@ -40,6 +40,9 @@ router.post('/userCreate', async (req, res) => {
       emailAddress: req.body.emailAddress,
       username: req.body.username,
       password: req.body.password,
+      profilePicture: req.body.profilePicture,
+      bio: req.body.bio,
+      phoneNumber: req.body.phoneNumber,
       dateOfBirth: req.body.dateOfBirth,
       gender: req.body.gender,
       countryRegion: req.body.countryRegion
@@ -89,8 +92,16 @@ router.post('/userUpdate', async (req, res) => {
     const username = req.body.username;
     console.log(`user.username=${username}`);
     const updates = req.body;
+    const updatedFields = {};
 
-    const updatedUser = await User.findOneAndUpdate({ username }, updates, { new: true});
+    //check which fields are updated
+    for (const field in updates) {
+      if (field != 'username' && updates[field]) {
+	updatedFields[field] = updates[field];
+      }
+    }
+
+    const updatedUser = await User.findOneAndUpdate({ username }, updatedFields, { new: true});
 
     // if update was successful, there's that
     if (updatedUser) {
