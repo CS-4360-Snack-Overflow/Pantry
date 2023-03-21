@@ -72,16 +72,10 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 
 export default ({
   heading = "Checkout the Menu",
-  upperTabs = {
-    Recent: [],
-    Trending: [],
-    Everything: []
-  },
   tabs = {
-    Breakfast: [],
-    Lunch: [],
-    Dinner: [],
-    Dessert: []
+    All: [],
+    Popular: [],
+    Recent: []
   }
 }) => {
   /*
@@ -90,9 +84,7 @@ export default ({
    * To see what attributes are configurable of each object inside this array see the example above for "Starters".
    */
   const tabsKeys = Object.keys(tabs);
-  const upperTabKeys = Object.keys(upperTabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
-  const [activeUpperTab, setUpperTab] = useState(upperTabKeys[0]);
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -113,13 +105,6 @@ export default ({
   return (
     <Container>
       <ContentWithPaddingXl>
-        <UpperTabsControl>
-            {Object.keys(upperTabs).map((tabName, index) => (
-              <UpperTabControl key={index} active={activeUpperTab === tabName} onClick={() => setUpperTab(tabName)}>
-                {tabName}
-              </UpperTabControl>
-            ))}
-          </UpperTabsControl>
         <HeaderRow>
           <Header>{heading}</Header>
           <TabsControl>
