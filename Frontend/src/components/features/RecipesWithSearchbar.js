@@ -16,17 +16,8 @@ export default () => {
         loadRecipes([], "All");
     }, [])
 
-    // const sortRecipes = (recipes, activeTab) => {
-    //     switch(activeTab){
-    //         case "Popular":
-    //             return
-    //         default:
-    //             return
-    //     }
-    // }
-
-    const loadRecipes = (ingredients, filter) => {
-        if(ingredients.length !== 0){
+    const loadRecipes = (ingredients, filter, writeUrl = true) => {
+        if(writeUrl){
             setUrl(new URLSearchParams(ingredients.map(value => ['ingredients', value])).toString());
         }
         getRecipes(url, filter).then((result) => {

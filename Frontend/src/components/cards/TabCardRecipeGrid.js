@@ -87,11 +87,12 @@ export default ({
    */
   const tabsKeys = Object.keys(tabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
-  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    recipes = loadRecipes([], activeTab)
-    setLoading(false);
+    if(tabs[activeTab].length === 0){
+      tabs[activeTab] = loadRecipes([], activeTab, false);
+    }
+    recipes = tabs[activeTab];
   }, [activeTab])
 
   return (
@@ -103,13 +104,8 @@ export default ({
             {Object.keys(tabs).map((tabName, index) => (
               <TabControl key={index} 
                   active={activeTab === tabName} 
-                    onClick={() => {
-                      setActiveTab(tabName);
-                      // Only retrieve recipes if current tab hasnt been loaded yet
-                      if(tabs[tabName].length === 0){
-                        recipes = loadRecipes([], tabName);
-                      }
-                    }}>
+                  onClick={() => {setActiveTab(tabName)}}
+              >
                 {tabName}
               </TabControl>
             ))}
