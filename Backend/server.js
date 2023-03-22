@@ -4,6 +4,7 @@ const express = require('express');
 const testRoutes = require('./routes/testroutes');
 const recipeRoutes = require('./routes/recipeRoutes');
 const userRoutes = require('./routes/userRoutes');
+const imageRoutes = require('./routes/imageRoutes');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser")
@@ -30,7 +31,7 @@ app.use(express.json())
 
 //set the session middleware up
 //first make mongoStore instance
-
+ 
 const store = MongoStore.create({ //'MongoStore' needs to be capital just like that, for some reason
   mongoUrl: process.env.LOCAL_URI,
   /* ttl: 14 * 24 * 60 * 60, //session will expire in 14 days*/
@@ -77,3 +78,4 @@ app.get('/signup', (req, res) => {
 
 app.use('/recipes', recipeRoutes);
 app.use('/user', userRoutes);
+app.use('/image', imageRoutes);
