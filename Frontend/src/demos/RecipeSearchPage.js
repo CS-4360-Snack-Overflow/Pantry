@@ -13,8 +13,6 @@ export default () => {
     <AnimationRevealPage>
       <Header />
       <RecipesWithSearchbar />
-      <RecipeSearchBar />
-      <TabCardRecipeGrid />
       <Footer />
     </AnimationRevealPage>
   );
