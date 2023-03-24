@@ -99,7 +99,7 @@ export default ({
               ))}
             </TagContainer>
             <Form action={formAction} method={formMethod}>
-              <SubmitButton type="Search" onClick={() => searchFor(parameters, "All")}>{submitButtonText}</SubmitButton>
+              <SubmitButton type="Search" onClick={() => searchFor(parameters)}>{submitButtonText}</SubmitButton>
             </Form>
           </TextContent>
         </TextColumn>

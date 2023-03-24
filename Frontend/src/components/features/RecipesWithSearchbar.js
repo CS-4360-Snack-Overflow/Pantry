@@ -7,23 +7,33 @@ import { useState, useEffect } from "react";
 import { SectionHeading } from "components/misc/Headings.js";
 
 export default () => {
-    const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [recipes, setRecipes] = useState([]);
     const [url, setUrl] = useState("");
+    const [filter, setFilter] = useState("");
+    let loadedIngredients = []
 
-    
     useEffect(() => {
         loadRecipes([], "All");
     }, [])
 
-    const loadRecipes = (ingredients, filter, writeUrl = true) => {
-        if(writeUrl){
-            setUrl(new URLSearchParams(ingredients.map(value => ['ingredients', value])).toString());
-        }
-        getRecipes(url, filter).then((result) => {
+    useEffect(() => {
+        getRecipes(url).then((result) => {
             setRecipes(result);
             setLoading(false);
         })
+    }, [url])
+
+    const loadRecipes = (selectedIngredients, filter, writeUrl = true) => {
+        let query
+        if(writeUrl){
+            query = new URLSearchParams(selectedIngredients.map(value => ['ingredients', value]));
+        }
+        else {
+            query = new URLSearchParams(loadedIngredients.map(value => ['ingredients', value]));
+        }
+        query.append('filter', filter);
+        setUrl(query.toString());  
     }
 
     if(loading) {

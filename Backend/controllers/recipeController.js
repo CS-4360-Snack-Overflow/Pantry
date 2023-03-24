@@ -1,8 +1,28 @@
 const Recipe = require('../models/recipe');
 
 const recipe_index = (req, res) => {
-    Recipe.find().sort({createdAt: -1}).then((result) => {
-        console.log(result)
+    const retrieveRecipes = (ingredients, filter) => {
+        let recipes;
+        if(!ingredients){
+            recipes = Recipe.find();
+        }
+        else {
+            recipes = Recipe.find({ingredients: {$all: ingredients}});
+        }
+        switch(filter){
+        case "Popular":
+            recipes = recipes.sort({review: -1});
+        case "Recent":
+            recipes = recipes.sort({createdAt: -1});
+        default:
+            console.log("here")
+            recipes = recipes.sort({recipeName: -1});
+        }
+        return recipes
+    }
+    console.log(req.query)
+
+    retrieveRecipes(req.query.ingredients, req.query.filter).then((result) => {
         res.send(result);
     })
     .catch((err) => {
