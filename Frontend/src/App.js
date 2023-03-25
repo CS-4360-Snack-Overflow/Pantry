@@ -81,27 +81,19 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 // import Footer from "components/footers/FiveColumnDark.js";
 // import Footer from "components/footers/MiniCenteredFooter.js";
 
-/* Ready Made Pages (from demos folder) */
-// import EventLandingPage from "demos/EventLandingPage.js";
-// import HotelTravelLandingPage from "demos/HotelTravelLandingPage.js";
-// import AgencyLandingPage from "demos/AgencyLandingPage.js";
-// import SaaSProductLandingPage from "demos/SaaSProductLandingPage.js";
 import RestaurantLandingPage from "demos/HomePage.js";
 import ServiceLandingPage from "demos/RecipeSearchPage.js";
-// import HostingCloudLandingPage from "demos/HostingCloudLandingPage.js";
-
-/* Inner Pages */
 import LoginPage from "pages/Login.js";
 import SignupPage from "pages/Signup.js";
 import PricingPage from "pages/Pricing.js";
 import AboutUsPage from "pages/AboutUs.js";
 import ContactUsPage from "pages/ContactUs.js";
-//import BlogIndexPage from "pages/BlogIndex.js";
+import AddRecipePage from "pages/AddRecipe";
 import TermsOfServicePage from "pages/TermsOfService.js";
 import PrivacyPolicyPage from "pages/PrivacyPolicy.js";
 import ComponentRenderer from "ComponentRenderer.js";
-//import MainLandingPage from "MainLandingPage.js";
-//import ThankYouPage from "ThankYouPage.js";
+import UserPage from "pages/User.js";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default function App() {
@@ -115,7 +107,6 @@ export default function App() {
         <Routes>
           <Route path="/components/:type/:subtype/:name" element={<ComponentRenderer />} />
           <Route path="/components/:type/:name" element={<ComponentRenderer />} />
-          {/* <Route path="/thank-you" element={<ThankYouPage />} /> */}
           <Route path="/" element={<RestaurantLandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
@@ -125,27 +116,10 @@ export default function App() {
           <Route path="/terms" element={<TermsOfServicePage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/recipes" element={<ServiceLandingPage />} />
+          <Route path="/addrecipe" element={<AddRecipePage />} />
+          <Route path="/User" element={<UserPage />} />
         </Routes>
       </Router>
     </>
   );
 }
-
-// export default EventLandingPage;
-// export default HotelTravelLandingPage;
-// export default AgencyLandingPage;
-// export default SaaSProductLandingPage;
-// export default RestaurantLandingPage;
-// export default ServiceLandingPage;
-// export default HostingCloudLandingPage;
-
-// export default LoginPage;
-// export default SignupPage;
-// export default PricingPage;
-// export default AboutUsPage;
-// export default ContactUsPage;
-// export default BlogIndexPage;
-// export default TermsOfServicePage;
-// export default PrivacyPolicyPage;
-
-// export default MainLandingPage;

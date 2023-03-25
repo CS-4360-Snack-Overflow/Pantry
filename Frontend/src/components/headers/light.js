@@ -3,12 +3,11 @@ import { motion } from "framer-motion";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
-
 import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.js";
-
 import logo from "../../images/logo-p.svg";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+//import { NavLink } from "react-router-dom";
 
 const Header = tw.header`
   flex justify-between items-center
@@ -24,18 +23,19 @@ export const NavLink = tw.a`
   text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
   font-semibold tracking-wide transition duration-300
   pb-1 border-b-2 border-transparent hover:border-primary-500 hocus:text-primary-500
+  
 `;
 
 export const PrimaryLink = tw(NavLink)`
   lg:mx-0
   px-8 py-3 rounded bg-primary-500 text-gray-100
-  hocus:bg-primary-700 hocus:text-gray-200 focus:shadow-outline
+  hocus:text-white 
+  hocus:bg-gray-800 transition duration-150 focus:shadow-outline
   border-b-0
 `;
 
 export const LogoLink = styled(NavLink)`
   ${tw`flex items-center font-black border-b-0 text-2xl! ml-0!`};
-
   img {
     ${tw`w-10 mr-3`}
   }
@@ -72,9 +72,11 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
    */
   const defaultLinks = [
     <NavLinks key={1}>
-      <NavLink href="/recipes">Recipes</NavLink>
+      <NavLink href="/recipes" >Recipes</NavLink>
+      <NavLink href="/addrecipe">Add Recipe</NavLink>
       <NavLink href="/about">About Us</NavLink>
       <NavLink href="/contact">Contact Us</NavLink>
+      <NavLink href="/user">Profile</NavLink>
       <NavLink href="/login" tw="lg:ml-12!">Login</NavLink>
       <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
     </NavLinks>
