@@ -15,13 +15,10 @@ const recipe_index = (req, res) => {
         case "Recent":
             recipes = recipes.sort({createdAt: -1});
         default:
-            console.log("here")
-            recipes = recipes.sort({recipeName: -1});
+            recipes = recipes.sort({recipeName: 1});
         }
         return recipes
     }
-    console.log(req.query)
-
     retrieveRecipes(req.query.ingredients, req.query.filter).then((result) => {
         res.send(result);
     })

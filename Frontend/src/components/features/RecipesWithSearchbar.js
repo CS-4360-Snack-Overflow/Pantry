@@ -1,5 +1,3 @@
-import tw from "twin.macro";
-import styled from "styled-components";
 import RecipeSearchBar from "components/forms/SearchBarWithIllustration";
 import TabCardRecipeGrid from "components/cards/TabCardRecipeGrid.js";
 import {getRecipes} from "../../helpers/RecipeService.js"
@@ -10,8 +8,8 @@ export default () => {
     const [loading, setLoading] = useState(true);
     const [recipes, setRecipes] = useState([]);
     const [url, setUrl] = useState("");
-    const [filter, setFilter] = useState("");
-    let loadedIngredients = []
+    const [loadedFilter, setFilter] = useState("");
+    const [loadedIngredients, setIngredients] = useState([])
 
     useEffect(() => {
         loadRecipes([], "All");
@@ -24,13 +22,15 @@ export default () => {
         })
     }, [url])
 
-    const loadRecipes = (selectedIngredients, filter, writeUrl = true) => {
+    const loadRecipes = (selectedIngredients, filter = loadedFilter, writeUrl = true) => {
         let query
         if(writeUrl){
             query = new URLSearchParams(selectedIngredients.map(value => ['ingredients', value]));
+            setIngredients(selectedIngredients);
         }
         else {
             query = new URLSearchParams(loadedIngredients.map(value => ['ingredients', value]));
+            setFilter(filter)
         }
         query.append('filter', filter);
         setUrl(query.toString());  
