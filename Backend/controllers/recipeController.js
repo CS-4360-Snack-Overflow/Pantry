@@ -1,27 +1,21 @@
 const Recipe = require('../models/recipe');
-const escapeStringRegexp = require('escape-string-regexp');
 
 const recipe_index = (req, res) => {
     const retrieveRecipes = (ingredients, filter) => {
-        let regex = []
         let recipes;
         if(!ingredients){
             recipes = Recipe.find();
         }
         else {
-            ingredients.map((ingredient) => {
-                regex.push({"ingredients": escapeStringRegexp(ingredient)});
-            })
+            recipes = Recipe.find({ingredients: {$all: ingredients}});
         }
         switch(filter){
         case "Popular":
-            recipes = Recipe.aggregate()
-            .match({$or: regex})
-            .group({review: {$divide: [user_ratings.count_positive, user_ratings.count_negative]}});
+            recipes = recipes.sort({review: -1});
         case "Recent":
-            recipes = Recipe.find({$or: regex}).sort({createdAt: -1});
+            recipes = recipes.sort({createdAt: -1});
         default:
-            recipes = Recipe.find({$or: regex}).sort({name: 1});
+            recipes = recipes.sort({recipeName: 1});
         }
         return recipes
     }
