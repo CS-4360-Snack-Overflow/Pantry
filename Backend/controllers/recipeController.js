@@ -1,8 +1,25 @@
 const Recipe = require('../models/recipe');
 
 const recipe_index = (req, res) => {
-    Recipe.find().sort({createdAt: -1}).then((result) => {
-        console.log(result)
+    const retrieveRecipes = (ingredients, filter) => {
+        let recipes;
+        if(!ingredients){
+            recipes = Recipe.find();
+        }
+        else {
+            recipes = Recipe.find({ingredients: {$all: ingredients}});
+        }
+        switch(filter){
+        case "Popular":
+            recipes = recipes.sort({review: -1});
+        case "Recent":
+            recipes = recipes.sort({createdAt: -1});
+        default:
+            recipes = recipes.sort({recipeName: 1});
+        }
+        return recipes
+    }
+    retrieveRecipes(req.query.ingredients, req.query.filter).then((result) => {
         res.send(result);
     })
     .catch((err) => {
@@ -45,7 +62,7 @@ const recipe_delete = (req, res) => {
 };
 const recipe_patch = (req, res) => {
     const id = req.params.id;
-    Recipe.findOneAndUpdate({_id: id}, {title: req.body.title, snippet: req.body.snippet, body: req.body.body}, {new: true})
+    Recipe.findOneAndUpdate({_id: id}, req.body, {new: true})
     .then((result) => {
         res.send(result);
     })
