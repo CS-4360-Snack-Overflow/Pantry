@@ -35,7 +35,7 @@ export default () => {
         primaryButtonUrl="/recipes"
         watchVideoButtonText="Quick Recipes"
       />
-      
+       
       {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
       <TabGrid
         heading={

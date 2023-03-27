@@ -139,7 +139,7 @@ export default ({
           <NavRow>
             <LogoLink href="/">
               <img src={logo} alt="" />
-              Treact
+              Pantry
             </LogoLink>
             <div tw="flex flex-wrap justify-center lg:justify-end items-center -mr-12">
               <NavLink target="_blank" href="https://owaiskhan.me/post/free-tailwindcss-react-ui-kit">
@@ -163,7 +163,7 @@ export default ({
           <HeroRow>
             <UpdateNotice>
               <UpdateNoticeIcon />
-              Last updated on 10th September, 2022 - Added support for React v18 and TailwindCSS v3!
+              Last updated on 16 March, 2023
             </UpdateNotice>
             <TextColumn>
               <Heading as="h1">{heading}</Heading>

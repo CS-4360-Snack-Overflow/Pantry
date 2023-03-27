@@ -43,7 +43,7 @@ function AnimatedSlideInComponent({ direction = "left", offset = 30, children })
             x: inView && 0
           }
         }}
-        transition={{ type: "spring", damping: 19 }}
+        transition={{ type: "spring", damping: 18 }}
       >
         {children}
       </motion.section>

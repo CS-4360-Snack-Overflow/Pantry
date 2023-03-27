@@ -9,8 +9,6 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
-import RecipeSearchBar from "components/forms/SearchBarWithIllustration";
-import {getRecipes} from "../../helpers/RecipeService.js"
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
@@ -72,17 +70,13 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 
 export default ({
   heading = "Checkout the Menu",
-  upperTabs = {
-    Recent: [],
-    Trending: [],
-    Everything: []
-  },
   tabs = {
-    Breakfast: [],
-    Lunch: [],
-    Dinner: [],
-    Dessert: []
-  }
+    All: [],
+    Popular: [],
+    Recent: []
+  },
+  recipes = [],
+  loadRecipes = () => {}
 }) => {
   /*
    * To customize the tabs, pass in data using the `tabs` prop. It should be an object which contains the name of the tab
@@ -90,41 +84,26 @@ export default ({
    * To see what attributes are configurable of each object inside this array see the example above for "Starters".
    */
   const tabsKeys = Object.keys(tabs);
-  const upperTabKeys = Object.keys(upperTabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
-  const [activeUpperTab, setUpperTab] = useState(upperTabKeys[0]);
-  const [recipes, setRecipes] = useState([]);
-  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    // setLoading(true)
-    getRecipes()
-    .then((result) => {
-        const sorted = result.sort(() => Math.random() - 0.5)
-        setRecipes(sorted);
-        setLoading(false);
-      })
+    if(tabs[activeTab].length === 0){
+      tabs[activeTab] = loadRecipes([], activeTab, false);
+    }
+    recipes = tabs[activeTab];
   }, [activeTab])
-
-  if(isLoading) {
-    return <Header>Loading...</Header>
-  }
 
   return (
     <Container>
       <ContentWithPaddingXl>
-        <UpperTabsControl>
-            {Object.keys(upperTabs).map((tabName, index) => (
-              <UpperTabControl key={index} active={activeUpperTab === tabName} onClick={() => setUpperTab(tabName)}>
-                {tabName}
-              </UpperTabControl>
-            ))}
-          </UpperTabsControl>
         <HeaderRow>
           <Header>{heading}</Header>
           <TabsControl>
             {Object.keys(tabs).map((tabName, index) => (
-              <TabControl key={index} active={activeTab === tabName} onClick={() => setActiveTab(tabName)}>
+              <TabControl key={index} 
+                  active={activeTab === tabName} 
+                  onClick={() => {setActiveTab(tabName)}}
+              >
                 {tabName}
               </TabControl>
             ))}
