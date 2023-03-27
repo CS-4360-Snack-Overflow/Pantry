@@ -32,7 +32,7 @@ const Info = styled.div`
 `;
 
 const Button = styled(Link)`
-background-color: orange;
+background-color: #F58023;
 color: white;
 font-weight: bold;
 padding: 10px 20px;
