@@ -27,6 +27,7 @@ const recipeSchema = new Schema({
         count_positive: Number,
         count_negative: Number
     },
+    review: Number,
     tags: [String],
     ingredients: [String],
     instructions: [String],
