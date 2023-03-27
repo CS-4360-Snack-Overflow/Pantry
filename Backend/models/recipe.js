@@ -6,38 +6,6 @@ the thing a model wraps around
 */
 const recipeSchema = new Schema({
     //properties of recipe docs
-    recipeName: {
-        type: String, 
-        required: true
-    }, 
-    author: {
-        type: String, 
-        required: true
-    }, 
-    review: {
-        type: Number, 
-        required: false
-    }, 
-    imUrl: {
-        type: String,
-        required: false
-    },
-    ingredients: {
-        type: [String],
-        required: true,
-        validate: [hasIngredients, "Recipe must contain at least one ingredient"]
-    },
-    directions: {
-        type: String,
-        required: true
-    }
-}, {timestamps: true})
-
-function hasIngredients(array) {
-    return array.length >= 1;
-}
-
-const recipeSchema_tastyAPI = new Schema({
     name: String,
     video_url: String,
     poster_image_url: String,
@@ -62,9 +30,8 @@ const recipeSchema_tastyAPI = new Schema({
     tags: [String],
     ingredients: [String],
     instructions: [String],
-    user_num: Number
-}, {timestamps: true}
-)
+    user_num: String
+}, {timestamps: true})
 
 /* then create a model based on the schema, which defines the structure of the documents
 model sourounds that and provides an interface with a db collection for that document
@@ -75,7 +42,6 @@ type
 model name convention (capitalized), same with schema constructor
 */
 const Recipes = mongoose.model('Recipe', recipeSchema);
-const Recipes_API = mongoose.model('Recipe_API', recipeSchema_tastyAPI);
 //export to use elsewhere in the project
 module.exports = Recipes;
-module.exports = Recipes_API
+//module.exports = Recipes_API
