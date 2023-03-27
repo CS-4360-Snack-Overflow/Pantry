@@ -37,6 +37,35 @@ function hasIngredients(array) {
     return array.length >= 1;
 }
 
+const recipeSchema_tastyAPI = new Schema({
+    name: String,
+    video_url: String,
+    poster_image_url: String,
+    alt_image_url: String,
+    num_servings: Number,
+    prep_time: Number,
+    credits: String,
+    cook_time: Number,
+    description: String,
+    nutrition: {
+        protein: Number,
+        fat: Number,
+        calories: Number,
+        sugar: Number,
+        carbohydrates: Number,
+        fiber: Number
+    },
+    user_ratings: {
+        count_positive: Number,
+        count_negative: Number
+    },
+    tags: [String],
+    ingredients: [String],
+    instructions: [String],
+    user_num: Number
+}, {timestamps: true}
+)
+
 /* then create a model based on the schema, which defines the structure of the documents
 model sourounds that and provides an interface with a db collection for that document
 type
@@ -46,5 +75,7 @@ type
 model name convention (capitalized), same with schema constructor
 */
 const Recipes = mongoose.model('Recipe', recipeSchema);
+const Recipes_API = mongoose.model('Recipe_API', recipeSchema_tastyAPI);
 //export to use elsewhere in the project
 module.exports = Recipes;
+module.exports = Recipes_API
