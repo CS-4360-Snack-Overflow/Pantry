@@ -71,9 +71,10 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 export default ({
   heading = "Checkout the Menu",
   tabs = {
-    All: [],
-    Popular: [],
-    Recent: []
+    "All": [],
+    "Popular": [],
+    "Highly Rated": [],
+    "Recent": []
   },
   recipes = [],
   loadRecipes = () => {}
@@ -98,6 +99,7 @@ export default ({
       <ContentWithPaddingXl>
         <HeaderRow>
           <Header>{heading}</Header>
+          <p>{recipes.length} results found</p>
           <TabsControl>
             {Object.keys(tabs).map((tabName, index) => (
               <TabControl key={index} 
