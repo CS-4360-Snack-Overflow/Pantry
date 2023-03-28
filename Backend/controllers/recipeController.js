@@ -15,7 +15,7 @@ const recipe_index = (req, res) => {
         case "Recent":
             recipes = recipes.sort({createdAt: -1});
         default:
-            recipes = recipes.sort({recipeName: 1});
+            recipes = recipes.sort({name: 1});
         }
         return recipes
     }
