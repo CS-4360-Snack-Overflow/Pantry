@@ -75,5 +75,10 @@ app.get('/signup', (req, res) => {
   res.sendFile('./signup.html', { root: __dirname } );
   });
 
+//this is here because any route that uses sendFile doesn't work unless it is in a file that is in root directory
+app.get('/getProPic', (req, res) => {
+  res.sendFile('./sample1.png', { root: __dirname});
+});
+
 app.use('/recipes', recipeRoutes);
 app.use('/user', userRoutes);

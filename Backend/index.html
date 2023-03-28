@@ -4,6 +4,12 @@
     <title>Pantry - Home</title>
   </head>
   <body>
+    <h1>Profile Picture</h1>
+    <img id="propic" src="" alt="propic">
+    <script>
+      const  img = document.getElementById(`propic`);
+      img.src = `/getProPic`;
+    </script>
     <h1>Pantry</h1>
     <form action="/login" method="GET">
       <button type="submit"> Log In</button>
