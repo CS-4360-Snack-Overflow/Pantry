@@ -4,7 +4,6 @@ const express = require('express');
 const testRoutes = require('./routes/testroutes');
 const recipeRoutes = require('./routes/recipeRoutes');
 const userRoutes = require('./routes/userRoutes');
-const imageRoutes = require('./routes/imageRoutes');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser")
@@ -78,4 +77,3 @@ app.get('/signup', (req, res) => {
 
 app.use('/recipes', recipeRoutes);
 app.use('/user', userRoutes);
-app.use('/image', imageRoutes);

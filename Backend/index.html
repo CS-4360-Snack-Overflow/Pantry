@@ -42,15 +42,6 @@
       // Call fetchUsers when the page is loaded
       window.addEventListener('load', fetchUsers);
     </script>
-
-    <h1>Upload Image</h1>
-    <form action="/image/upload" method="POST" enctype="multipart/form-data">
-      <label for="image">Choose an image:</label>
-      <input type="file" id="image" name="image" accept="image/*">
-      <br>
-      <button type="submit">Upload</button>
-    </form>
-
     <h1> Search for users!:</h1>
     <form action="/user/userSearch" method="get">
       <label for="username">Username:</label>
