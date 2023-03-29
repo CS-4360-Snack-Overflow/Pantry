@@ -64,26 +64,28 @@ export default ({
     e.preventDefault();
     setSteps([currentInput, ...recipeSteps])
   }
-  function submitRecipe() {
+  function submitRecipe(e) {
+    e.preventDefault();
     addRecipe(recipeFields)
   }
 
   useEffect(() => {
     let tags = [mealType, ...attributes]
-      // setFields({
-      //   "name": {recipeName},
-      //   "description": {recipeDescription},
-      //   "tags": {tags},
-      //   "ingredients": {recipeIngredients}
-      // })
+      setFields({
+        "name": recipeName,
+        "description": recipeDescription,
+        "tags": tags,
+        "ingredients": recipeIngredients,
+        "instructions": recipeSteps
+      })
     
-    console.log({
-      "name": {recipeName},
-      "description": {recipeDescription},
-      "tags": {tags},
-      "ingredients": {recipeIngredients}, 
-      "instructions": {recipeSteps}
-    })
+    // console.log({
+    //   "name": {recipeName},
+    //   "description": {recipeDescription},
+    //   "tags": {tags},
+    //   "ingredients": {recipeIngredients}, 
+    //   "instructions": {recipeSteps}
+    // })
   }, [attributes, mealType, recipeName, recipeIngredients, recipeDescription, recipeSteps])
 
 
