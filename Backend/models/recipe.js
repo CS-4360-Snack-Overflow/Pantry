@@ -14,24 +14,65 @@ const recipeSchema = new Schema({
     user_num: String,
     tags: [String],
     user_ratings: {
-        count_positive: Number,
-        count_negative: Number
+        count_positive: {
+            type: Number,
+            default: 0
+        },
+        count_negative: {
+            type: Number,
+            default: 0}
     },
-    review: Number,
-    total_reviews: Number,
+    review: {
+        type: Number,
+        default: 0
+    },
+    total_reviews: {
+        type: Number,
+        default: 0
+    },
     ingredients: [String],
     nutrition: {
-        protein: Number,
-        fat: Number,
-        calories: Number,
-        sugar: Number,
-        carbohydrates: Number,
-        fiber: Number
+        protein: {
+            type: Number,
+            default: 0
+        },
+        fat: {
+            type: Number,
+            default: 0
+        },
+        calories: {
+            type: Number,
+            default: 0
+        },
+        sugar: {
+            type: Number,
+            default: 0
+        },
+        carbohydrates: {
+            type: Number,
+            default: 0
+        },
+        fiber: {
+            type: Number,
+            default: 0
+        }
     },
-    num_servings: Number,
-    prep_time: Number,
-    cook_time: Number,
-    description: String,
+    num_servings: {
+        type: Number,
+        default: 0
+    },
+    prep_time: {
+        type: Number,
+        default: 0
+    },
+    cook_time: {
+        type: Number,
+        default: 0
+    },
+    description: {
+        type: String,
+        default: ""
+    },
     instructions: [String],
 }, {timestamps: true})
 

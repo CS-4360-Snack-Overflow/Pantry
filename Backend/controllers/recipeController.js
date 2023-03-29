@@ -53,11 +53,12 @@ const recipe_create_get = (req, res) => {
 const recipe_create_post = (req, res) => {
     //the submit form will redirect here from html file
     const recipe = new Recipe(req.body);
-    recipe.save()
-    .then((result) => {
-        res.redirect('/recipes')
-    })
-    .catch((err) => {console.log(err)})
+    console.log(req.body)
+    // recipe.save()
+    // .then((result) => {
+    //     res.redirect('/recipes')
+    // })
+    // .catch((err) => {console.log(err)})
 };
 const recipe_delete = (req, res) => {
     const id = req.params.id;

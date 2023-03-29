@@ -6,3 +6,12 @@ export async function getRecipes(url) {
 	})
 	  return recipes
 }
+
+export async function addRecipe(data){
+	await fetch("/recipes", {
+		method: "POST", 
+		body: JSON.stringify(data)
+	}).then((res) => {
+		return res;
+	})
+}
