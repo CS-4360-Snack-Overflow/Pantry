@@ -78,14 +78,6 @@ export default ({
         "ingredients": recipeIngredients,
         "instructions": recipeSteps
       })
-    
-    // console.log({
-    //   "name": {recipeName},
-    //   "description": {recipeDescription},
-    //   "tags": {tags},
-    //   "ingredients": {recipeIngredients}, 
-    //   "instructions": {recipeSteps}
-    // })
   }, [attributes, mealType, recipeName, recipeIngredients, recipeDescription, recipeSteps])
 
 
@@ -145,24 +137,5 @@ export default ({
       <TwoColumn>
       </TwoColumn>
     </Container>
-
-    // {/* <Container>
-    // <TwoColumn>
-    //   <ImageColumn>
-    //     <Image imageSrc={EmailIllustrationSrc} />
-    //   </ImageColumn>
-    //   <TextColumn textOnLeft={textOnLeft}>
-    //     <TextContent>
-    //       {subheading && <Subheading>{subheading}</Subheading>}
-    //       <Heading>{heading}</Heading>
-    //       <Description>{description}</Description>
-    //       <Form action={formAction} method={formMethod}>
-    //         <Input type="email" name="email" placeholder="Placeholder text" />
-    //         <SubmitButton type="submit">{submitButtonText}</SubmitButton>
-    //       </Form>
-    //     </TextContent>
-    //   </TextColumn>
-    // </TwoColumn>
-    // </Container> */}
   );
 };
