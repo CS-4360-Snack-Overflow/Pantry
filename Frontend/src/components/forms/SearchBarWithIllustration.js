@@ -60,7 +60,6 @@ export default ({
     const elements = new Set(parameters);
     if(!elements.has(query) && query !== ""){
       setParameters([...parameters, query]);
-      ref.current.value = ""
     }
   }
 
@@ -84,14 +83,13 @@ export default ({
                 <Input 
                   type="ingredients" 
                   name="search"
-                  ref={ref} 
                   placeholder="Search for recipes here ..." 
                   onKeyUp={handleQuery}/>
                 <AddButton type="button" onClick={addParameter}>{addButtonText}</AddButton>
             </Search>
             <TagContainer>
               {parameters.map((parameter, index) => (
-                <Tag>
+                <Tag key={parameter}>
                   <span>{parameter}</span>
                   <CloseIcon onClick={() => removeParameter(index)}></CloseIcon>
                 </Tag>

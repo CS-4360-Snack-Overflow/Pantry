@@ -8,6 +8,7 @@ import { CustomButton as CustomButtonBase, PrimaryButton } from "components/misc
 //import EmailIllustrationSrc from "images/email-illustration.svg";
 import { useState, useEffect } from "react";
 import { addRecipe } from "helpers/RecipeService";
+import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -39,9 +40,12 @@ const RowSelect = tw.select`border-2 px-5 py-3 w-1/6 rounded focus:outline-none 
 const RowMultiSelect = tw.select`border-2 px-5 py-3 min-h-48 w-1/6 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
 const AddButton = tw(PrimaryButtonBase)`inline-block`
 const SubmitButtonRow = tw(CustomButtonBase)`inline-block ml-2 lg:ml-4 mt-0`
-
+const Tag = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-400 hover:bg-gray-300 text-gray-600 rounded-full`
+const TagContainer = tw.div`w-full`
+const Step = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-200 hover:bg-gray-300 text-black w-full`
 
 export default ({
+  recipeId = null,
   submitButtonText = "Submit Recipe!",
   formAction = "",
   formMethod = "get",
@@ -60,9 +64,15 @@ export default ({
     e.preventDefault();
     setIngredients([currentInput,...recipeIngredients])
   }
+  function removeIngredient(index) {
+    setIngredients([...recipeIngredients.filter(ingredient => recipeIngredients.indexOf(ingredient) !== index)])
+  }
   function addStep(e) {
     e.preventDefault();
-    setSteps([currentInput, ...recipeSteps])
+    setSteps([...recipeSteps, currentInput])
+  }
+  function removeStep(index) {
+    setSteps([...recipeSteps.filter(step => recipeSteps.indexOf(step) !== index)])
   }
   function submitRecipe(e) {
     e.preventDefault();
@@ -100,11 +110,26 @@ export default ({
         <AreaInput autoCorrect="on" rows={1} placeholder="Ingredient" onChange={(e) => setInput(e.target.value)}/>
         <AddButton onClick={addIngredient}>Add ingredient</AddButton>
       </RowForm>
+      <TagContainer>
+          {recipeIngredients.map((ingredient,index) => (
+            <Tag key={index}>
+              <span>{ingredient}</span>
+              <CloseIcon onClick={() => removeIngredient(index)}></CloseIcon>
+            </Tag>
+          ))}
+      </TagContainer>
       <RowForm action={formAction} method={formMethod}>
-        <CustomDescription>Recipe Instructions: </CustomDescription>
+        <CustomDescription>Recipe Instructions </CustomDescription>
         <AreaInput autoCorrect="on" rows={1} placeholder="Recipe Step" onChange={(e) => setInput(e.target.value)}/>
         <AddButton onClick={addStep}>Add step</AddButton>
       </RowForm>
+          {recipeSteps.map((step,index) => (
+            <Step key={index}>
+                <span>Step {index + 1}:</span>
+                <span>{step}</span>
+                <CloseIcon onClick={() => removeStep(index)}></CloseIcon>
+            </Step>
+          ))}
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Select Recipe Attributes:<br/>(Click and hold or<br/>Shift + Click or<br/>CTRL + Click) </CustomDescription>
         <RowMultiSelect name="selectedMealAttributes" multiple={true} onChange={(e)=>{
