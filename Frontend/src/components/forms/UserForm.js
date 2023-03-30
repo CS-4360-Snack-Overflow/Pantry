@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+
+
+
 
 const Container = styled.div`
   display: flex;
@@ -42,28 +45,43 @@ margin-top: 20px;
 cursor: pointer;
 `;
 
+
 const UserPage = () => {
+  const [userData, setUserData] = useState({});
+  
+  useEffect(() => {
+    //Fetch user data from test file user-data.json, Did not get to display but set it up
+  fetch("user-data.json")
+  .then(response => response.json())
+  .then(data => setUserData(data))
+  .catch(error => console.error(error));
+  }, []);
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+  
   return (
     <Container>
-      <ProfilePicture src="https://via.placeholder.com/150" alt="Profile Picture" />
+      <ProfilePicture src={userData.profilePicture} alt="Profile Picture" />
       <UserInfo>
         <Label>Name:</Label>
-        <Info>Name Will Go Here</Info>
+        <Info>{userData.name}</Info>
         <Label>Bio:</Label>
-        <Info>User Bio Will go Here.</Info>
+        <Info>{userData.bio}</Info>
         <Label>Email:</Label>
-        <Info>Email Here</Info>
+        <Info>{userData.email}</Info>
         <Label>Username:</Label>
-        <Info>UserName Here</Info>
+        <Info>{userData.username}</Info>
         <Label>Password:</Label>
-        <Info>PassPass</Info>
+        <Info>{userData.password}</Info>
         <Label>Date of Birth:</Label>
-        <Info>01/01/0000</Info>
+        <Info>{userData.dob}</Info>
         <Label>Gender:</Label>
-        <Info>Male</Info>
+        <Info>{userData.gender}</Info>
         <Label>Country/Region:</Label>
-        <Info>United States</Info>
-        <Button to="/">Edit Profile</Button>
+        <Info>{userData.country}</Info>
+        <Button to="/EditUser">Edit Profile</Button>
       </UserInfo>
     </Container>
   );
