@@ -5,6 +5,7 @@ import { SectionHeading, Subheading as SubheadingBase } from "components/misc/He
 import styled from "styled-components";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { CustomButton as CustomButtonBase, PrimaryButton } from "components/misc/Buttons.js";
+
 //import EmailIllustrationSrc from "images/email-illustration.svg";
 import { useState, useEffect } from "react";
 import { addRecipe } from "helpers/RecipeService";
