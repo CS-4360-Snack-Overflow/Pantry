@@ -38,7 +38,7 @@ const TabContent = tw(motion.div)`mt-6 flex flex-wrap sm:-mr-10 md:-mr-6 lg:-mr-
 const CardContainer = tw.div`mt-10 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md:pr-6 lg:pr-12`;
 const Card = tw(motion.a)`bg-gray-200 rounded-b block max-w-xs mx-auto sm:max-w-none sm:mx-0`;
 const CardImageContainer = styled.div`
-  ${props => css`background-image: url("${props.imageSrc}");`}
+  ${props => {return props.user_num === "0" ? css`background-image:url("${props.imageSrc}");` : console.log("here")}}
   ${tw`h-56 bg-center bg-cover relative rounded-t`}
 `;
 const CardRatingContainer = tw.div`leading-none absolute inline-flex bg-gray-100 bottom-0 left-0 ml-4 mb-4 rounded-full px-5 py-2 items-end`;
@@ -136,7 +136,7 @@ export default ({
             {Object.keys(recipes).map((key, index) => (
               <CardContainer key={index}>
                 <Card className="group" href={"http://localhost:8080/recipes/" + recipes[key]._id} target ="_blank" initial="rest" whileHover="hover" animate="rest">
-                  <CardImageContainer imageSrc={recipes[key].alt_image_url}>
+                  <CardImageContainer user_num={recipes[key].user_num} imageSrc={recipes[key].poster_image_url} >
                     <CardRatingContainer>
                       <CardRating>
                         <StarIcon />

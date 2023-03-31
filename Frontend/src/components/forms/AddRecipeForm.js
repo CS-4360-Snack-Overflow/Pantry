@@ -103,6 +103,8 @@ export default ({
     setFields({
       "name": recipeName,
       "description": recipeDescription,
+      "credits":"",
+      "user_num":"123",
       "poster_image_url": imUrl,
       "tags": tags,
       "ingredients": recipeIngredients,
