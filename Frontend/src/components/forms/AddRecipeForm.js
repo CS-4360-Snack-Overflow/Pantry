@@ -8,7 +8,7 @@ import { CustomButton as CustomButtonBase, PrimaryButton } from "components/misc
 
 //import EmailIllustrationSrc from "images/email-illustration.svg";
 import { useState, useEffect } from "react";
-import { addRecipe } from "helpers/RecipeService";
+import { addRecipe, uploadImage } from "helpers/RecipeService";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 
 const Container = tw.div`relative`;
@@ -52,7 +52,9 @@ export default ({
   formMethod = "get",
   
 }) => {
-  const [currentInput, setInput] = useState("")
+  const [currentInput, setInput] = useState("");
+  const [image, setImage] = useState(null);
+  const [imUrl, setUrl] = useState("");
   const [attributes, setAttributes] = useState([]);
   const [mealType, setMealType] = useState("Breakfast");
   const [recipeName, setName] = useState("");
@@ -61,42 +63,57 @@ export default ({
   const [recipeDescription, setDescription] = useState("");
   const [recipeFields, setFields] = useState([])
 
-  function addIngredient(e) {
-    e.preventDefault();
-    setIngredients([currentInput,...recipeIngredients])
-  }
   function removeIngredient(index) {
     setIngredients([...recipeIngredients.filter(ingredient => recipeIngredients.indexOf(ingredient) !== index)])
   }
-  function addStep(e) {
-    e.preventDefault();
-    setSteps([...recipeSteps, currentInput])
-  }
+  
   function removeStep(index) {
     setSteps([...recipeSteps.filter(step => recipeSteps.indexOf(step) !== index)])
   }
-  function submitRecipe(e) {
+
+  function handleFileChange(e) {
+    if(e.target.files) {
+      setImage(e.target.files[0]);
+    }
+  }
+
+  async function handleFileUpload(e) {
+    e.preventDefault()
+    let form = new FormData();
+    form.append('files', image);
+    let res = await uploadImage(form);
+    res = await res.json().then((result) =>{
+      setUrl("../../../../" + result.path)
+    })
+  }
+
+  async function submitRecipe(e) {
     e.preventDefault();
-    addRecipe(recipeFields)
+    let res = await addRecipe(recipeFields);
+    res = await res.json().then((result) =>{
+      recipeId = result.recipeId
+    })
   }
 
   useEffect(() => {
     let tags = [mealType, ...attributes]
-      setFields({
-        "name": recipeName,
-        "description": recipeDescription,
-        "tags": tags,
-        "ingredients": recipeIngredients,
-        "instructions": recipeSteps
-      })
-  }, [attributes, mealType, recipeName, recipeIngredients, recipeDescription, recipeSteps])
+    setFields({
+      "name": recipeName,
+      "description": recipeDescription,
+      "image_url": imUrl,
+      "tags": tags,
+      "ingredients": recipeIngredients,
+      "instructions": recipeSteps
+    })
+  }, [attributes, mealType, recipeName, recipeIngredients, recipeDescription, recipeSteps, imUrl])
 
 
   return (
     <Container>
       <TopForm action={formAction} method={formMethod}>
         <CustomDescription>Upload Recipe Image: </CustomDescription>
-        <RowInput type="file" accept="image/*"/>
+        <RowInput type="file" enctype="multipart/form-data" name="image" onChange={handleFileChange}/>
+        <AddButton type="add" onClick={handleFileUpload}>Upload Photo</AddButton>
       </TopForm>
       <RowForm>
         <CustomDescription>Recipe Name: </CustomDescription>
@@ -109,7 +126,7 @@ export default ({
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe Ingredients: </CustomDescription>
         <AreaInput autoCorrect="on" rows={1} placeholder="Ingredient" onChange={(e) => setInput(e.target.value)}/>
-        <AddButton onClick={addIngredient}>Add ingredient</AddButton>
+        <AddButton onClick={() => setIngredients([currentInput,...recipeIngredients])}>Add ingredient</AddButton>
       </RowForm>
       <TagContainer>
           {recipeIngredients.map((ingredient,index) => (
@@ -122,7 +139,7 @@ export default ({
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe Instructions </CustomDescription>
         <AreaInput autoCorrect="on" rows={1} placeholder="Recipe Step" onChange={(e) => setInput(e.target.value)}/>
-        <AddButton onClick={addStep}>Add step</AddButton>
+        <AddButton type="add" onClick={() => setSteps([...recipeSteps, currentInput])}>Add step</AddButton>
       </RowForm>
           {recipeSteps.map((step,index) => (
             <Step key={index}>

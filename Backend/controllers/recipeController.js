@@ -1,5 +1,8 @@
 const Recipe = require('../models/recipe');
-const escapeRegExp = require('escape-string-regexp')
+const escapeRegExp = require('escape-string-regexp');
+const fs = require("fs");
+const path = require('path');
+require('dotenv').config();
 
 const recipe_index = (req, res) => {
     const retrieveRecipes = (ingredients, filter) => {
@@ -53,11 +56,8 @@ const recipe_create_get = (req, res) => {
 const recipe_create_post = (req, res) => {
     //the submit form will redirect here from html file
     const recipe = new Recipe(req.body);
-    recipe.save()
-    .then((result) => {
-        res.redirect('/recipes')
-    })
-    .catch((err) => {console.log(err)})
+    recipe.save().catch((err) => {console.log(err)})
+    return res.json({recipeId: recipe._id, redirect: '/recipes'})
 };
 const recipe_delete = (req, res) => {
     const id = req.params.id;
@@ -81,6 +81,13 @@ const recipe_patch = (req, res) => {
         console.log(err)
     });
 };
+const recipe_upload_image = (req, res) => {
+    const pathString = process.env.RECIPE_IM_PATH + req.file.originalname
+    const newPath = path.join(__dirname, "../../"+pathString)
+    fs.rename(req.file.path, newPath, err => {console.log(err)});
+    return res.json({"path": pathString})
+}
+ 
 
 module.exports = {
     recipe_index,
@@ -88,5 +95,6 @@ module.exports = {
     recipe_create_get,
     recipe_create_post,
     recipe_delete,
-    recipe_patch
+    recipe_patch, 
+    recipe_upload_image
 };
