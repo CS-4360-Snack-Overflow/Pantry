@@ -33,6 +33,7 @@ const recipe_index = (req, res) => {
         return recipes
     }
     retrieveRecipes(req.query.ingredients, req.query.filter).then((result) => {
+        console.log(result)
         res.send(result);
     })
     .catch((err) => {

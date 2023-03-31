@@ -1,19 +1,17 @@
 import React from "react";
 import tw from "twin.macro";
-import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
-
+import { Container, ContentWithPaddingXl } from "components/misc/Layouts.js";
 import styled from "styled-components";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { CustomButton as CustomButtonBase, PrimaryButton } from "components/misc/Buttons.js";
+import { motion } from "framer-motion";
 
 //import EmailIllustrationSrc from "images/email-illustration.svg";
 import { useState, useEffect } from "react";
 import { addRecipe, uploadImage } from "helpers/RecipeService";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
-
-const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
 const TwoRow = tw.div`flex justify-start mx-auto py-20 md:py-24`;
 const Row = tw.div`flex w-full max-w-xl mx-auto md:max-w-none md:mx-0`;
@@ -24,17 +22,18 @@ const TextColumn = styled(Column)(props => [
   props.textOnLeft ? tw`md:mr-12 lg:mr-16 md:order-first` : tw`md:ml-12 lg:ml-16 md:order-last`
 ]);
 
-const Image = styled.div(props => [
-  `background-image: url("${props.imageSrc}");`,
-  tw`rounded bg-contain bg-no-repeat bg-center h-full`,
-]);
-
+const Image = styled.div`
+  ${props => css`background-image:url("${props.imageSrc}");max-width:80%; height:90rem`}
+  ${tw`h-144 bg-center bg-cover relative rounded-t mx-auto flex-row`}
+`;
+// const Image = styled.div`${css`max-width:100%; max-height:100%`} 
+//                      ${tw`object-scale-down`}`
 const TextContent = tw.div`lg:py-8 text-center md:text-left`;
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
 const Heading = tw(SectionHeading)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`
 const CustomDescription = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100 pr-2`
-const TopForm = tw.form`flex justify-center pt-80 md:pt-12 mt-8 md:mt-10 text-base flex`
+const TopForm = tw.form`justify-center pt-80 md:pt-12 mt-8 md:mt-10 text-base flex`
 const RowForm = tw.form`flex justify-start pt-2 mt-8 md:mt-10 text-base flex`
 const ColForm = tw.form`mt-8 md:mt-10 p-2 w-1/3 text-sm flex flex-col`
 const AreaInput = tw.textarea`border-2 p-2 rounded focus:outline-none font-medium transition duration-150 hocus:border-primary-500`
@@ -46,7 +45,8 @@ const SubmitButtonRow = tw(CustomButtonBase)`inline-block ml-2 lg:ml-4 mt-0`
 const Tag = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-400 hover:bg-gray-300 text-gray-600 rounded-full`
 const TagContainer = tw.div`w-full`
 const Step = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-200 hover:bg-gray-300 text-black w-full`
-
+// const ImageContainer = tw.div`lg:container mx-auto`;
+const ImageContainer = tw(motion.a)`rounded-b block max-w-xs mx-auto sm:max-w-none sm:mx-0`
 export default ({
   recipeId = null,
   submitButtonText = "Submit Recipe!",
@@ -56,7 +56,7 @@ export default ({
 }) => {
   const [currentInput, setInput] = useState("");
   const [image, setImage] = useState(null);
-  const [imUrl, setUrl] = useState("");
+  const [imUrl, setUrl] = useState("/placeholder.webp");
   const [attributes, setAttributes] = useState([]);
   const [mealType, setMealType] = useState("Breakfast");
   const [recipeName, setName] = useState("");
@@ -117,11 +117,17 @@ export default ({
 
   return (
     <Container>
-      <TopForm action={formAction} method={formMethod}>
-        <CustomDescription>Upload Recipe Image: </CustomDescription>
-        <RowInput required={true} type="file" enctype="multipart/form-data" name="image" onChange={handleFileChange}/>
-        <AddButton type="add" onClick={handleFileUpload}>Upload Photo</AddButton>
-      </TopForm>
+    <ContentWithPaddingXl>
+    <CustomDescription>Upload Recipe Image: </CustomDescription>
+    <ImageContainer>
+        <Image class="relative" imageSrc={imUrl}>
+            <TopForm class="absolute bottom-0" action={formAction} method={formMethod} >
+              <RowInput required={true} type="file" enctype="multipart/form-data" name="image" onChange={handleFileChange}/>
+              <AddButton type="add" onClick={handleFileUpload}>Save Photo</AddButton>
+            </TopForm>
+        </Image>
+    </ImageContainer>
+      
       <RowForm>
         <CustomDescription>Recipe Name: </CustomDescription>
         <RowInput required={true} type="text" name="recipeInstructions" placeholder="Recipe Name" onChange={(e)=>setName(e.target.value)}/>
@@ -186,6 +192,7 @@ export default ({
       </RowForm>
       <TwoColumn>
       </TwoColumn>
+    </ContentWithPaddingXl>   
     </Container>
   );
 };

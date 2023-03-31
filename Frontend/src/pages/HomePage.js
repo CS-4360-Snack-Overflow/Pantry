@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
@@ -6,7 +6,7 @@ import Hero from "components/hero/TwoColumnWithVideo.js";
 import Features from "components/features/ThreeColSimple.js";
 //import MainFeature from "components/features/TwoColWithButton.js";
 import MainFeature2 from "components/features/TwoColSingleFeatureWithStats2.js";
-import TabGrid from "components/cards/TabCardGrid.js";
+import TabGrid from "components/cards/TabCardRecipeGrid.js";
 import TabNavGrids from "components/cards/TabCardNavGrid.js";
 import Testimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
 //import DownloadApp from "components/cta/DownloadApp.js";
@@ -16,6 +16,7 @@ import Footer from "components/footers/MiniCenteredFooter";
 import chefIconImageSrc from "images/chef-icon.svg";
 import celebrationIconImageSrc from "images/celebration-icon.svg";
 import shopIconImageSrc from "images/shop-icon.svg";
+import {getRecipes} from "../helpers/RecipeService.js"
 
 export default () => {
   const Subheading = tw.span`tracking-wider text-sm font-medium`;
@@ -23,6 +24,15 @@ export default () => {
   //const HighlightedTextInverse = tw.span`bg-gray-100 text-primary-500 px-4 transform -skew-x-12 inline-block`;
   //const Description = tw.span`inline-block mt-8`;
   const imageCss = tw`rounded-4xl`;
+  const [recipes, setRecipes] = useState([])
+  useEffect(()=>{
+    setRecipes(loadRecipes("All"))
+  }, [])
+  async function loadRecipes(_, filter){
+    getRecipes(`filter=${filter}`).then((result) => {
+      setRecipes(result);
+  })
+  }
   return (
     <AnimationRevealPage>
       <Hero
@@ -36,7 +46,7 @@ export default () => {
         watchVideoButtonText="Quick Recipes"
       />
        
-      <TabGrid
+      <TabGrid loadRecipes={loadRecipes} recipes={recipes}
         heading={
           <>Checkout our <HighlightedText>trending</HighlightedText> recipes</>
         }
