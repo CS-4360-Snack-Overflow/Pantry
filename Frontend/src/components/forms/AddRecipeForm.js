@@ -89,12 +89,15 @@ export default ({
 
   async function submitRecipe(e) {
     e.preventDefault();
+    await handleFileUpload(e)
     let res = await addRecipe(recipeFields);
     res = await res.json().then((result) =>{
       recipeId = result.recipeId
     })
   }
-
+  useEffect(() => {
+    console.log(recipeFields)
+  }, [recipeFields])
   useEffect(() => {
     let tags = [mealType, ...attributes]
     setFields({
