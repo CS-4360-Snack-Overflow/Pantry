@@ -1,6 +1,8 @@
 const Recipe = require('../models/recipe');
-const escapeRegExp = require('escape-string-regexp')
-
+const escapeRegExp = require('escape-string-regexp');
+const fs = require("fs");
+const path = require('path');
+require('dotenv').config();
 const recipe_index = (req, res) => {
     const retrieveRecipes = (ingredients, filter) => {
         let recipes;
@@ -85,6 +87,7 @@ const recipe_create_post = (req, res) => {
         res.redirect('/');
     })
     .catch((err) => {console.log(err)})
+
 };
 const recipe_delete = (req, res) => {
     const id = req.params.id;
@@ -108,6 +111,16 @@ const recipe_patch = (req, res) => {
         console.log(err)
     });
 };
+const recipe_upload_image = (req, res) => {
+    const pathString = process.env.RECIPE_IM_PATH + req.file.originalname
+    const newPath = path.join(__dirname, "../../Frontend/public/"+pathString)
+    if(fs.existsSync(newPath)) {
+        fs.unlink(newPath, ()=>{})
+    }
+    fs.rename(req.file.path, newPath, err => {if(err) {console.log(err)}});
+    return res.json({"path": pathString})
+}
+ 
 
 module.exports = {
     recipe_index,
@@ -115,5 +128,6 @@ module.exports = {
     recipe_create_get,
     recipe_create_post,
     recipe_delete,
-    recipe_patch
+    recipe_patch, 
+    recipe_upload_image
 };

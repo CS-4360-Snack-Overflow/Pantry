@@ -36,7 +36,6 @@ export default () => {
         watchVideoButtonText="Quick Recipes"
       />
        
-      {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
       <TabGrid
         heading={
           <>Checkout our <HighlightedText>trending</HighlightedText> recipes</>
@@ -74,46 +73,10 @@ export default () => {
         imageContainerCss={tw`p-2!`}
         imageCss={tw`w-20! h-20!`}
       />
-      {/* <MainFeature
-        subheading={<Subheading>Established 2023</Subheading>}
-        heading={
-          <>
-            Find the recipe for these delicious home cooked
-            <wbr /> <HighlightedText>Meals.</HighlightedText>
-          </>
-        }
-        description={
-          <Description>
-            Learn about the history about how these dishes were made and their importance
-            and see how these traditonal dishes continue to be passed down.
-          </Description>
-        }
-        buttonRounded={false}
-        textOnLeft={false}
-        primaryButtonText="Find out more."
-        imageSrc={
-          "https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
-        }
-        imageCss={imageCss}
-        imageDecoratorBlob={true}
-        imageDecoratorBlobCss={tw`left-1/2 -translate-x-1/2 md:w-32 md:h-32 opacity-25`}
-      /> */}
       <MainFeature2
         subheading={<Subheading>A Reputed Brand</Subheading>}
         heading={<>Why <HighlightedText>Choose Us?</HighlightedText></>}
         statistics={[
-          // {
-          //   key: "Orders",
-          //   value: "94000+",
-          // },
-          // {
-          //   key: "Customers",
-          //   value: "11000+"
-          // },
-          // {
-          //   key: "Chefs",
-          //   value: "1500+"
-          // }
         ]}
         primaryButtonText="Learn More"
         primaryButtonUrl="/about"
@@ -129,9 +92,6 @@ export default () => {
         subheading=""
         heading={<>Novice Chefs <HighlightedText>Love Us</HighlightedText></>}
       />
-      {/* <DownloadApp
-        text={<>People around you are cooking delicious meals using the <HighlightedTextInverse>Pantry App.</HighlightedTextInverse></>}
-      /> */}
       <Footer />
     </AnimationRevealPage>
   );
