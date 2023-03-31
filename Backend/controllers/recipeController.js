@@ -83,7 +83,7 @@ const recipe_patch = (req, res) => {
 };
 const recipe_upload_image = (req, res) => {
     const pathString = process.env.RECIPE_IM_PATH + req.file.originalname
-    const newPath = path.join(__dirname, "../../"+pathString)
+    const newPath = path.join(__dirname, "../../Frontend/public/"+pathString)
     fs.rename(req.file.path, newPath, err => {console.log(err)});
     return res.json({"path": pathString})
 }

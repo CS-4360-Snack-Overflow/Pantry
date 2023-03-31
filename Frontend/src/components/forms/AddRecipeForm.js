@@ -22,10 +22,10 @@ const TextColumn = styled(Column)(props => [
   props.textOnLeft ? tw`md:mr-12 lg:mr-16 md:order-first` : tw`md:ml-12 lg:ml-16 md:order-last`
 ]);
 
-// const Image = styled.div(props => [
-//   `background-image: url("${props.imageSrc}");`,
-//   tw`rounded bg-contain bg-no-repeat bg-center h-full`,
-// ]);
+const Image = styled.div(props => [
+  `background-image: url("${props.imageSrc}");`,
+  tw`rounded bg-contain bg-no-repeat bg-center h-full`,
+]);
 
 const TextContent = tw.div`lg:py-8 text-center md:text-left`;
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
