@@ -9,7 +9,7 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
@@ -87,7 +87,6 @@ export default ({
    */
   const tabsKeys = Object.keys(tabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if(tabs[activeTab].length === 0){
@@ -96,9 +95,6 @@ export default ({
     recipes = tabs[activeTab];
   }, [activeTab])
 
-  function toDetails(clickedRecipe) {
-    navigate('/recipedetails', {state:{recipe:{clickedRecipe}}})  
-  }
   return (
     <Container>
       <ContentWithPaddingXl>
@@ -138,6 +134,8 @@ export default ({
           >
             {Object.keys(recipes).map((key, index) => (
               <CardContainer key={index}>
+              <Link to="/recipedetails" 
+                        state= {{clickedRecipe:recipes[key]}}>
                 <Card className="group" href={"http://localhost:8080/recipes/" + recipes[key]._id} target ="_blank" initial="rest" whileHover="hover" animate="rest">
                   <CardImageContainer imageSrc={recipes[key].alt_image_url}>
                     <CardRatingContainer>
@@ -159,7 +157,8 @@ export default ({
                       }}
                       transition={{ duration: 0.3 }}
                     >
-                      <CardButton onClick={toDetails(recipes[key])}>See Recipe</CardButton>
+                      
+                          <CardButton>See Recipe</CardButton>
                     </CardHoverOverlay>
                   </CardImageContainer>
                   <CardText>
@@ -167,6 +166,7 @@ export default ({
                     <CardContent>{recipes[key].credits ? recipes[key].credits : (recipes[key].user_num === "0" ? "Tasty.com" : "Unknown author")}</CardContent>
                   </CardText>
                 </Card>
+                </Link>
               </CardContainer>
             ))}
           </TabContent>
