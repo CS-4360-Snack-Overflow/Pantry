@@ -10,6 +10,7 @@ import ContactUsPage from "pages/ContactUs.js";
 import AddRecipePage from "pages/AddRecipe";
 import ComponentRenderer from "ComponentRenderer.js";
 import UserPage from "pages/User.js";
+import EditUser from "pages/EditUser";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/recipes" element={<RecipeSearchPage />} />
           <Route path="/addrecipe" element={<AddRecipePage />} />
           <Route path="/User" element={<UserPage />} />
+          <Route path="/EditUser" element={<EditUser/>} />
         </Routes>
       </Router>
     </>
