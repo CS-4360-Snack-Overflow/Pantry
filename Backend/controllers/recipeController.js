@@ -1,7 +1,36 @@
 const Recipe = require('../models/recipe');
+const escapeRegExp = require('escape-string-regexp')
 
 const recipe_index = (req, res) => {
-    Recipe.find().sort({createdAt: -1}).then((result) => {
+    const retrieveRecipes = (ingredients, filter) => {
+        let recipes;
+        if(!ingredients){
+            recipes = Recipe.find();
+        }
+        else if(typeof(ingredients) === "string") {
+            recipes = Recipe.find({ingredients:RegExp(ingredients)})
+        }
+        else {
+            let regexp = [];
+            for(let i = 0; i < ingredients.length; i++) {
+                regexp.push({ingredients: RegExp(ingredients[i])})
+            }
+            console.log(regexp)
+            recipes = Recipe.find({$and : regexp});
+        }
+        switch(filter){
+        case "Popular":
+            recipes = recipes.sort({total_reviews: -1});
+        case "Recent":
+            recipes = recipes.sort({createdAt: -1});
+        case "Highly Rated":
+            recipes = recipes.sort({review: -1});
+        default:
+            recipes = recipes.sort({name: 1});
+        }
+        return recipes
+    }
+    retrieveRecipes(req.query.ingredients, req.query.filter).then((result) => {
         res.send(result);
     })
     .catch((err) => {
@@ -44,7 +73,7 @@ const recipe_delete = (req, res) => {
 };
 const recipe_patch = (req, res) => {
     const id = req.params.id;
-    Recipe.findOneAndUpdate({_id: id}, {title: req.body.title, snippet: req.body.snippet, body: req.body.body}, {new: true})
+    Recipe.findOneAndUpdate({_id: id}, req.body, {new: true})
     .then((result) => {
         res.send(result);
     })

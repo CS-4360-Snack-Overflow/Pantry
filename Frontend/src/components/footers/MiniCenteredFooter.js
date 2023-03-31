@@ -34,8 +34,10 @@ export default () => {
           <LinksContainer>
             <Link href="/">Home</Link>
             <Link href="/recipes">Recipes</Link>
+            <Link href="/addrecipe">Add Recipe</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact Us</Link>
+            <Link href="/user">Profile</Link>
           </LinksContainer>
           <SocialLinksContainer>
             <SocialLink href="https://github.com/CS-4360-Snack-Overflow">

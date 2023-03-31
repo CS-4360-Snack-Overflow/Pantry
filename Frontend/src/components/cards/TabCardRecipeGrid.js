@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -9,7 +9,6 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
-import RecipeSearchBar from "components/forms/SearchBarWithIllustration";
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
@@ -39,7 +38,7 @@ const CardContainer = tw.div`mt-10 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md
 const Card = tw(motion.a)`bg-gray-200 rounded-b block max-w-xs mx-auto sm:max-w-none sm:mx-0`;
 const CardImageContainer = styled.div`
   ${props => css`background-image: url("${props.imageSrc}");`}
-  ${tw`h-56 xl:h-64 bg-center bg-cover relative rounded-t`}
+  ${tw`h-56 bg-center bg-cover relative rounded-t`}
 `;
 const CardRatingContainer = tw.div`leading-none absolute inline-flex bg-gray-100 bottom-0 left-0 ml-4 mb-4 rounded-full px-5 py-2 items-end`;
 const CardRating = styled.div`
@@ -71,109 +70,14 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 
 export default ({
   heading = "Checkout the Menu",
-  upperTabs = {
-    Recent: [
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Vege Mixer",
-        content: "Tomato Salad & Carrot",
-        // price: "$5.99",
-        rating: "5.0",
-        reviews: "87",
-        url: "#"
-      },
-    ],
-    Trending: getRandomCards(),
-    Everything: getRandomCards(),
-  },
   tabs = {
-    Breakfast: [
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Vege Mixer",
-        content: "Tomato Salad & Carrot",
-        // price: "$5.99",
-        rating: "5.0",
-        reviews: "87",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1432139555190-58524dae6a55?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Tony's Famous Porkchop",
-        content: "Grilled Porkchop with Apple Compote",
-        // price: "$2.99",
-        rating: "4.8",
-        reviews: "32",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327??ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Crispy Mozz",
-        content: "Mozzarella Sticks",
-        // price: "$7.99",
-        rating: "4.9",
-        reviews: "89",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Nell's Signature Soup",
-        content: "Spicy Thai Soup",
-        // price: "$8.99",
-        rating: "4.6",
-        reviews: "12",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1473093226795-af9932fe5856?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Cajun Chicken Pasta",
-        content: "Roasted Chicken, Noodles, & Spinach",
-        // price: "$7.99",
-        rating: "4.2",
-        reviews: "19",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1550461716-dbf266b2a8a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Carribean Soup",
-        content: "Plantain Bisque",
-        // price: "$2.99",
-        rating: "5.0",
-        reviews: "61",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Gyoza Three Ways",
-        content: "Japanese Gyoza",
-        // price: "$3.99",
-        rating: "4.2",
-        reviews: "95",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1565310022184-f23a884f29da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Spicy Chicken Cutlets",
-        content: "Baked Chicken with Chiles",
-        // price: "$3.99",
-        rating: "3.9",
-        reviews: "26",
-        url: "#"
-      },
-    ],
-    Lunch: getRandomCards(),
-    Dinner: getRandomCards(),
-    Dessert: getRandomCards(),
-  }
+    "All": [],
+    "Popular": [],
+    "Highly Rated": [],
+    "Recent": []
+  },
+  recipes = [],
+  loadRecipes = () => {}
 }) => {
   /*
    * To customize the tabs, pass in data using the `tabs` prop. It should be an object which contains the name of the tab
@@ -183,22 +87,25 @@ export default ({
   const tabsKeys = Object.keys(tabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
 
+  useEffect(() => {
+    if(tabs[activeTab].length === 0){
+      tabs[activeTab] = loadRecipes([], activeTab, false);
+    }
+    recipes = tabs[activeTab];
+  }, [activeTab])
+
   return (
     <Container>
       <ContentWithPaddingXl>
-        <RecipeSearchBar/> 
-        <UpperTabsControl>
-            {Object.keys(upperTabs).map((tabName, index) => (
-              <UpperTabControl key={index} active={activeTab === tabName} onClick={() => setActiveTab(tabName)}>
-                {tabName}
-              </UpperTabControl>
-            ))}
-          </UpperTabsControl>
         <HeaderRow>
           <Header>{heading}</Header>
+          <p>{recipes.length} results found</p>
           <TabsControl>
             {Object.keys(tabs).map((tabName, index) => (
-              <TabControl key={index} active={activeTab === tabName} onClick={() => setActiveTab(tabName)}>
+              <TabControl key={index} 
+                  active={activeTab === tabName} 
+                  onClick={() => {setActiveTab(tabName)}}
+              >
                 {tabName}
               </TabControl>
             ))}
@@ -224,16 +131,15 @@ export default ({
             initial={activeTab === tabKey ? "current" : "hidden"}
             animate={activeTab === tabKey ? "current" : "hidden"}
           >
-            {tabs[tabKey].map((card, index) => (
+            {Object.keys(recipes).map((key, index) => (
               <CardContainer key={index}>
-                <Card className="group" href={card.url} initial="rest" whileHover="hover" animate="rest">
-                  <CardImageContainer imageSrc={card.imageSrc}>
+                <Card className="group" href={"http://localhost:8080/recipes/" + recipes[key]._id} target ="_blank" initial="rest" whileHover="hover" animate="rest">
+                  <CardImageContainer imageSrc={recipes[key].alt_image_url}>
                     <CardRatingContainer>
                       <CardRating>
                         <StarIcon />
-                        {card.rating}
                       </CardRating>
-                      <CardReview>({card.reviews})</CardReview>
+                      <CardReview>{recipes[key].review ? Math.round(recipes[key].review*10)/10 : "No reviews yet"}</CardReview>
                     </CardRatingContainer>
                     <CardHoverOverlay
                       variants={{
@@ -252,9 +158,8 @@ export default ({
                     </CardHoverOverlay>
                   </CardImageContainer>
                   <CardText>
-                    <CardTitle>{card.title}</CardTitle>
-                    <CardContent>{card.content}</CardContent>
-                    <CardPrice>{card.price}</CardPrice>
+                    <CardTitle>{recipes[key].name}</CardTitle>
+                    <CardContent>{recipes[key].credits ? recipes[key].credits : (recipes[key].user_num === "0" ? "Tasty.com" : "Unknown author")}</CardContent>
                   </CardText>
                 </Card>
               </CardContainer>
@@ -268,91 +173,3 @@ export default ({
   );
 };
 
-/* This function is only there for demo purposes. It populates placeholder cards */
-const getRandomCards = () => {
-  const cards = [
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Chicken Chilled",
-      content: "Chicken Main Course",
-      price: "$5.99",
-      rating: "5.0",
-      reviews: "87",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1582254465498-6bc70419b607?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Samsa Beef",
-      content: "Fried Mexican Beef",
-      price: "$3.99",
-      rating: "4.5",
-      reviews: "34",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1565310022184-f23a884f29da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Carnet Nachos",
-      content: "Chilli Crispy Nachos",
-      price: "$3.99",
-      rating: "3.9",
-      reviews: "26",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Guacamole Mex",
-      content: "Mexican Chilli",
-      price: "$3.99",
-      rating: "4.2",
-      reviews: "95",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1550461716-dbf266b2a8a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Chillie Cake",
-      content: "Deepfried Chicken",
-      price: "$2.99",
-      rating: "5.0",
-      reviews: "61",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327??ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Nelli",
-      content: "Hamburger & Fries",
-      price: "$7.99",
-      rating: "4.9",
-      reviews: "89",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Jalapeno Poppers",
-      content: "Crispy Soyabeans",
-      price: "$8.99",
-      rating: "4.6",
-      reviews: "12",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1473093226795-af9932fe5856?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Cajun Chicken",
-      content: "Roasted Chicken & Egg",
-      price: "$7.99",
-      rating: "4.2",
-      reviews: "19",
-      url: "#"
-    }
-  ];
-
-  // Shuffle array
-  return cards.sort(() => Math.random() - 0.5);
-};

@@ -7,6 +7,7 @@ import Features from "components/features/ThreeColSimple.js";
 //import MainFeature from "components/features/TwoColWithButton.js";
 import MainFeature2 from "components/features/TwoColSingleFeatureWithStats2.js";
 import TabGrid from "components/cards/TabCardGrid.js";
+import TabNavGrids from "components/cards/TabCardNavGrid.js";
 import Testimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
 //import DownloadApp from "components/cta/DownloadApp.js";
 //Old footer
@@ -34,15 +35,21 @@ export default () => {
         primaryButtonUrl="/recipes"
         watchVideoButtonText="Quick Recipes"
       />
+       
       {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
       <TabGrid
         heading={
           <>Checkout our <HighlightedText>trending</HighlightedText> recipes</>
         }
       />
+      <TabNavGrids
+        heading={
+          <> <HighlightedText>Pages</HighlightedText></>
+        }
+      />
       <Features
         heading={
-          <>Amazing <HighlightedText>Services</HighlightedText></>
+          <>Amazing Selection for any <HighlightedText>Occasion</HighlightedText></>
         }
         cards={[
           {
