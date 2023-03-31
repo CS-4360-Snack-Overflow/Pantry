@@ -82,7 +82,7 @@ const recipe_create_post = (req, res) => {
     });
     recipe.save()
     .then((result) => {
-        res.redirect('/recipes')
+        res.redirect('/')
     })
     .catch((err) => {console.log(err)})
 };
