@@ -18,7 +18,6 @@ const requireAuth = (req, res, next) => {
 async function loginUser(credentials, session) {
   const { username, password } = credentials;
   const user = await User.findOne({ username });
-
   if (!user) {
     throw new Error('Invalid credentials');
   }
@@ -61,27 +60,14 @@ router.post('/userCreate', async (req, res) => {
 //TODO: this route is accessed from the signup.html. after user is created, automatically log him in, then direct them to their user profile page.
 
 // Get all users
-router.get('/userRead', async (req, res) => {
+router.get('/userRead', requireAuth, async (req, res) => {
   console.log("message: Accessed userRead route");
   try {
-    const users = await User.find();
-    res.json(users);
+    console.log(session.userId)
+    const user = await User.findById(req.session.userId);
+    res.json(user);
   } catch (err) {
     res.status(500).json({ message: err.message });
-  }
-});
-
-// user search route
-router.get('/userSearch', async (req, res) => {
-  try {
-    const user = await User.findOne({ username: req.query.username });
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(404).json({ message: "User not found" });
-    }
-  }catch (err) {
-    res.status(500).json({message: err.message});
   }
 });
 
@@ -135,6 +121,7 @@ router.post('/userDelete', requireAuth, async (req, res) => {
 router.post('/userLoginProc', async (req, res) => {
   try{
     await loginUser(req.body, req.session);
+    console.log("here")
     res.redirect('/');
   } catch (error) {
     res.status(401).json({ error: error.message });
@@ -142,7 +129,7 @@ router.post('/userLoginProc', async (req, res) => {
 });
 
 router.get('/testAuth', requireAuth, async (req, res) => {
-  res.send('Logged in');
+  res.json({active:true});
 });
 
 

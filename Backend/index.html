@@ -26,33 +26,8 @@
     <form action="/user/logout" method="GET">
       <button type="submit">Log out</button>
     </form>
-
-    <h1>All Users</h1>
-    <ul id="users-list"></ul>
-
-    <script>
-      // Fetch all users from the server and display them in a list
-      async function fetchUsers() {
-	const response = await fetch('/user/userRead');
-	const users = await response.json();
-
-	const usersList = document.getElementById('users-list');
-	usersList.innerHTML = '';
-	for (const user of users) {
-	  const userItem = document.createElement('li');
-	  userItem.textContent = `${user.fullName}, ${user.username}, ${user.emailAddress}`;
-	  usersList.appendChild(userItem);
-	}
-      }
-
-      // Call fetchUsers when the page is loaded
-      window.addEventListener('load', fetchUsers);
-    </script>
-    <h1> Search for users!:</h1>
-    <form action="/user/userSearch" method="get">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required>
-      <button type="submit">Search</button>
+    <form action="/user/userRead" method="GET">
+      <button type="submit">Get user profile</button>
     </form>
 
     <h1>Update user data:</h1>
