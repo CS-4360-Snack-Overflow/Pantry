@@ -96,15 +96,11 @@ export default ({
   }
 
   useEffect(() => {
-    console.log(recipeFields)
-  }, [recipeFields])
-
-  useEffect(() => {
     let tags = [mealType, ...attributes]
     setFields({
       "name": recipeName,
       "description": recipeDescription,
-      "image_url": imUrl,
+      "poster_image_url": imUrl,
       "tags": tags,
       "ingredients": recipeIngredients,
       "instructions": recipeSteps
@@ -116,21 +112,21 @@ export default ({
     <Container>
       <TopForm action={formAction} method={formMethod}>
         <CustomDescription>Upload Recipe Image: </CustomDescription>
-        <RowInput type="file" enctype="multipart/form-data" name="image" onChange={handleFileChange}/>
+        <RowInput required={true} type="file" enctype="multipart/form-data" name="image" onChange={handleFileChange}/>
         <AddButton type="add" onClick={handleFileUpload}>Upload Photo</AddButton>
       </TopForm>
       <RowForm>
         <CustomDescription>Recipe Name: </CustomDescription>
-        <RowInput type="text" name="recipeInstructions" placeholder="Recipe Name" onChange={(e)=>setName(e.target.value)}/>
+        <RowInput required={true} type="text" name="recipeInstructions" placeholder="Recipe Name" onChange={(e)=>setName(e.target.value)}/>
       </RowForm>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe description: </CustomDescription>
-        <RowInput type="text" name="recipeInstructions" placeholder="Recipe Description" onChange={(e)=>setDescription(e.target.value)} />
+        <RowInput required={true} type="text" name="recipeInstructions" placeholder="Recipe Description" onChange={(e)=>setDescription(e.target.value)} />
       </RowForm>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe Ingredients: </CustomDescription>
-        <AreaInput autoCorrect="on" rows={1} placeholder="Ingredient" onChange={(e) => setInput(e.target.value)}/>
-        <AddButton onClick={() => setIngredients([currentInput,...recipeIngredients])}>Add ingredient</AddButton>
+        <AreaInput required={recipeIngredients.length > 1} autoCorrect="on" rows={1} placeholder="Ingredient" onChange={(e) => setInput(e.target.value)}/>
+        <AddButton onClick={(e) => {e.preventDefault(); setIngredients([currentInput,...recipeIngredients])}}>Add ingredient</AddButton>
       </RowForm>
       <TagContainer>
           {recipeIngredients.map((ingredient,index) => (
@@ -142,8 +138,8 @@ export default ({
       </TagContainer>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe Instructions </CustomDescription>
-        <AreaInput autoCorrect="on" rows={1} placeholder="Recipe Step" onChange={(e) => setInput(e.target.value)}/>
-        <AddButton type="add" onClick={() => setSteps([...recipeSteps, currentInput])}>Add step</AddButton>
+        <AreaInput required={recipeSteps.length > 1} autoCorrect="on" rows={1} placeholder="Recipe Step" onChange={(e) => setInput(e.target.value)}/>
+        <AddButton type="add" onClick={(e) => {e.preventDefault(); setSteps([...recipeSteps, currentInput])}}>Add step</AddButton>
       </RowForm>
           {recipeSteps.map((step,index) => (
             <Step key={index}>
