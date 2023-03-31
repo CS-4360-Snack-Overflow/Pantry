@@ -83,7 +83,7 @@ export default ({
     form.append('files', image);
     let res = await uploadImage(form);
     res = await res.json().then((result) =>{
-      setUrl("../../../../" + result.path)
+      setUrl(__dirname + result.path)
     })
   }
 
@@ -94,6 +94,10 @@ export default ({
       recipeId = result.recipeId
     })
   }
+
+  useEffect(() => {
+    console.log(recipeFields)
+  }, [recipeFields])
 
   useEffect(() => {
     let tags = [mealType, ...attributes]
