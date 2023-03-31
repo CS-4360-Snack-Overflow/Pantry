@@ -10,11 +10,16 @@ const recipeSchema = new Schema({
     video_url: String,
     poster_image_url: String,
     alt_image_url: String,
-    num_servings: Number,
-    prep_time: Number,
     credits: String,
-    cook_time: Number,
-    description: String,
+    user_num: String,
+    tags: [String],
+    user_ratings: {
+        count_positive: Number,
+        count_negative: Number
+    },
+    review: Number,
+    total_reviews: Number,
+    ingredients: [String],
     nutrition: {
         protein: Number,
         fat: Number,
@@ -23,15 +28,11 @@ const recipeSchema = new Schema({
         carbohydrates: Number,
         fiber: Number
     },
-    user_ratings: {
-        count_positive: Number,
-        count_negative: Number
-    },
-    review: Number,
-    tags: [String],
-    ingredients: [String],
+    num_servings: Number,
+    prep_time: Number,
+    cook_time: Number,
+    description: String,
     instructions: [String],
-    user_num: String
 }, {timestamps: true})
 
 /* then create a model based on the schema, which defines the structure of the documents
