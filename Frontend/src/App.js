@@ -94,7 +94,7 @@ import PrivacyPolicyPage from "pages/PrivacyPolicy.js";
 import ComponentRenderer from "ComponentRenderer.js";
 import UserPage from "pages/User.js";
 import EditUser from "pages/EditUser";
-
+import RecipeDetails from "pages/RecipeDetails";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default function App() {
@@ -118,6 +118,7 @@ export default function App() {
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/recipes" element={<ServiceLandingPage />} />
           <Route path="/addrecipe" element={<AddRecipePage />} />
+          <Route path="/recipedetails" element={<RecipeDetails />} />
           <Route path="/User" element={<UserPage />} />
           <Route path="/EditUser" element={<EditUser/>} />
         </Routes>

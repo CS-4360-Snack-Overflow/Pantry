@@ -14,7 +14,7 @@ const MongoStore = require('connect-mongo');
 const app = express();
 
 //connect to db
-mongoose.connect(process.env.LOCAL_URI, { //remember to change it back to MONGO_URI in two places 
+mongoose.connect(process.env.MONGO_URI, { //remember to change it back to MONGO_URI in two places 
 	useNewUrlParser: true, 
 	useUnifiedTopology: true
 })
@@ -32,7 +32,7 @@ app.use(express.json())
 //first make mongoStore instance
  
 const store = MongoStore.create({ //'MongoStore' needs to be capital just like that, for some reason
-  mongoUrl: process.env.LOCAL_URI,
+  mongoUrl: process.env.MONGO_URI,
   /* ttl: 14 * 24 * 60 * 60, //session will expire in 14 days*/
   ttl: 10 * 60, //session will expire in 10 minutes
 });

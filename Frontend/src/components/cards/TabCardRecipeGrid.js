@@ -9,6 +9,7 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
+import { useNavigate } from "react-router-dom";
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
@@ -86,6 +87,7 @@ export default ({
    */
   const tabsKeys = Object.keys(tabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if(tabs[activeTab].length === 0){
@@ -94,6 +96,9 @@ export default ({
     recipes = tabs[activeTab];
   }, [activeTab])
 
+  function toDetails(clickedRecipe) {
+    navigate('/recipedetails', {state:{recipe:{clickedRecipe}}})  
+  }
   return (
     <Container>
       <ContentWithPaddingXl>
@@ -154,7 +159,7 @@ export default ({
                       }}
                       transition={{ duration: 0.3 }}
                     >
-                      <CardButton>See Recipe</CardButton>
+                      <CardButton onClick={toDetails(recipes[key])}>See Recipe</CardButton>
                     </CardHoverOverlay>
                   </CardImageContainer>
                   <CardText>
