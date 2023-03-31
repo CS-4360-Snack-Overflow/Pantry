@@ -46,16 +46,9 @@ cursor: pointer;
 `;
 
 
-const UserPage = () => {
-  const [userData, setUserData] = useState({});
-  
-  useEffect(() => {
-    //Fetch user data from test file user-data.json, Did not get to display but set it up
-  fetch("user-data.json")
-  .then(response => response.json())
-  .then(data => setUserData(data))
-  .catch(error => console.error(error));
-  }, []);
+export default ({
+  userData = null
+}) => {
 
   if (!userData) {
     return <div>Loading...</div>;
@@ -66,11 +59,11 @@ const UserPage = () => {
       <ProfilePicture src={userData.profilePicture} alt="Profile Picture" />
       <UserInfo>
         <Label>Name:</Label>
-        <Info>{userData.name}</Info>
+        <Info>{userData.fullName}</Info>
         <Label>Bio:</Label>
         <Info>{userData.bio}</Info>
         <Label>Email:</Label>
-        <Info>{userData.email}</Info>
+        <Info>{userData.emailAddress}</Info>
         <Label>Username:</Label>
         <Info>{userData.username}</Info>
         <Label>Password:</Label>
@@ -80,11 +73,9 @@ const UserPage = () => {
         <Label>Gender:</Label>
         <Info>{userData.gender}</Info>
         <Label>Country/Region:</Label>
-        <Info>{userData.country}</Info>
+        <Info>{userData.countryRegion}</Info>
         <Button to="/EditUser">Edit Profile</Button>
       </UserInfo>
     </Container>
   );
 };
-
-export default UserPage;

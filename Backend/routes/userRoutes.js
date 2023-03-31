@@ -16,7 +16,6 @@ const requireAuth = (req, res, next) => {
 async function loginUser(credentials, session) {
   const { username, password } = credentials;
   const user = await User.findOne({ username });
-
   if (!user) {
     throw new Error('Invalid credentials');
   }
@@ -62,6 +61,7 @@ router.post('/userCreate', async (req, res) => {
 router.get('/userRead', requireAuth, async (req, res) => {
   console.log("message: Accessed userRead route");
   try {
+    console.log(session.userId)
     const user = await User.findById(req.session.userId);
     res.json(user);
   } catch (err) {
@@ -127,7 +127,7 @@ router.post('/userLoginProc', async (req, res) => {
 });
 
 router.get('/testAuth', requireAuth, async (req, res) => {
-  res.send('Logged in');
+  res.json({active:true});
 });
 
 
