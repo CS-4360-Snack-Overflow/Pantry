@@ -42,7 +42,20 @@ export default ({
   SubmitButtonIcon = SignUpIcon,
   tosUrl = "#",
   privacyPolicyUrl = "#",
-  signInUrl = "/login"
+  signInUrl = "/login",
+  fields = {
+    "fullName" : "Name",
+    "emailAddress": "Emai",
+    "username": "Username",
+    "profilePicture": "Picture",
+    "password": "Password",
+    "profilePicture": "Picture",
+    "bio": "Bio",
+    "phoneNumber": "Phone",
+    "dateOfBirth": "DOB",
+    "gender":"Gender",
+    "countryRegion": "Country"
+  }
 }) => (
   <AnimationRevealPage>
     <Container>
@@ -54,9 +67,27 @@ export default ({
           <MainContent>
             <Heading>{headingText}</Heading>
             <FormContainer>
-              <Form>
-                <Input type="email" placeholder="Email" />
-                <Input type="password" placeholder="Password" />
+              <Form action="/user/userCreate" method="POST">
+                {Object.keys(fields).map((field, index) => (
+                  <div key={index}>
+                    <label>{fields[field]}</label>
+                    <Input type="text" id={field} name={field} required></Input>
+                  </div>
+                ))}
+                {/* <label>Full name</label>
+                <Input type="text" id="fullName" name="fullName" required></Input>
+                
+                <label>Full name</label>
+                <Input type="email" id="emailAddress" name="emailAddress" required>Email</Input>
+
+                <label>Full name</label>
+                <Input type="text" id="username" name="username" required>Username</Input>
+                <Input type="password" id="password" name="password" required>Password</Input>
+                <Input type="text" id="profilePicture" name="profilePicture" required>Picture</Input>
+                <Input type="text" id="bio" name="bio" required>Bio</Input>
+                <Input type="tel" id="phoneNumber" name="phoneNumber" placeholder="###-###-####" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>Phone</Input>
+                <Input type="text" id="dateOfBirth" name="dateOfBirth" required>Date of Birth</Input>
+                <Input type="text" id="countryRegion" name="countryRegion" required>Country / Region</Input> */}
                 <SubmitButton type="submit">
                   <SubmitButtonIcon className="icon" />
                   <span className="text">{submitButtonText}</span>
