@@ -55,9 +55,9 @@ export default ({
           <MainContent>
             <Heading>{headingText}</Heading>
             <FormContainer>
-              <Form>
-                <Input type="email" placeholder="Email" />
-                <Input type="password" placeholder="Password" />
+              <Form action="/user/userLoginProc" method="POST">
+                <Input type="username" placeholder="Username" id="username" name="username" required />
+                <Input type="password" id="password" name="password" required />
                 <SubmitButton type="submit">
                   <SubmitButtonIcon className="icon" />
                   <span className="text">{submitButtonText}</span>

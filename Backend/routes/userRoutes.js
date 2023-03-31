@@ -133,6 +133,7 @@ router.post('/userDelete', requireAuth, async (req, res) => {
 router.post('/userLoginProc', async (req, res) => {
   try{
     await loginUser(req.body, req.session);
+    console.log("here")
     res.redirect('/');
   } catch (error) {
     res.status(401).json({ error: error.message });
