@@ -90,6 +90,18 @@
       <input type="text" id="username" name="username" required>
       <button type="submit">Delete Forever</button>
     </form>
+
+    <h1>Create a Recipe</h1>
+    <form action="/user/recipe_create" method="POST">
+      <label for="name">Recipe Name:</label>
+      <input type="text" name="name" required><br>
+
+      <label for="video_url">Video URL:</label>
+      <input type="text" name="video_url"><br>
+
+      <button type="submit">Post</button>
+    </form>
+
   </body>
 </html>
 
