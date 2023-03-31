@@ -16,6 +16,7 @@ export default () => {
     }, [])
 
     useEffect(() => {
+        console.log(url)
         getRecipes(url).then((result) => {
             setRecipes(result);
             setLoading(false);
