@@ -54,9 +54,40 @@ const recipe_create_get = (req, res) => {
 };
 const recipe_create_post = (req, res) => {
     //the submit form will redirect here from html file
-    const recipe = new Recipe(req.body);
-    recipe.save().catch((err) => {console.log(err)})
-    return res.json({recipeId: recipe._id, redirect: '/recipes'})
+    const recipe = new Recipe({
+        name: req.body.name,
+        // video_url: req.body.video_url,
+        // poster_image_url: req.body.poster_image_url,
+        // alt_image_url: req.body.alt_image.url,
+        // num_servings: req.body.num_servings,
+        // prep_time: req.body.prep_time,
+        // credits: req.body.credits,
+        // cook_time: req.body.cook_time,
+        // description: req.body.description,
+        // nutrition: {
+        //     protein: req.body.protein,
+        //     fat: req.body.fat,
+        //     calories: req.body.calories,
+        //     sugar: req.body.sugar,
+        //     carbohydrates: req.body.carbohydrates,
+        //     fiber: req.body.fiber
+        // },
+        // user_ratings: {
+        //     count_positive: 0,
+        //     count_negative: 0
+        // },
+        // review: (((recipe.user_ratings.count_positive)/(recipe.user_ratings.count_positive + recipe.user_ratings.count_negative)) * 5).toFixed(1),
+        // tags: req.body.tags,
+        // ingredients: req.body.ingredients,
+        // instructions: req.bodyinstructions,
+        user_num: req.session.userId
+    });
+    recipe.save()
+    .then((result) => {
+        res.redirect('/');
+    })
+    .catch((err) => {console.log(err)})
+
 };
 const recipe_delete = (req, res) => {
     const id = req.params.id;
