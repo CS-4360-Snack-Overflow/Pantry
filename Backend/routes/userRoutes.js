@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const recipeController = require('../controllers/recipeController');
 
 // function to protect routes that require authentication
 const requireAuth = (req, res, next) => {
@@ -11,6 +12,7 @@ const requireAuth = (req, res, next) => {
   }
   next();
 };
+
 
 //function to login user
 async function loginUser(credentials, session) {
@@ -141,6 +143,8 @@ router.get('/logout', requireAuth, async (req, res) => {
     res.redirect('/');
   });
 });
+
+//router.post('/recipe_create', recipeController.recipe_create_post);
 
 
 module.exports = router;
