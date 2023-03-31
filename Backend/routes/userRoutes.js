@@ -157,9 +157,7 @@ router.get('/logout', requireAuth, async (req, res) => {
   });
 });
 
-router.post('/recipe_create', requireAuth, async (req, res) => {
-  recipeController.recipe_create_post
-});
+//router.post('/recipe_create', recipeController.recipe_create_post);
 
 
 module.exports = router;
