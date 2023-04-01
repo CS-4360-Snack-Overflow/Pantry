@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 
-import styled from "styled-components";
+//import styled from "styled-components";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { CustomButton as CustomButtonBase, PrimaryButton } from "components/misc/Buttons.js";
 
@@ -12,9 +12,12 @@ import { CustomButton as CustomButtonBase, PrimaryButton } from "components/misc
 import { useState, useEffect } from "react";
 import { addRecipe, uploadImage } from "helpers/RecipeService";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+import AnimationRevealPage from "helpers/AnimationRevealPage.js";
+import food from "images/honey.jpg";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
+const SingleColumn = tw.div`flex flex-col md:flex-row justify-start max-w-screen-xl mx-auto py-10 md:py-12`;
 const TwoRow = tw.div`flex justify-start mx-auto py-20 md:py-24`;
 const Row = tw.div`flex w-full max-w-xl mx-auto md:max-w-none md:mx-0`;
 const Column = tw.div`flex w-full justify-center max-w-xl mx-auto md:max-w-none md:mx-0`;
@@ -35,21 +38,28 @@ const Heading = tw(SectionHeading)`mt-4 font-black text-left text-3xl sm:text-4x
 const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`
 const CustomDescription = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100 pr-2`
 const TopForm = tw.form`flex justify-center pt-80 md:pt-12 mt-8 md:mt-10 text-base flex`
-const RowForm = tw.form`flex justify-start pt-2 mt-8 md:mt-10 text-base flex`
+const RowForm = tw.form`flex justify-center pt-2 mt-8 md:mt-10 text-base flex`
 const ColForm = tw.form`mt-8 md:mt-10 p-2 w-1/3 text-sm flex flex-col`
 const AreaInput = tw.textarea`border-2 p-2 rounded focus:outline-none font-medium transition duration-150 hocus:border-primary-500`
 const RowInput = tw.input`border-2 px-5 py-3 w-1/3 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
+const RowInputShort = tw.input`border-2 px-5 py-3 w-1/5 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
+const RowInputLong = tw.input`border-2 px-5 py-3 w-1/2 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
+const RowInputLong2 = tw.input`border-2 px-5 py-3 w-2/5 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
 const RowSelect = tw.select`border-2 px-5 py-3 w-1/6 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
-const RowMultiSelect = tw.select`border-2 px-5 py-3 min-h-48 w-1/6 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
+const RowSelectLong = tw.select`border-2 px-5 py-3 w-1/4 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
+const RowMultiSelect = tw.select`border-2 px-5 py-3 min-h-48 w-1/3 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
 const AddButton = tw(PrimaryButtonBase)`inline-block`
 const SubmitButtonRow = tw(CustomButtonBase)`inline-block ml-2 lg:ml-4 mt-0`
 const Tag = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-400 hover:bg-gray-300 text-gray-600 rounded-full`
 const TagContainer = tw.div`w-full`
 const Step = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-200 hover:bg-gray-300 text-black w-full`
+const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-2 w-full md:w-2/5`;
+const ImageContainer = tw.div`border-2 border-solid border-white rounded-lg p-4 mx-2 w-full md:w-2/5`;
+const Images = tw.img`max-w-full rounded-t sm:rounded`;
 
 export default ({
   recipeId = null,
-  submitButtonText = "Submit Recipe!",
+  submitButtonText = "Submit Recipe",
   formAction = "",
   formMethod = "get",
 
@@ -114,24 +124,28 @@ export default ({
 
 
   return (
-    <Container>
-      <TopForm action={formAction} method={formMethod}>
+    <AnimationRevealPage>
+    <SingleColumn></SingleColumn>
+    <div css={tw`flex flex-wrap justify-center md:justify-between`}>
+    <SingleColumn></SingleColumn>
+    <RecipeContainer>
+      <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Upload Recipe Image: </CustomDescription>
-        <RowInput required={true} type="file" enctype="multipart/form-data" name="image" onChange={handleFileChange}/>
+        <RowInputShort required={true} type="file" enctype="multipart/form-data" name="image" onChange={handleFileChange}/>
         <AddButton type="add" onClick={handleFileUpload}>Upload Photo</AddButton>
-      </TopForm>
+      </RowForm>
       <RowForm>
         <CustomDescription>Recipe Name: </CustomDescription>
-        <RowInput required={true} type="text" name="recipeInstructions" placeholder="Recipe Name" onChange={(e)=>setName(e.target.value)}/>
+        <RowInputLong required={true} type="text" name="recipeInstructions" placeholder="Recipe Name" onChange={(e)=>setName(e.target.value)}/>
       </RowForm>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe description: </CustomDescription>
-        <RowInput required={true} type="text" name="recipeInstructions" placeholder="Recipe Description" onChange={(e)=>setDescription(e.target.value)} />
+        <RowInputLong2 required={true} type="text" name="recipeInstructions" placeholder="Recipe Description" onChange={(e)=>setDescription(e.target.value)} />
       </RowForm>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe Ingredients: </CustomDescription>
         <AreaInput required={recipeIngredients.length > 1} autoCorrect="on" rows={1} placeholder="Ingredient" onChange={(e) => setInput(e.target.value)}/>
-        <AddButton onClick={(e) => {e.preventDefault(); setIngredients([currentInput,...recipeIngredients])}}>Add ingredient</AddButton>
+        <AddButton onClick={(e) => {e.preventDefault(); setIngredients([currentInput,...recipeIngredients])}}>Add</AddButton>
       </RowForm>
       <TagContainer>
           {recipeIngredients.map((ingredient,index) => (
@@ -144,7 +158,7 @@ export default ({
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe Instructions </CustomDescription>
         <AreaInput required={recipeSteps.length > 1} autoCorrect="on" rows={1} placeholder="Recipe Step" onChange={(e) => setInput(e.target.value)}/>
-        <AddButton type="add" onClick={(e) => {e.preventDefault(); setSteps([...recipeSteps, currentInput])}}>Add step</AddButton>
+        <AddButton type="add" onClick={(e) => {e.preventDefault(); setSteps([...recipeSteps, currentInput])}}>Add</AddButton>
       </RowForm>
           {recipeSteps.map((step,index) => (
             <Step key={index}>
@@ -156,7 +170,7 @@ export default ({
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Select Recipe Attributes:<br/>(Click and hold or<br/>Shift + Click or<br/>CTRL + Click) </CustomDescription>
         <RowMultiSelect name="selectedMealAttributes" multiple={true} onChange={(e)=>{
-                                                                      setAttributes(Array.from(e.target.selectedOptions, option => option.value))}}>
+        setAttributes(Array.from(e.target.selectedOptions, option => option.value))}}>
           <option value="Vegan">Vegan</option>
           <option value="Vegetarian">Vegetarian</option>
           <option value="Pescatarian">Pescatarian</option>
@@ -171,19 +185,25 @@ export default ({
       </RowForm>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Select a meal type: </CustomDescription>
-        <RowSelect name="selectedMealType" onChange={(e) => setMealType(e.target.value)}>
+        <RowSelectLong name="selectedMealType" onChange={(e) => setMealType(e.target.value)}>
           <option value="Breakfast">Breakfast</option>
           <option value="Lunch">Lunch</option>
           <option value="Appetizer">Appetizer</option>
           <option value="Dinner">Dinner</option>
           <option value="Dessert">Dessert</option>
-        </RowSelect>
+        </RowSelectLong>
       </RowForm>
       <RowForm action={formAction} method={formMethod}>
         <SubmitButtonRow type="submit" onClick={submitRecipe}>{submitButtonText}</SubmitButtonRow>
       </RowForm>
-      <TwoColumn>
+    </RecipeContainer>
+    <ImageContainer>
+    <Images src={food} />
+    </ImageContainer>
+    <SingleColumn></SingleColumn>
+    </div>
+    <TwoColumn>
       </TwoColumn>
-    </Container>
+    </AnimationRevealPage>
   );
 };
