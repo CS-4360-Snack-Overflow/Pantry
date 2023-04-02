@@ -1,13 +1,13 @@
-import React from "react";
+import React, {useNavigate} from "react";
 import tw from "twin.macro";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import styled from "styled-components";
 import Header from "components/headers/light.js";
 import Footer from "components/footers/MiniCenteredFooter";
-import { useLocation } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
+import { editRecipe, deleteRecipe } from "helpers/RecipeService";
+import { PrimaryButton } from "components/misc/Buttons";
 const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-center pt-10 md:pt-24`;
-
 //-----------------RECIPE FIELDS TO FILL IN------------------
 // Recipe Header
   // misc - edit/delete buttons, favorite/like/dislike buttons
@@ -38,11 +38,17 @@ const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-center 
 
 export default () => {
   const recipe = useLocation().state.clickedRecipe
+  console.log(recipe)
   return (
     <AnimationRevealPage>
       <Header />
       <img src={recipe.poster_image_url}></img>
       <Heading>{recipe.name}</Heading>     
+      <Link to="/addrecipe" state= {{recipe:recipe}}>
+        <PrimaryButton>Edit Recipe</PrimaryButton>
+      </Link>
+      <PrimaryButton onClick={()=>{deleteRecipe(recipe._id); window.location.href='/recipes/'}}>Delete Recipe</PrimaryButton>
+      <p>{recipe.user_ratings.count_positive}</p>
       <Footer />
     </AnimationRevealPage>
   );

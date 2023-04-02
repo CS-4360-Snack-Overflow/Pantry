@@ -10,7 +10,8 @@ import { CustomButton as CustomButtonBase, PrimaryButton } from "components/misc
 
 //import EmailIllustrationSrc from "images/email-illustration.svg";
 import { useState, useEffect } from "react";
-import { addRecipe, uploadImage } from "helpers/RecipeService";
+import { useLocation } from "react-router";
+import { addRecipe, uploadImage, getOneRecipe, editRecipe } from "helpers/RecipeService";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import food from "images/honey.jpg";
@@ -62,19 +63,18 @@ export default ({
   submitButtonText = "Submit Recipe",
   formAction = "",
   formMethod = "get",
-
 }) => {
+  const recipe = useLocation().state ? useLocation().state.recipe : null
   const [currentInput, setInput] = useState("");
   const [image, setImage] = useState(null);
-  const [imUrl, setUrl] = useState("");
+  const [imUrl, setUrl] = useState(recipe ? recipe.poster_image_url : "");
   const [attributes, setAttributes] = useState([]);
   const [mealType, setMealType] = useState("Breakfast");
-  const [recipeName, setName] = useState("");
-  const [recipeIngredients, setIngredients] = useState([]);
-  const [recipeSteps, setSteps] = useState([]);
-  const [recipeDescription, setDescription] = useState("");
-  const [recipeFields, setFields] = useState([])
-
+  const [recipeName, setName] = useState(recipe ? recipe.name : "");
+  const [recipeIngredients, setIngredients] = useState(recipe ? recipe.ingredients : []);
+  const [recipeSteps, setSteps] = useState(recipe ? recipe.instructions : []);
+  const [recipeDescription, setDescription] = useState(recipe ? recipe.description : "");
+  const [recipeFields, setFields] = useState(recipe)
   function removeIngredient(index) {
     setIngredients([...recipeIngredients.filter(ingredient => recipeIngredients.indexOf(ingredient) !== index)])
   }
@@ -92,24 +92,32 @@ export default ({
   async function handleFileUpload(e) {
     e.preventDefault()
     let form = new FormData();
-    form.append('files', image);
+    if(image) {
+      form.append('files', image);
     let res = await uploadImage(form);
     res = await res.json().then((result) =>{
       setUrl(__dirname + result.path)
     })
+    }
+    
   }
 
   async function submitRecipe(e) {
     e.preventDefault();
-    await handleFileUpload(e)
-    let res = await addRecipe(recipeFields);
-    res = await res.json().then((result) =>{
-      recipeId = result.recipeId
-    })
+    if(image){
+      await handleFileUpload(e)
+    }
+    if(recipe) {
+      await editRecipe(recipeFields);
+    } else {
+      let res = await addRecipe(recipeFields);
+      res = await res.json().then((result) =>{
+        recipeId = result.recipeId
+      })
+    }
   }
-  useEffect(() => {
-    console.log(recipeFields)
-  }, [recipeFields])
+  
+
   useEffect(() => {
     let tags = [mealType, ...attributes]
     setFields({
@@ -136,15 +144,15 @@ export default ({
       </RowForm>
       <RowForm>
         <CustomDescription>Recipe Name: </CustomDescription>
-        <RowInputLong required={true} type="text" name="recipeInstructions" placeholder="Recipe Name" onChange={(e)=>setName(e.target.value)}/>
+        <RowInputLong required={true} type="text" name="recipeName" defaultValue={recipe ? recipe.name : ""} placeholder="Recipe Name" onChange={(e)=>setName(e.target.value)}/>
       </RowForm>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe description: </CustomDescription>
-        <RowInputLong2 required={true} type="text" name="recipeInstructions" placeholder="Recipe Description" onChange={(e)=>setDescription(e.target.value)} />
+        <RowInputLong2 required={true} type="text" name="recipeInstructions" defaultValue={recipe ? recipe.description : ""} placeholder="Recipe Description" onChange={(e)=>setDescription(e.target.value)} />
       </RowForm>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe Ingredients: </CustomDescription>
-        <AreaInput required={recipeIngredients.length > 1} autoCorrect="on" rows={1} placeholder="Ingredient" onChange={(e) => setInput(e.target.value)}/>
+        <AreaInput autoCorrect="on" rows={1} placeholder="Ingredient" onChange={(e) => setInput(e.target.value)}/>
         <AddButton onClick={(e) => {e.preventDefault(); setIngredients([currentInput,...recipeIngredients])}}>Add</AddButton>
       </RowForm>
       <TagContainer>
@@ -157,7 +165,7 @@ export default ({
       </TagContainer>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe Instructions </CustomDescription>
-        <AreaInput required={recipeSteps.length > 1} autoCorrect="on" rows={1} placeholder="Recipe Step" onChange={(e) => setInput(e.target.value)}/>
+        <AreaInput autoCorrect="on" rows={1} placeholder="Recipe Step" onChange={(e) => setInput(e.target.value)}/>
         <AddButton type="add" onClick={(e) => {e.preventDefault(); setSteps([...recipeSteps, currentInput])}}>Add</AddButton>
       </RowForm>
           {recipeSteps.map((step,index) => (
@@ -169,7 +177,7 @@ export default ({
           ))}
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Select Recipe Attributes:<br/>(Click and hold or<br/>Shift + Click or<br/>CTRL + Click) </CustomDescription>
-        <RowMultiSelect name="selectedMealAttributes" multiple={true} onChange={(e)=>{
+        <RowMultiSelect name="selectedMealAttributes" multiple={true} defaultValue={recipe ? recipe.tags : null} onChange={(e)=>{
         setAttributes(Array.from(e.target.selectedOptions, option => option.value))}}>
           <option value="Vegan">Vegan</option>
           <option value="Vegetarian">Vegetarian</option>
@@ -194,7 +202,7 @@ export default ({
         </RowSelectLong>
       </RowForm>
       <RowForm action={formAction} method={formMethod}>
-        <SubmitButtonRow type="submit" onClick={submitRecipe}>{submitButtonText}</SubmitButtonRow>
+        <SubmitButtonRow type="submit" onClick={submitRecipe}>{recipe ? "Update Recipe" : "Submit Recipe"}</SubmitButtonRow>
       </RowForm>
     </RecipeContainer>
     <ImageContainer>
