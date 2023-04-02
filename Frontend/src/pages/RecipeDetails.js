@@ -13,44 +13,12 @@ import { ReactComponent as LikeIcon } from "images/like.svg";
 import { ReactComponent as DislikeIcon } from "images/dislike.svg";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { motion } from "framer-motion";
-
-//-----------------RECIPE FIELDS TO FILL IN------------------
-// Recipe Header
-  // misc - edit/delete buttons, favorite/like/dislike buttons
-  // recipe.name , String
-  // recipe.tags , String array, stuff like "Breakfast" and "Vegetarian"
-  // recipe.poster_image_url , String
-  // recipe.description, String
-  // recipe.credits , String, author's name
-  // recipe.createdAt , String, timestamp
-  // recipe.prep_time , Number
-  // recipe.cook_time , Number
-  // recipe.review - Number, rating out of 5
-  // recipe.user_reviews.count_positive - Number
-  // recipe.user_reviews.count_negative - Number
-  // recipe.total_reviews - Number, sum of reviews
-  // recipe.num_servings , Number
-//
-// Recipe Content
-  // recipe.ingredients , String array, each element is an ingredient
-  // recipe.directions , String array, each element is a step in the recipe
-  // recipe.nutrition , comes with several fields:
-  //    recipe.nutrition.protein - Number (grams)
-  //    recipe.nutrition.fat - Number (grams)
-  //    recipe.nutrition.calories - Number
-  //    recipe.nutrition.sugar - Number (grams)
-  //    recipe.nutrition.carbohydrates - Number (grams)
-  //    recipe.nutrition.fiber - Number (grams)
+import { deleteRecipe } from "helpers/RecipeService";
+import { Link } from "react-router-dom";
 
 export default () => {
   const recipe = useLocation().state.clickedRecipe;
   console.log(recipe);
-  var i = "" 
-  var d = "";
-  var c = "";
-  var ingredients = getIngedients(i);
-  var directions = getDirections(d);
-  var credits = getCredits(c);
   const prepTime = recipe.prep_time ? recipe.prep_time : 0;
   const cookTime = recipe.cook_time ? recipe.cook_time : 0;
   const numServings = recipe.num_servings ? recipe.num_servings : 0;
@@ -64,47 +32,6 @@ export default () => {
   const numReviews = recipe.total_reviews ? recipe.total_reviews : 0;
   var likes = recipe.user_ratings.count_positive ? recipe.user_ratings.count_positive : 0;
   var dislikes = recipe.user_ratings.count_negative ? recipe.user_ratings.count_negative : 0;
-
-
-  function getIngedients(ingredients) {
-    var ing = recipe.ingredients
-    if (ingredients) {
-      for(var i = 0; i < ing.length; i++){
-        ingredients += "\t•" + ing[i] + "\n";
-      }
-    } else {
-      ingredients = "No ingredients";
-    }
-    return ingredients;
-  }
-
-  function getDirections(directions) {
-    var dir = recipe.directions
-    if (directions) {
-      for(var i = 0; i < dir.length; i++){
-        directions += "\t" + (i+1) + ". " + dir[i] + "\n";
-      }
-    } else {
-      directions = "No directions";
-    }
-    return directions;
-  }
-
-  function getCredits(credits) {
-    var cred = recipe.credits
-    if(cred) {
-      for(var i = 0; i < cred.length; i++){
-        if(i !== cred.length - 1){
-          cred += cred[i] + " ";
-        } else {
-          cred += cred[i];
-        }
-      }
-    } else {
-      cred = "Anonymous";
-    }
-    return cred;
-  }
 
 
   const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-center pt-10 md:pt-24`;
@@ -139,7 +66,7 @@ export default () => {
     <AnimationRevealPage>
       <Header/>
       <Heading>{recipe.name}</Heading>
-      <Subheading>by {credits}</Subheading>
+      <Subheading>by {recipe.credits ? recipe.credits : "Unknown"}</Subheading>
       <TagContainer>
         {recipe.tags.map((tag, index) => (
         <Tag key={index}><span>{tag}</span></Tag>
@@ -176,17 +103,26 @@ export default () => {
         <Text>Cook time: {cookTime} minutes</Text>
         <Text>Number of servings: {numServings}</Text>
         <SmallColumn></SmallColumn>
-        <AddButton type="Edit" onClick={null}>Edit</AddButton>
-        <SmallColumn></SmallColumn>
-        <AddButton type="Delete" onClick={null}>Delete</AddButton>
+        <Link to="/addrecipe" state= {{recipe:recipe}}>
+          <AddButton type="Edit">Edit Recipe</AddButton>
+        </Link>
+        <AddButton onClick={()=>{deleteRecipe(recipe._id); window.location.href='/recipes/'}}>Delete Recipe</AddButton>
         </RecipeContainer>
       </div>
       <SmallColumn></SmallColumn>
       <SubheadingLeft>Ingredients</SubheadingLeft>
-      <Text>{ingredients}</Text>
+      <ol>
+      {recipe.ingredients.map((ingredient, index)=>(
+        <li key={index}>- {ingredient}</li>
+      ))}
+      </ol>
       <SmallColumn></SmallColumn>
       <SubheadingLeft>Cooking Instructions</SubheadingLeft>
-      <Text>{directions}</Text>
+      <ol>
+      {recipe.instructions.map((step, index)=>(
+        <li key={index}>{index + 1}: {step}</li>
+      ))}
+      </ol>
       <SmallColumn></SmallColumn>
       <SubheadingLeft>Nutrition Facts</SubheadingLeft>
       <Text>{calories} calories</Text>

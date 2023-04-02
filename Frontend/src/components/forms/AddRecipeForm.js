@@ -5,7 +5,7 @@ import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 
-//import styled from "styled-components";
+import styled from "styled-components";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { CustomButton as CustomButtonBase, PrimaryButton } from "components/misc/Buttons.js";
 import { motion } from "framer-motion";
@@ -94,12 +94,12 @@ export default ({
     }
   }
 
-  function handleNutrition(nutrient, value) {
-    let newObj = nutrition
-    newObj[nutrient] = value
-    console.log(newObj)
-    setNutrition(newObj)
-  }
+  // function handleNutrition(nutrient, value) {
+  //   let newObj = nutrition
+  //   newObj[nutrient] = value
+  //   console.log(newObj)
+  //   setNutrition(newObj)
+  // }
 
   async function handleFileUpload(e) {
     e.preventDefault()
