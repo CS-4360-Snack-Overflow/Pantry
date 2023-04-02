@@ -38,8 +38,12 @@ export async function uploadImage(form){
 }
 
 export async function editRecipe(data) {
-	await fetch("/recipes/"+data.id, {
+	console.log(data)
+	await fetch("/recipes/"+data._id, {
 		method: "PATCH",
+		headers: {
+			"Content-Type": "application/json",
+		  },
 		body: JSON.stringify(data)
 	})
 }

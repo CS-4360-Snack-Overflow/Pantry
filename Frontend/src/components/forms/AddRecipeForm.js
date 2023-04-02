@@ -117,17 +117,19 @@ export default ({
     }
   }
   
+  useEffect(()=>{console.log(recipeFields)}, [recipeFields])
 
   useEffect(() => {
     let tags = [mealType, ...attributes]
-    setFields({
-      "name": recipeName,
-      "description": recipeDescription,
-      "poster_image_url": imUrl,
-      "tags": tags,
-      "ingredients": recipeIngredients,
-      "instructions": recipeSteps
-    })
+    let newRecipe = Object.assign({}, recipe); 
+    newRecipe.name = recipeName
+    newRecipe.description = recipeDescription
+    newRecipe.alt_image_url = imUrl
+    newRecipe.poster_image_url = imUrl
+    newRecipe.tags = tags
+    newRecipe.ingredients = recipeIngredients
+    newRecipe.instructions = recipeSteps
+    setFields(newRecipe)
   }, [attributes, mealType, recipeName, recipeIngredients, recipeDescription, recipeSteps, imUrl])
 
 
