@@ -1,18 +1,20 @@
 import React from "react";
+import Select, { IndicatorSeparatorProps } from "react-select"
+
 import tw from "twin.macro";
-import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 
 //import styled from "styled-components";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { CustomButton as CustomButtonBase, PrimaryButton } from "components/misc/Buttons.js";
-
+import { motion } from "framer-motion";
 //import EmailIllustrationSrc from "images/email-illustration.svg";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { addRecipe, uploadImage, getOneRecipe, editRecipe } from "helpers/RecipeService";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import food from "images/honey.jpg";
 
@@ -28,11 +30,12 @@ const TextColumn = styled(Column)(props => [
   props.textOnLeft ? tw`md:mr-12 lg:mr-16 md:order-first` : tw`md:ml-12 lg:ml-16 md:order-last`
 ]);
 
-const Image = styled.div(props => [
-  `background-image: url("${props.imageSrc}");`,
-  tw`rounded bg-contain bg-no-repeat bg-center h-full`,
-]);
-
+const Image = styled.div`
+  ${props => css`background-image:url("${props.imageSrc}");max-width:80%;`}
+  ${tw`h-128 bg-center bg-cover relative rounded-t mx-auto flex-row`}
+`;
+// const Image = styled.div`${css`max-width:100%; max-height:100%`} 
+//                      ${tw`object-scale-down`}`
 const TextContent = tw.div`lg:py-8 text-center md:text-left`;
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
 const Heading = tw(SectionHeading)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
@@ -50,13 +53,14 @@ const RowSelect = tw.select`border-2 px-5 py-3 w-1/6 rounded focus:outline-none 
 const RowSelectLong = tw.select`border-2 px-5 py-3 w-1/4 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
 const RowMultiSelect = tw.select`border-2 px-5 py-3 min-h-48 w-1/3 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
 const AddButton = tw(PrimaryButtonBase)`inline-block`
-const SubmitButtonRow = tw(CustomButtonBase)`inline-block ml-2 lg:ml-4 mt-0`
+const SubmitButtonRow = tw(PrimaryButtonBase)``
 const Tag = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-400 hover:bg-gray-300 text-gray-600 rounded-full`
 const TagContainer = tw.div`w-full`
 const Step = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-200 hover:bg-gray-300 text-black w-full`
 const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-2 w-full md:w-2/5`;
 const ImageContainer = tw.div`border-2 border-solid border-white rounded-lg p-4 mx-2 w-full md:w-2/5`;
 const Images = tw.img`max-w-full rounded-t sm:rounded`;
+
 
 export default ({
   recipeId = null,
@@ -75,6 +79,7 @@ export default ({
   const [recipeSteps, setSteps] = useState(recipe ? recipe.instructions : []);
   const [recipeDescription, setDescription] = useState(recipe ? recipe.description : "");
   const [recipeFields, setFields] = useState(recipe)
+
   function removeIngredient(index) {
     setIngredients([...recipeIngredients.filter(ingredient => recipeIngredients.indexOf(ingredient) !== index)])
   }
@@ -87,6 +92,13 @@ export default ({
     if(e.target.files) {
       setImage(e.target.files[0]);
     }
+  }
+
+  function handleNutrition(nutrient, value) {
+    let newObj = nutrition
+    newObj[nutrient] = value
+    console.log(newObj)
+    setNutrition(newObj)
   }
 
   async function handleFileUpload(e) {
@@ -144,6 +156,7 @@ export default ({
         <RowInputShort required={true} type="file" enctype="multipart/form-data" name="image" onChange={handleFileChange}/>
         <AddButton type="add" onClick={handleFileUpload}>Upload Photo</AddButton>
       </RowForm>
+
       <RowForm>
         <CustomDescription>Recipe Name: </CustomDescription>
         <RowInputLong required={true} type="text" name="recipeName" defaultValue={recipe ? recipe.name : ""} placeholder="Recipe Name" onChange={(e)=>setName(e.target.value)}/>
@@ -172,7 +185,7 @@ export default ({
       </RowForm>
           {recipeSteps.map((step,index) => (
             <Step key={index}>
-                <span>Step {index + 1}:</span>
+                <span>Step {index + 1}: </span>
                 <span>{step}</span>
                 <CloseIcon onClick={() => removeStep(index)}></CloseIcon>
             </Step>

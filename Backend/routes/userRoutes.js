@@ -78,7 +78,6 @@ router.post('/userUpdate', async (req, res) => {
 
     // first access the username attribute from the model
     const username = req.body.username;
-    console.log(`user.username=${username}`);
     const updates = req.body;
     const updatedFields = {};
 
@@ -121,7 +120,6 @@ router.post('/userDelete', requireAuth, async (req, res) => {
 router.post('/userLoginProc', async (req, res) => {
   try{
     await loginUser(req.body, req.session);
-    console.log("here")
     res.redirect('/');
   } catch (error) {
     res.status(401).json({ error: error.message });

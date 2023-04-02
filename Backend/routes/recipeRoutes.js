@@ -6,7 +6,7 @@ const upload = multer({dest: "../../Frontend/public/recipeimages/"});
 
 router.get('/', recipeController.recipe_index);
 
-router.post('/', recipeController.recipe_create_post);
+router.post('/create', recipeController.recipe_create_post);
 
 router.get('/create', recipeController.recipe_create_get);
 

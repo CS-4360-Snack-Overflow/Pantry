@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+import { useNavigate } from "react-router-dom";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -27,9 +28,9 @@ const Input = tw.input`mt-6 first:mt-0 border-b-2 py-3 focus:outline-none font-m
 const Tag = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-400 hover:bg-gray-300 text-gray-600 rounded-full`
 const TagContainer = tw.div`w-full`
 const AddButton = tw(PrimaryButtonBase)`bg-white hover:bg-gray-200 text-gray-700 hover:text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow basis-1/4`
-const SubmitButton = tw(PrimaryButtonBase)`inline-block`
-
-
+const SubmitButton = tw(PrimaryButtonBase)`basis-3/4 mx-3 p-0`
+const AddRecipeButton = tw(PrimaryButtonBase)`basis-1/4 ml-3 p-0`
+const ButtonContainer = tw.div`inline-flex w-full`
 
 export default ({
   subheading = "Recipes",
@@ -45,7 +46,7 @@ export default ({
   const [parameters, setParameters] = useState([]);
   const [query, setQuery] = useState("");
   const ref = useRef(null);
-
+  let navigate = useNavigate();
   // Update the search query while user types, and add it to search when enter is pressed
   const handleQuery = event => {
     const newValue = event.target.value;
@@ -67,7 +68,11 @@ export default ({
   const removeParameter = index => {
     setParameters([...parameters.filter(parameter => parameters.indexOf(parameter) !== index)])
   }
-
+  const linkToAddRecipe = () => { 
+    const path = '/addrecipe'
+    navigate(path);
+  }
+  
   return (
     <Container>
       <TwoColumn>
@@ -96,7 +101,10 @@ export default ({
               ))}
             </TagContainer>
             <Form action={formAction} method={formMethod}>
-              <SubmitButton type="Search" onClick={() => searchFor(parameters)}>{submitButtonText}</SubmitButton>
+              <ButtonContainer>
+                <SubmitButton type="Search" onClick={() => searchFor(parameters)}>{submitButtonText}</SubmitButton>
+                <AddRecipeButton onClick={linkToAddRecipe}>Add a New Recipe!</AddRecipeButton>
+              </ButtonContainer>
             </Form>
           </TextContent>
         </TextColumn>

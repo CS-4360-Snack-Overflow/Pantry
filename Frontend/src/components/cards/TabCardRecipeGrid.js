@@ -39,7 +39,7 @@ const TabContent = tw(motion.div)`mt-6 flex flex-wrap sm:-mr-10 md:-mr-6 lg:-mr-
 const CardContainer = tw.div`mt-10 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md:pr-6 lg:pr-12`;
 const Card = tw(motion.div)`bg-gray-200 rounded-b block max-w-xs mx-auto sm:max-w-none sm:mx-0`;
 const CardImageContainer = styled.div`
-  ${props => css`background-image: url("${props.imageSrc}");`}
+  ${props => css`background-image:url("${props.imageSrc}");`}
   ${tw`h-56 bg-center bg-cover relative rounded-t`}
 `;
 const CardRatingContainer = tw.div`leading-none absolute inline-flex bg-gray-100 bottom-0 left-0 ml-4 mb-4 rounded-full px-5 py-2 items-end`;
@@ -69,7 +69,6 @@ const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
 const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
   ${tw`pointer-events-none -z-20 absolute left-0 bottom-0 h-80 w-80 opacity-15 transform -translate-x-2/3 text-primary-500`}
 `;
-const AddRecipeButton = tw(PrimaryButtonBase)`inline-block`
 
 export default ({
   heading = "Checkout the Menu",
@@ -114,7 +113,6 @@ export default ({
             ))}
           </TabsControl>
         </HeaderRow>
-        <AddRecipeButton onClick={event =>  window.location.href='/addrecipe'}>Add a New Recipe!</AddRecipeButton>
         {tabsKeys.map((tabKey, index) => (
           <TabContent
             key={index}
