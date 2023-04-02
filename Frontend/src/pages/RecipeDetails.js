@@ -47,11 +47,10 @@ export default () => {
   console.log(recipe);
   var i = "" 
   var d = "";
-  var t = "";
+  var c = "";
   var ingredients = getIngedients(i);
   var directions = getDirections(d);
-  var tags = getTags(t);
-  var credits = getCredits(t);
+  var credits = getCredits(c);
   const prepTime = recipe.prep_time ? recipe.prep_time : 0;
   const cookTime = recipe.cook_time ? recipe.cook_time : 0;
   const numServings = recipe.num_servings ? recipe.num_servings : 0;
@@ -91,22 +90,6 @@ export default () => {
     return directions;
   }
 
-  function getTags(tags) {
-    var tag = recipe.tags
-    if (tag) {
-      for(var i = 0; i < tag.length; i++){
-        if(i !== tag.length - 1){
-          tags += tag[i] + "   ";
-        } else {
-          tags += tag[i];
-        }
-      } 
-    } else {
-      tags = "No tags";
-    }
-    return tags;
-  }
-
   function getCredits(credits) {
     var cred = recipe.credits
     if(cred) {
@@ -125,20 +108,15 @@ export default () => {
 
 
   const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-center pt-10 md:pt-24`;
-  const Subheading = tw.div`uppercase tracking-wider text-sm text-center justify-center text-orange-600 font-bold`;
-  const SubheadingLeft = tw.div`uppercase tracking-wider text-sm text-left justify-start text-orange-600 font-bold`;
+  const Subheading = tw.div`uppercase tracking-wider text-base text-center justify-center text-orange-600 font-bold`;
+  const SubheadingLeft = tw.div`uppercase tracking-wider text-base text-left justify-start text-orange-600 font-bold`;
   const Text = tw.div`tracking-wider text-sm text-left justify-start text-black font-bold`;
   const Tag = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-400 hover:bg-gray-300 text-gray-600 rounded-full`
   const TagContainer = tw.div`w-full flex flex-wrap justify-center` 
   const AddButton = tw(PrimaryButtonBase)`inline-block`
-  const Container = tw.div`relative`;
-  const Column = tw.div`w-1/2`
   const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
   const SingleColumn = tw.div`flex flex-col md:flex-row justify-start max-w-screen-xl mx-auto py-8 md:py-8`;
   const SmallColumn = tw.div`flex flex-col md:flex-row justify-start max-w-screen-xl mx-auto py-4 md:py-4`;
-  const TwoRow = tw.div`flex justify-start mx-auto py-20 md:py-24`;
-  const Row = tw.div`flex w-full bottom-0 left-0 max-w-xl mx-auto md:max-w-none md:mx-0`;
-  const RowForm = tw.form`justify-start pt-2 mt-8 md:mt-10 text-base flex`
   const CardReview = tw.div`font-medium justify-center text-xs text-gray-600`;
   const CardRatingContainer = tw.div`leading-none absolute inline-flex bg-gray-100 bottom-0 left-0 ml-4 mb-4 rounded-full px-5 py-2 items-end`;
   const CardLikeContainer = tw(PrimaryButtonBase)`leading-none absolute inline-flex bg-gray-100 bottom-0 right-[110px] ml-4 mb-4 rounded-full px-5 py-2 items-end`;
@@ -217,6 +195,8 @@ export default () => {
       <Text>{carbs}g of carbs</Text>
       <Text>{sugar}g of sugar</Text>
       <Text>{fiber}g of fiber</Text>
+      <SingleColumn></SingleColumn>
+      <AddButton onClick={event =>  window.location.href='/recipes'}>Back</AddButton>
       <TwoColumn></TwoColumn>
       <Footer />
     </AnimationRevealPage>
