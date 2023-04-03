@@ -120,7 +120,7 @@ export default () => {
       <SubheadingLeft>Cooking Instructions</SubheadingLeft>
       <ol>
       {recipe.instructions.map((step, index)=>(
-        <li key={index}>{index + 1}: {step}</li>
+        <li key={index}>{index + 1}. {step}</li>
       ))}
       </ol>
       <SmallColumn></SmallColumn>
