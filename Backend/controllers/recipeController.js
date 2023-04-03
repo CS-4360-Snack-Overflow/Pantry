@@ -25,7 +25,7 @@ const recipe_index = (req, res) => {
         case "Popular":
             recipes = recipes.sort({total_reviews: -1});
         case "Recent":
-            recipes = recipes.sort({createdAt: -1});
+            recipes = recipes.sort({updatedAt: -1});
         case "Highly Rated":
             recipes = recipes.sort({review: -1});
         default:
@@ -95,8 +95,9 @@ const recipe_delete = (req, res) => {
     });
 };
 const recipe_patch = (req, res) => {
-    const id = req.params.id;
-    Recipe.findOneAndUpdate({_id: id}, req.body, {new: true})
+    let recipe = Recipe.findById({id: req.params.id})
+    console.log(req.body)
+    Recipe.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
     .then((result) => {
         res.send(result);
     })
