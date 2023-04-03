@@ -135,7 +135,6 @@ export default ({
     if(recipe) {
       await editRecipe(recipeFields);
     } else {
-      console.log("here")
       let res = await addRecipe(recipeFields);
       res = await res.json().then((result) =>{
         recipeId = result.recipeId
@@ -160,6 +159,7 @@ export default ({
     newRecipe.cook_time = cookTime
     newRecipe.prep_time = prepTime
     newRecipe.num_servings = numServings
+    newRecipe.nutrition = nutrition
     setFields(newRecipe)
   }, [attributes, mealType, recipeName, recipeIngredients, recipeDescription, recipeSteps, imUrl, numServings, prepTime, cookTime, nutrition])
 
@@ -255,6 +255,15 @@ export default ({
           <option value="Dessert">Dessert</option>
         </RowSelectLong>
       </RowForm>
+      <RowForm action={formAction} method={formMethod}>
+        <CustomDescription>Nutrition information: </CustomDescription>
+      </RowForm>
+      {Object.keys(nutrition).map((nutrient, index) => (
+            <div key={index} class="w-1/2 m-2">
+              <label class="mx-3 flex">{nutrient.charAt(0).toUpperCase() + nutrient.slice(1)} {nutrient!=="calories" ? "(grams)":""}</label>
+              <RowInput class="ml-2 p-3 w-1/4" type="text" defaultValue={recipe? recipe.nutrition[nutrient] : 0} onChange={(e) => handleNutrition(nutrient, e.target.value)}></RowInput>           
+            </div>
+          ))}
       <RowForm action={formAction} method={formMethod}>
         <SubmitButtonRow type="submit" onClick={(e)=> {submitRecipe(e); linkToRecipes()}}>{recipe ? "Update Recipe" : "Submit Recipe"}</SubmitButtonRow>
       </RowForm>

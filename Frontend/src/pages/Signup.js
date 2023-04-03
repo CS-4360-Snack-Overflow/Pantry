@@ -22,7 +22,7 @@ const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 borde
   focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
 const IllustrationContainer = tw.div`sm:rounded-r-lg flex-1 bg-purple-100 text-center hidden lg:flex justify-center`;
 const SubmitButton = styled.button`
-  ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 w-full py-4 rounded-lg hover:bg-primary-900 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
+  ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 w-1/2 py-4 rounded-lg mb-3 mx-auto hover:bg-primary-900 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
   .icon {
     ${tw`w-6 h-6 -ml-2`}
   }
@@ -33,6 +33,13 @@ const SubmitButton = styled.button`
 const IllustrationImage = styled.div`
   ${props => `background-image: url("${props.imageSrc}");`}
   ${tw`m-12 xl:m-16 w-full max-w-lg bg-contain bg-center bg-no-repeat`}
+`;
+const ProfilePicture = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  ${tw`mx-auto`}
 `;
 
 export default ({
@@ -89,9 +96,12 @@ export default ({
             <Heading>{headingText}</Heading>
             <FormContainer>
               <Form action="/user/userCreate" method="POST">
-                <label>Profile picture</label>
+                <label class="mx-auto">Profile picture</label>
+                <ProfilePicture src={imUrl} alt="Profile Picture" />
+                <div class="flex-row">
                 <Input type="file" onChange={handleFileChange} required></Input>
                 <SubmitButton type="add" onClick={handleFileUpload}>Upload Photo</SubmitButton>
+                </div>
                 <Input type="text" hidden={true} id="profilePicture" name="profilePicture" value={imUrl}></Input>
                 {Object.keys(fields).map((field, index) => (
                   <div key={index}>

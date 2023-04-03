@@ -57,7 +57,7 @@ const recipe_create_post = (req, res) => {
     const recipe = new Recipe({
         name: req.body.name,
         video_url: req.body.video_url,
-        poster_image_url: req.body.poster_image_url,
+        alt_image_url: req.body.alt_image_url,
         num_servings: req.body.num_servings,
         prep_time: req.body.prep_time,
         credits: req.body.credits,
