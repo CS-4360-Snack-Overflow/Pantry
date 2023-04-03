@@ -18,7 +18,7 @@ export async function getOneRecipe(id) {
 
 export async function addRecipe(data){
 	console.log(data)
-	return await fetch("/recipes", {
+	return await fetch("/recipes/create", {
 		method: "POST", 
 		headers: {
 			"Content-Type": "application/json",

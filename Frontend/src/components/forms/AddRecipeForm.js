@@ -11,7 +11,7 @@ import { CustomButton as CustomButtonBase, PrimaryButton } from "components/misc
 import { motion } from "framer-motion";
 //import EmailIllustrationSrc from "images/email-illustration.svg";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { addRecipe, uploadImage, getOneRecipe, editRecipe } from "helpers/RecipeService";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 
@@ -42,13 +42,13 @@ const Heading = tw(SectionHeading)`mt-4 font-black text-left text-3xl sm:text-4x
 const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`
 const CustomDescription = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100 pr-2`
 const TopForm = tw.form`flex justify-center pt-80 md:pt-12 mt-8 md:mt-10 text-base flex`
-const RowForm = tw.form`flex justify-center pt-2 mt-8 md:mt-10 text-base flex`
+const RowForm = tw.form` justify-center pt-2 mt-8 md:mt-10 text-base w-full`
 const ColForm = tw.form`mt-8 md:mt-10 p-2 w-1/3 text-sm flex flex-col`
-const AreaInput = tw.textarea`border-2 p-2 rounded focus:outline-none font-medium transition duration-150 hocus:border-primary-500`
-const RowInput = tw.input`border-2 px-5 py-3 w-1/3 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
-const RowInputShort = tw.input`border-2 px-5 py-3 w-1/5 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
-const RowInputLong = tw.input`border-2 px-5 py-3 w-1/2 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
-const RowInputLong2 = tw.input`border-2 px-5 py-3 w-2/5 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
+const AreaInput = tw.textarea`border-2 p-2 w-full rounded focus:outline-none font-medium transition duration-150 hocus:border-primary-500`
+const RowInput = tw.input`border-2 px-5 py-3 w-full rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
+const RowInputShort = tw.input`border-2 px-5 py-3 w-full rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
+const RowInputLong = tw.input`border-2 px-5 py-3 w-full rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
+const RowInputLong2 = tw.input`border-2 px-5 py-3 w-full rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
 const RowSelect = tw.select`border-2 px-5 py-3 w-1/6 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
 const RowSelectLong = tw.select`border-2 px-5 py-3 w-1/4 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
 const RowMultiSelect = tw.select`border-2 px-5 py-3 min-h-48 w-1/3 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
@@ -57,9 +57,11 @@ const SubmitButtonRow = tw(PrimaryButtonBase)``
 const Tag = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-400 hover:bg-gray-300 text-gray-600 rounded-full`
 const TagContainer = tw.div`w-full`
 const Step = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-200 hover:bg-gray-300 text-black w-full`
-const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-2 w-full md:w-2/5`;
-const ImageContainer = tw.div`border-2 border-solid border-white rounded-lg p-4 mx-2 w-full md:w-2/5`;
-const Images = tw.img`max-w-full rounded-t sm:rounded`;
+const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-auto w-full`;
+const ImageContainer = tw.div`border-2 border-solid border-white rounded-lg p-4 m-2 w-full md:w-2/5`;
+const Images = styled.div`
+${props => css`background-image:url("${props.imageSrc}");max-width:80%;`}
+${tw`h-128 w-full bg-center bg-cover relative rounded-t mx-auto flex-row`}`
 
 
 export default ({
@@ -71,7 +73,12 @@ export default ({
   const recipe = useLocation().state ? useLocation().state.recipe : null
   const [currentInput, setInput] = useState("");
   const [image, setImage] = useState(null);
-  const [imUrl, setUrl] = useState(recipe ? recipe.poster_image_url : "");
+  const [numServings, setServings] = useState(recipe ? recipe.num_servings : 0)
+  const [prepTime, setPrep] = useState(recipe ? recipe.prep_time : 0)
+  const [cookTime, setCook] = useState(recipe ? recipe.cook_time : 0)
+  const [nutrition, setNutrition] = useState(recipe? recipe.nutrition : {"protein": 0,"fat": 0,"calories": 0,
+                                              "sugar": 0, "carbohydrates":0, "fiber":0}) 
+  const [imUrl, setUrl] = useState(recipe ? recipe.alt_image_url : "/placeholder.webp");
   const [attributes, setAttributes] = useState([]);
   const [mealType, setMealType] = useState("Breakfast");
   const [recipeName, setName] = useState(recipe ? recipe.name : "");
@@ -79,6 +86,7 @@ export default ({
   const [recipeSteps, setSteps] = useState(recipe ? recipe.instructions : []);
   const [recipeDescription, setDescription] = useState(recipe ? recipe.description : "");
   const [recipeFields, setFields] = useState(recipe)
+  const navigate = useNavigate();
 
   function removeIngredient(index) {
     setIngredients([...recipeIngredients.filter(ingredient => recipeIngredients.indexOf(ingredient) !== index)])
@@ -94,12 +102,12 @@ export default ({
     }
   }
 
-  // function handleNutrition(nutrient, value) {
-  //   let newObj = nutrition
-  //   newObj[nutrient] = value
-  //   console.log(newObj)
-  //   setNutrition(newObj)
-  // }
+  function handleNutrition(nutrient, value) {
+    let newObj = nutrition
+    newObj[nutrient] = value
+    console.log(newObj)
+    setNutrition(newObj)
+  }
 
   async function handleFileUpload(e) {
     e.preventDefault()
@@ -114,6 +122,11 @@ export default ({
     
   }
 
+  const linkToRecipes = () => { 
+    const path = '/recipes'
+    navigate(path);
+  }
+
   async function submitRecipe(e) {
     e.preventDefault();
     if(image){
@@ -122,6 +135,7 @@ export default ({
     if(recipe) {
       await editRecipe(recipeFields);
     } else {
+      console.log("here")
       let res = await addRecipe(recipeFields);
       res = await res.json().then((result) =>{
         recipeId = result.recipeId
@@ -129,6 +143,8 @@ export default ({
     }
   }
   
+  
+
   useEffect(()=>{console.log(recipeFields)}, [recipeFields])
 
   useEffect(() => {
@@ -141,22 +157,29 @@ export default ({
     newRecipe.tags = tags
     newRecipe.ingredients = recipeIngredients
     newRecipe.instructions = recipeSteps
+    newRecipe.cook_time = cookTime
+    newRecipe.prep_time = prepTime
+    newRecipe.num_servings = numServings
     setFields(newRecipe)
-  }, [attributes, mealType, recipeName, recipeIngredients, recipeDescription, recipeSteps, imUrl])
+  }, [attributes, mealType, recipeName, recipeIngredients, recipeDescription, recipeSteps, imUrl, numServings, prepTime, cookTime, nutrition])
 
 
   return (
     <AnimationRevealPage>
     <SingleColumn></SingleColumn>
-    <div css={tw`flex flex-wrap justify-center md:justify-between`}>
-    <SingleColumn></SingleColumn>
+    <div css={tw`w-full flex-row justify-center md:justify-between`}>
+    <SingleColumn css={tw`w-full`}></SingleColumn>
+    <Images imageSrc={imUrl} />
+
+    {/* <ImageContainer>
+    <Images imageSrc={imUrl} />
+    </ImageContainer> */}
     <RecipeContainer>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Upload Recipe Image: </CustomDescription>
         <RowInputShort required={true} type="file" enctype="multipart/form-data" name="image" onChange={handleFileChange}/>
         <AddButton type="add" onClick={handleFileUpload}>Upload Photo</AddButton>
       </RowForm>
-
       <RowForm>
         <CustomDescription>Recipe Name: </CustomDescription>
         <RowInputLong required={true} type="text" name="recipeName" defaultValue={recipe ? recipe.name : ""} placeholder="Recipe Name" onChange={(e)=>setName(e.target.value)}/>
@@ -165,10 +188,26 @@ export default ({
         <CustomDescription>Recipe description: </CustomDescription>
         <RowInputLong2 required={true} type="text" name="recipeInstructions" defaultValue={recipe ? recipe.description : ""} placeholder="Recipe Description" onChange={(e)=>setDescription(e.target.value)} />
       </RowForm>
+      <RowForm>
+        <CustomDescription>Number of Servings: </CustomDescription>
+        <RowInput required={true} type="number" name="recipeServings" placeholder="# Servings" defaultValue={numServings} onChange={(e)=>setServings(e.target.value)}/>
+      </RowForm>
+      <RowForm>
+        <CustomDescription>Prep Time: </CustomDescription>
+        <RowInput required={true} type="number" name="recipeInstructions" placeholder="#" defaultValue={recipe ? recipe.prep_time : 0} onChange={(e)=>setPrep(e.target.value)}/>
+        <p>Minutes</p>
+      </RowForm>
+      <RowForm>
+        <CustomDescription>Cook Time: </CustomDescription>
+        <RowInput required={true} type="text" name="recipeInstructions" placeholder="#" defaultValue={recipe ? recipe.cook_time : 0} onChange={(e)=>setCook(e.target.value)}/>
+        <p>Minutes</p>
+      </RowForm>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe Ingredients: </CustomDescription>
-        <AreaInput autoCorrect="on" rows={1} placeholder="Ingredient" onChange={(e) => setInput(e.target.value)}/>
-        <AddButton onClick={(e) => {e.preventDefault(); setIngredients([currentInput,...recipeIngredients])}}>Add</AddButton>
+        <div class="inline-block">
+          <AreaInput autoCorrect="on" rows={1} placeholder="Ingredient" onChange={(e) => setInput(e.target.value)}/>
+          <AddButton onClick={(e) => {e.preventDefault(); setIngredients([currentInput,...recipeIngredients])}}>Add</AddButton>
+        </div>
       </RowForm>
       <TagContainer>
           {recipeIngredients.map((ingredient,index) => (
@@ -180,7 +219,7 @@ export default ({
       </TagContainer>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Recipe Instructions </CustomDescription>
-        <AreaInput autoCorrect="on" rows={1} placeholder="Recipe Step" onChange={(e) => setInput(e.target.value)}/>
+        <AreaInput autoCorrect="on" rows={4} placeholder="Recipe Step" onChange={(e) => setInput(e.target.value)}/>
         <AddButton type="add" onClick={(e) => {e.preventDefault(); setSteps([...recipeSteps, currentInput])}}>Add</AddButton>
       </RowForm>
           {recipeSteps.map((step,index) => (
@@ -208,7 +247,7 @@ export default ({
       </RowForm>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Select a meal type: </CustomDescription>
-        <RowSelectLong name="selectedMealType" onChange={(e) => setMealType(e.target.value)}>
+        <RowSelectLong name="selectedMealType" onChange={(e) => setMealType(e.target.value)} >
           <option value="Breakfast">Breakfast</option>
           <option value="Lunch">Lunch</option>
           <option value="Appetizer">Appetizer</option>
@@ -217,12 +256,10 @@ export default ({
         </RowSelectLong>
       </RowForm>
       <RowForm action={formAction} method={formMethod}>
-        <SubmitButtonRow type="submit" onClick={submitRecipe}>{recipe ? "Update Recipe" : "Submit Recipe"}</SubmitButtonRow>
+        <SubmitButtonRow type="submit" onClick={(e)=> {submitRecipe(e); linkToRecipes()}}>{recipe ? "Update Recipe" : "Submit Recipe"}</SubmitButtonRow>
       </RowForm>
     </RecipeContainer>
-    <ImageContainer>
-    <Images src={food} />
-    </ImageContainer>
+
     <SingleColumn></SingleColumn>
     </div>
     <TwoColumn>

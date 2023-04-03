@@ -15,7 +15,9 @@ export default () => {
     <AnimationRevealPage>
       <Header />
       <Heading>Share Your <HighlightedText>Recipes</HighlightedText></Heading>
+      <div css={tw`w-full`}>
       <AddRecipeForm />
+      </div>
       <Footer />
     </AnimationRevealPage>
   );
