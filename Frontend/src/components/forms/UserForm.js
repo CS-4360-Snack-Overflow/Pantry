@@ -66,8 +66,6 @@ export default ({
         <Info>{userData.emailAddress}</Info>
         <Label>Username:</Label>
         <Info>{userData.username}</Info>
-        <Label>Password:</Label>
-        <Info>{userData.password}</Info>
         <Label>Date of Birth:</Label>
         <Info>{userData.dob}</Info>
         <Label>Gender:</Label>

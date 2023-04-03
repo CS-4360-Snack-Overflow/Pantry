@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
@@ -7,6 +7,7 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import illustration from "images/login-pantry.svg";
 import logo from "images/logo-p.svg";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
+import { uploadImage } from "helpers/RecipeService";
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -45,17 +46,38 @@ export default ({
   signInUrl = "/login",
   fields = {
     "fullName" : "Name",
-    "emailAddress": "Emai",
+    "emailAddress": "Email",
     "username": "Username",
-    "profilePicture": "Picture",
     "password": "Password",
-    "profilePicture": "Picture",
     "bio": "Bio",
     "phoneNumber": "Phone",
     "dateOfBirth": "DOB",
-    "countryRegion": "Country"
+    "countryRegion": "Country",
+  "gender" : "Favorite dish"
   }
-}) => (
+}) => {
+  const [image, setImage] = useState(null)
+  const [imUrl, setUrl] = useState("/placeholder.webp")
+
+  function handleFileChange(e) {
+    if(e.target.files) {
+      setImage(e.target.files[0]);
+    }
+  }
+
+  async function handleFileUpload(e) {
+    e.preventDefault()
+    let form = new FormData();
+    if(image) {
+      form.append('files', image);
+    let res = await uploadImage(form);
+    res = await res.json().then((result) =>{
+      setUrl(__dirname + result.path)
+    })
+    }
+  }
+
+  return (
   <AnimationRevealPage>
     <Container>
       <Content>
@@ -67,6 +89,10 @@ export default ({
             <Heading>{headingText}</Heading>
             <FormContainer>
               <Form action="/user/userCreate" method="POST">
+                <label>Profile picture</label>
+                <Input type="file" onChange={handleFileChange} required></Input>
+                <SubmitButton type="add" onClick={handleFileUpload}>Upload Photo</SubmitButton>
+                <Input type="text" hidden={true} id="profilePicture" name="profilePicture" value={imUrl}></Input>
                 {Object.keys(fields).map((field, index) => (
                   <div key={index}>
                     <label>{fields[field]}</label>
@@ -103,4 +129,4 @@ export default ({
       </Content>
     </Container>
   </AnimationRevealPage>
-);
+)};
