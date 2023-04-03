@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import tw from "twin.macro";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import styled from "styled-components";
@@ -30,8 +30,8 @@ export default () => {
   const fiber = recipe.nutrition.fiber ? recipe.nutrition.fiber : 0;
   const review = recipe.review ? recipe.review : 0;
   const numReviews = recipe.total_reviews ? recipe.total_reviews : 0;
-  var likes = recipe.user_ratings.count_positive ? recipe.user_ratings.count_positive : 0;
-  var dislikes = recipe.user_ratings.count_negative ? recipe.user_ratings.count_negative : 0;
+  const [likes, setLikes] = useState(recipe.user_ratings.count_positive ? recipe.user_ratings.count_positive : 0);
+  const [dislikes, setDislikes] = useState(recipe.user_ratings.count_negative ? recipe.user_ratings.count_negative : 0);
 
 
   const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-center pt-10 md:pt-24`;
@@ -82,13 +82,13 @@ export default () => {
                 </CardRating>
                 <CardReview>{review ? Math.round(review*10)/10 : "No reviews yet"}</CardReview>
               </CardRatingContainer>
-              <CardLikeContainer type="like" onClick={null}>
+              <CardLikeContainer type="like" onClick={()=>setLikes(likes + 1)}>
                 <CardRating>
                   <LikeIcon />
                 </CardRating>
                 <CardReview>{likes}</CardReview>
               </CardLikeContainer>
-              <CardDislikeContainer type="dislike" onClick={null}>
+              <CardDislikeContainer type="dislike" onClick={()=>setDislikes(dislikes + 1)}>
                 <CardRating>
                   <DislikeIcon />
                 </CardRating>

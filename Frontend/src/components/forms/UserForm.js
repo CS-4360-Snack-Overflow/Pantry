@@ -68,7 +68,7 @@ export default ({
         <Info>{userData.username}</Info>
         <Label>Date of Birth:</Label>
         <Info>{userData.dob}</Info>
-        <Label>Gender:</Label>
+        <Label>Favorite Dish:</Label>
         <Info>{userData.gender}</Info>
         <Label>Country/Region:</Label>
         <Info>{userData.countryRegion}</Info>
