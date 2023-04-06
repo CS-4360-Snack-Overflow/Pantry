@@ -46,7 +46,7 @@ export default () => {
   const SmallColumn = tw.div`flex flex-col md:flex-row justify-start max-w-screen-xl mx-auto py-4 md:py-4`;
   const CardReview = tw.div`font-medium justify-center text-xs text-gray-600`;
   const CardRatingContainer = tw.div`leading-none absolute inline-flex bg-gray-100 bottom-0 left-0 ml-4 mb-4 rounded-full px-5 py-2 items-end`;
-  const CardLikeContainer = tw(PrimaryButtonBase)`leading-none absolute inline-flex bg-gray-100 bottom-0 right-[110px] ml-4 mb-4 rounded-full px-5 py-2 items-end`;
+  const CardLikeContainer = tw(PrimaryButtonBase)`leading-none absolute inline-flex bg-gray-100 bottom-0 right-[90px] ml-4 mb-4 rounded-full px-5 py-2 items-end`;
   const CardDislikeContainer = tw(PrimaryButtonBase)`leading-none absolute inline-flex bg-gray-100 bottom-0 right-[18px] ml-4 mb-4 rounded-full px-5 py-2 items-end`;
   const CardRating = styled.div`
     ${tw`mr-1 text-sm font-bold flex items-end`}
@@ -75,7 +75,7 @@ export default () => {
       <div css={tw`flex flex-initial justify-start md:justify-items-start`}>
         <CardContainer>
           <Card>
-            <CardImageContainer imageSrc={recipe.poster_image_url}>
+            <CardImageContainer imageSrc={recipe.alt_image_url}>
               <CardRatingContainer>
                 <CardRating>
                   <StarIcon />

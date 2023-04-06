@@ -34,7 +34,7 @@ const ButtonContainer = tw.div`inline-flex w-full`
 
 export default ({
   subheading = "Recipes",
-  heading = <>Your one<span tw="text-primary-500"> stop shop for new</span><wbr/>and delicious recipes.</>,
+  heading = <>Your one<span tw="text-primary-500"> stop shop for new</span><wbr/> and delicious recipes.</>,
   description = "Select ingredients to find recipes that meet your needs or search directly for what you're looking for.",
   submitButtonText = "Search recipes",
   addButtonText = "Add",
