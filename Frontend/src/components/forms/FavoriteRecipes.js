@@ -42,9 +42,9 @@ const RecipeDescription = styled.div`
 
 const UserFavoritesPage = () => {
   const favoriteRecipes = [
-    { id: 1, title: "Test", description: "Desc" },
-    { id: 2, title: "Test", description: "Desc" },
-    { id: 3, title: "Test", description: "Desc" },
+    { id: 1, title: "Chocolate Tart", description: "Brianna Smith" },
+    { id: 2, title: "Quick and easy BLT", description: "Tyler Lopez" },
+    { id: 3, title: "BBQ Pulled pork", description: "Chris Rosa" },
   ];
 
   return (
