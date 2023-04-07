@@ -9,8 +9,8 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
-import RecipeSearchBar from "components/forms/SearchBarWithIllustration";
-import {getRecipes} from "../../helpers/RecipeService.js"
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
@@ -37,10 +37,10 @@ const TabControl = styled.div`
 
 const TabContent = tw(motion.div)`mt-6 flex flex-wrap sm:-mr-10 md:-mr-6 lg:-mr-12`;
 const CardContainer = tw.div`mt-10 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md:pr-6 lg:pr-12`;
-const Card = tw(motion.a)`bg-gray-200 rounded-b block max-w-xs mx-auto sm:max-w-none sm:mx-0`;
+const Card = tw(motion.div)`bg-gray-200 rounded-b block max-w-xs mx-auto sm:max-w-none sm:mx-0`;
 const CardImageContainer = styled.div`
-  ${props => css`background-image: url("${props.imageSrc}");`}
-  ${tw`h-56 xl:h-64 bg-center bg-cover relative rounded-t`}
+  ${props => css`background-image:url("${props.imageSrc}");`}
+  ${tw`h-56 bg-center bg-cover relative rounded-t`}
 `;
 const CardRatingContainer = tw.div`leading-none absolute inline-flex bg-gray-100 bottom-0 left-0 ml-4 mb-4 rounded-full px-5 py-2 items-end`;
 const CardRating = styled.div`
@@ -72,17 +72,14 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 
 export default ({
   heading = "Checkout the Menu",
-  upperTabs = {
-    Recent: [],
-    Trending: [],
-    Everything: []
-  },
   tabs = {
-    Breakfast: [],
-    Lunch: [],
-    Dinner: [],
-    Dessert: []
-  }
+    "All": [],
+    "Popular": [],
+    "Highly Rated": [],
+    "Recent": []
+  },
+  recipes = [],
+  loadRecipes = () => {}
 }) => {
   /*
    * To customize the tabs, pass in data using the `tabs` prop. It should be an object which contains the name of the tab
@@ -90,47 +87,32 @@ export default ({
    * To see what attributes are configurable of each object inside this array see the example above for "Starters".
    */
   const tabsKeys = Object.keys(tabs);
-  const upperTabKeys = Object.keys(upperTabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
-  const [activeUpperTab, setUpperTab] = useState(upperTabKeys[0]);
-  const [recipes, setRecipes] = useState([]);
-  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    // setLoading(true)
-    getRecipes()
-    .then((result) => {
-        const sorted = result.sort(() => Math.random() - 0.5)
-        setRecipes(sorted);
-        setLoading(false);
-      })
+    if(tabs[activeTab].length === 0){
+      tabs[activeTab] = loadRecipes([], activeTab, false);
+    }
+    recipes = tabs[activeTab];
   }, [activeTab])
-
-  if(isLoading) {
-    return <Header>Loading...</Header>
-  }
 
   return (
     <Container>
       <ContentWithPaddingXl>
-        <UpperTabsControl>
-            {Object.keys(upperTabs).map((tabName, index) => (
-              <UpperTabControl key={index} active={activeUpperTab === tabName} onClick={() => setUpperTab(tabName)}>
-                {tabName}
-              </UpperTabControl>
-            ))}
-          </UpperTabsControl>
         <HeaderRow>
           <Header>{heading}</Header>
+          <p>{recipes.length} results found</p>
           <TabsControl>
             {Object.keys(tabs).map((tabName, index) => (
-              <TabControl key={index} active={activeTab === tabName} onClick={() => setActiveTab(tabName)}>
+              <TabControl key={index} 
+                  active={activeTab === tabName} 
+                  onClick={() => {setActiveTab(tabName)}}
+              >
                 {tabName}
               </TabControl>
             ))}
           </TabsControl>
         </HeaderRow>
-
         {tabsKeys.map((tabKey, index) => (
           <TabContent
             key={index}
@@ -152,13 +134,15 @@ export default ({
           >
             {Object.keys(recipes).map((key, index) => (
               <CardContainer key={index}>
-                <Card className="group" href={"http://localhost:8080/recipes/" + recipes[key]._id} target ="_blank" initial="rest" whileHover="hover" animate="rest">
-                  <CardImageContainer imageSrc={recipes[key].imUrl}>
+              <Link to="/recipedetails" 
+                        state= {{clickedRecipe:recipes[key]}}>
+                <Card className="group" target ="_blank" initial="rest" whileHover="hover" animate="rest">
+                  <CardImageContainer imageSrc={recipes[key].alt_image_url}>
                     <CardRatingContainer>
                       <CardRating>
                         <StarIcon />
                       </CardRating>
-                      <CardReview>{recipes[key].review}</CardReview>
+                      <CardReview>{recipes[key].review ? Math.round(recipes[key].review*10)/10 : "No reviews yet"}</CardReview>
                     </CardRatingContainer>
                     <CardHoverOverlay
                       variants={{
@@ -173,14 +157,16 @@ export default ({
                       }}
                       transition={{ duration: 0.3 }}
                     >
-                      <CardButton>See Recipe</CardButton>
+                      
+                          <CardButton>See Recipe</CardButton>
                     </CardHoverOverlay>
                   </CardImageContainer>
                   <CardText>
-                    <CardTitle>{recipes[key].recipeName}</CardTitle>
-                    <CardContent>{recipes[key].author}</CardContent>
+                    <CardTitle>{recipes[key].name}</CardTitle>
+                    <CardContent>{recipes[key].credits ? recipes[key].credits : (recipes[key].user_num === "0" ? "Tasty.com" : "Unknown author")}</CardContent>
                   </CardText>
                 </Card>
+                </Link>
               </CardContainer>
             ))}
           </TabContent>

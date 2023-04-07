@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
@@ -6,7 +6,7 @@ import Hero from "components/hero/TwoColumnWithVideo.js";
 import Features from "components/features/ThreeColSimple.js";
 //import MainFeature from "components/features/TwoColWithButton.js";
 import MainFeature2 from "components/features/TwoColSingleFeatureWithStats2.js";
-import TabGrid from "components/cards/TabCardGrid.js";
+import TabGrid from "components/cards/TabCardRecipeGrid.js";
 import TabNavGrids from "components/cards/TabCardNavGrid.js";
 import Testimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
 //import DownloadApp from "components/cta/DownloadApp.js";
@@ -16,6 +16,7 @@ import Footer from "components/footers/MiniCenteredFooter";
 import chefIconImageSrc from "images/chef-icon.svg";
 import celebrationIconImageSrc from "images/celebration-icon.svg";
 import shopIconImageSrc from "images/shop-icon.svg";
+import {getRecipes} from "../helpers/RecipeService.js"
 
 export default () => {
   const Subheading = tw.span`tracking-wider text-sm font-medium`;
@@ -23,6 +24,15 @@ export default () => {
   //const HighlightedTextInverse = tw.span`bg-gray-100 text-primary-500 px-4 transform -skew-x-12 inline-block`;
   //const Description = tw.span`inline-block mt-8`;
   const imageCss = tw`rounded-4xl`;
+  const [recipes, setRecipes] = useState([])
+  useEffect(()=>{
+    setRecipes(loadRecipes("All"))
+  }, [])
+  async function loadRecipes(_, filter){
+    getRecipes(`filter=${filter}`).then((result) => {
+      setRecipes(result);
+  })
+  }
   return (
     <AnimationRevealPage>
       <Hero
@@ -35,9 +45,8 @@ export default () => {
         primaryButtonUrl="/recipes"
         watchVideoButtonText="Quick Recipes"
       />
-      
-      {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
-      <TabGrid
+       
+      <TabGrid loadRecipes={loadRecipes} recipes={recipes}
         heading={
           <>Checkout our <HighlightedText>trending</HighlightedText> recipes</>
         }
@@ -74,46 +83,10 @@ export default () => {
         imageContainerCss={tw`p-2!`}
         imageCss={tw`w-20! h-20!`}
       />
-      {/* <MainFeature
-        subheading={<Subheading>Established 2023</Subheading>}
-        heading={
-          <>
-            Find the recipe for these delicious home cooked
-            <wbr /> <HighlightedText>Meals.</HighlightedText>
-          </>
-        }
-        description={
-          <Description>
-            Learn about the history about how these dishes were made and their importance
-            and see how these traditonal dishes continue to be passed down.
-          </Description>
-        }
-        buttonRounded={false}
-        textOnLeft={false}
-        primaryButtonText="Find out more."
-        imageSrc={
-          "https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
-        }
-        imageCss={imageCss}
-        imageDecoratorBlob={true}
-        imageDecoratorBlobCss={tw`left-1/2 -translate-x-1/2 md:w-32 md:h-32 opacity-25`}
-      /> */}
       <MainFeature2
         subheading={<Subheading>A Reputed Brand</Subheading>}
         heading={<>Why <HighlightedText>Choose Us?</HighlightedText></>}
         statistics={[
-          // {
-          //   key: "Orders",
-          //   value: "94000+",
-          // },
-          // {
-          //   key: "Customers",
-          //   value: "11000+"
-          // },
-          // {
-          //   key: "Chefs",
-          //   value: "1500+"
-          // }
         ]}
         primaryButtonText="Learn More"
         primaryButtonUrl="/about"
@@ -129,9 +102,6 @@ export default () => {
         subheading=""
         heading={<>Novice Chefs <HighlightedText>Love Us</HighlightedText></>}
       />
-      {/* <DownloadApp
-        text={<>People around you are cooking delicious meals using the <HighlightedTextInverse>Pantry App.</HighlightedTextInverse></>}
-      /> */}
       <Footer />
     </AnimationRevealPage>
   );

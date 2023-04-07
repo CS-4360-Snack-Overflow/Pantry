@@ -8,10 +8,10 @@ import ContactUsForm from "components/forms/TwoColContactUsWithIllustrationFullF
 import ContactDetails from "components/cards/ThreeColContactDetails.js";
 
 const Address = tw.span`leading-relaxed`;
-const AddressLine = tw.span`block`;
+const AddressLine = tw.span`block text-center`;
 const Email = tw.span`text-sm mt-6 block text-gray-500`;
 const Phone = tw.span`text-sm mt-0 block text-gray-500`;
-
+ 
 export default () => {
   return (
     <AnimationRevealPage>

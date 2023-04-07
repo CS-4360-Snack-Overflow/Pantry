@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Signup for Pantry</title>
+  </head>
+  <body>
+    <h1>Signup for Pantry - a click away from easy-to-make recipes</h1>
+    <form action="/user/userCreate" method="POST">
+      <label for="fullName">Full Name:</label>
+      <input type="text" id="fullName" name="fullName" required><br>
+      <label for="emailAddress">Email Address:</label>
+      <input type="email" id="emailAddress" name="emailAddress" required><br>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required><br>
+
+      <label for="profilePicture">Profile Picture:</label>
+      <input type="text" id="profilePicture" name="profilePicture" required><br>
+
+      <label for="bio">Bio:</label>
+      <input type="text" id="bio" name="bio" required><br>
+
+      <label for="phoneNumber">Phone Number:</label>
+      <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="###-###-####" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
+
+      <label for="dateOfBirth">Date of Birth:</label>
+      <input type="text" id="dateOfBirth" name="dateOfBirth" required><br>
+      <label for="gender">Gender:</label>
+      <input type="text" id="gender" name="gender" required><br>
+      <label for="countryRegion">Country/Region:</label>
+      <input type="text" id="countryRegion" name="countryRegion" required><br>
+      <button type="submit">Sign up</button>
+    </form>
+  </body>
+</html>
+
+

@@ -6,8 +6,8 @@ import EventLandingPage from "demos/EventLandingPage.js";
 import HotelTravelLandingPage from "demos/HotelTravelLandingPage.js";
 import AgencyLandingPage from "demos/AgencyLandingPage.js";
 import SaaSProductLandingPage from "demos/SaaSProductLandingPage.js";
-import RestaurantLandingPage from "demos/HomePage.js";
-import ServiceLandingPage from "demos/RecipeSearchPage.js";
+import RestaurantLandingPage from "pages/HomePage.js";
+import ServiceLandingPage from "pages/RecipeSearchPage.js";
 import HostingCloudLandingPage from "demos/HostingCloudLandingPage.js";
 
 import EventLandingPageImageSrc from "images/demo/EventLandingPage.jpeg";
@@ -21,12 +21,12 @@ import HostingCloudLandingPageImageSrc from "images/demo/HostingCloudLandingPage
 
 import LoginPage from "pages/Login.js";
 import SignupPage from "pages/Signup.js";
-import PricingPage from "pages/Pricing.js";
+import PricingPage from "demos/Pricing.js";
 import AboutUsPage from "pages/AboutUs.js";
 import ContactUsPage from "pages/ContactUs.js";
-import BlogIndexPage from "pages/BlogIndex.js";
-import TermsOfServicePage from "pages/TermsOfService.js";
-import PrivacyPolicyPage from "pages/PrivacyPolicy.js";
+import BlogIndexPage from "demos/BlogIndex.js";
+import TermsOfServicePage from "demos/TermsOfService.js";
+import PrivacyPolicyPage from "demos/PrivacyPolicy.js";
 
 import LoginPageImageSrc from "images/demo/LoginPage.jpeg";
 import SignupPageImageSrc from "images/demo/SignupPage.jpeg";
