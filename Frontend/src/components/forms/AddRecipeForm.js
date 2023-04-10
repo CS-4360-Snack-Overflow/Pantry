@@ -1,20 +1,16 @@
 import React from "react";
 import Select, { IndicatorSeparatorProps } from "react-select"
-
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
-
 import styled from "styled-components";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { CustomButton as CustomButtonBase, PrimaryButton } from "components/misc/Buttons.js";
 import { motion } from "framer-motion";
-//import EmailIllustrationSrc from "images/email-illustration.svg";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { addRecipe, uploadImage, getOneRecipe, editRecipe } from "helpers/RecipeService";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
-
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import food from "images/honey.jpg";
 
@@ -34,8 +30,7 @@ const Image = styled.div`
   ${props => css`background-image:url("${props.imageSrc}");max-width:80%;`}
   ${tw`h-128 bg-center bg-cover relative rounded-t mx-auto flex-row`}
 `;
-// const Image = styled.div`${css`max-width:100%; max-height:100%`} 
-//                      ${tw`object-scale-down`}`
+
 const TextContent = tw.div`lg:py-8 text-center md:text-left`;
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
 const Heading = tw(SectionHeading)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
@@ -58,11 +53,9 @@ const Tag = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-400 hover:bg-gray-300 text-
 const TagContainer = tw.div`w-full`
 const Step = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-200 hover:bg-gray-300 text-black w-full`
 const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-auto w-full`;
-const ImageContainer = tw.div`border-2 border-solid border-white rounded-lg p-4 m-2 w-full md:w-2/5`;
 const Images = styled.div`
 ${props => css`background-image:url("${props.imageSrc}");max-width:80%;`}
 ${tw`h-128 w-full bg-center bg-cover relative rounded-t mx-auto flex-row`}`
-
 
 export default ({
   recipeId = null,
@@ -76,8 +69,7 @@ export default ({
   const [numServings, setServings] = useState(recipe ? recipe.num_servings : 0)
   const [prepTime, setPrep] = useState(recipe ? recipe.prep_time : 0)
   const [cookTime, setCook] = useState(recipe ? recipe.cook_time : 0)
-  const [nutrition, setNutrition] = useState(recipe? recipe.nutrition : {"protein": 0,"fat": 0,"calories": 0,
-                                              "sugar": 0, "carbohydrates":0, "fiber":0}) 
+  const [nutrition, setNutrition] = useState(recipe? recipe.nutrition : {"protein": 0,"fat": 0,"calories": 0,"sugar": 0, "carbohydrates":0, "fiber":0})
   const [imUrl, setUrl] = useState(recipe ? recipe.alt_image_url : "/placeholder.webp");
   const [attributes, setAttributes] = useState([]);
   const [mealType, setMealType] = useState("Breakfast");
@@ -119,10 +111,9 @@ export default ({
       setUrl(__dirname + result.path)
     })
     }
-    
   }
 
-  const linkToRecipes = () => { 
+  const linkToRecipes = () => {
     const path = '/recipes'
     navigate(path);
   }
@@ -141,14 +132,12 @@ export default ({
       })
     }
   }
-  
-  
 
   useEffect(()=>{console.log(recipeFields)}, [recipeFields])
 
   useEffect(() => {
     let tags = [mealType, ...attributes]
-    let newRecipe = Object.assign({}, recipe); 
+    let newRecipe = Object.assign({}, recipe);
     newRecipe.name = recipeName
     newRecipe.description = recipeDescription
     newRecipe.alt_image_url = imUrl
@@ -160,9 +149,8 @@ export default ({
     newRecipe.prep_time = prepTime
     newRecipe.num_servings = numServings
     newRecipe.nutrition = nutrition
-    setFields(newRecipe)
+    setFields(newRecipe) // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attributes, mealType, recipeName, recipeIngredients, recipeDescription, recipeSteps, imUrl, numServings, prepTime, cookTime, nutrition])
-
 
   return (
     <AnimationRevealPage>
@@ -171,9 +159,6 @@ export default ({
     <SingleColumn css={tw`w-full`}></SingleColumn>
     <Images imageSrc={imUrl} />
 
-    {/* <ImageContainer>
-    <Images imageSrc={imUrl} />
-    </ImageContainer> */}
     <RecipeContainer>
       <RowForm action={formAction} method={formMethod}>
         <CustomDescription>Upload Recipe Image: </CustomDescription>
@@ -261,7 +246,7 @@ export default ({
       {Object.keys(nutrition).map((nutrient, index) => (
             <div key={index} class="w-1/2 m-2">
               <label class="mx-3 flex">{nutrient.charAt(0).toUpperCase() + nutrient.slice(1)} {nutrient!=="calories" ? "(grams)":""}</label>
-              <RowInput class="ml-2 p-3 w-1/4" type="text" defaultValue={recipe? recipe.nutrition[nutrient] : 0} onChange={(e) => handleNutrition(nutrient, e.target.value)}></RowInput>           
+              <RowInput class="ml-2 p-3 w-1/4" type="text" defaultValue={recipe? recipe.nutrition[nutrient] : 0} onChange={(e) => handleNutrition(nutrient, e.target.value)}></RowInput>
             </div>
           ))}
       <RowForm action={formAction} method={formMethod}>
