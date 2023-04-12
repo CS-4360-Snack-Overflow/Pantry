@@ -12,6 +12,8 @@ router.get('/create', recipeController.recipe_create_get);
 
 router.get('/:id', recipeController.recipe_details);
 
+router.get('/user_created', recipeController.recipe_get_created);
+
 router.delete('/:id', recipeController.recipe_delete);
 
 router.patch('/:id', recipeController.recipe_patch);

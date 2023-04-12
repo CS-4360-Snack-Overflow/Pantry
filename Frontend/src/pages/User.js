@@ -9,15 +9,24 @@ import UserForm from "components/forms/UserForm";
 import UserRecipe from "components/forms/UserRecipe";
 import FavoriteRecipes from "components/forms/FavoriteRecipes"
 import { useState } from "react";
+import {getCreatedRecipes} from "../helpers/RecipeService"
+
 const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-left pt-10 md:pt-24 w-full`;
 const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
 
 const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-2 w-full md:w-2/5`;
+/// USER PROFILE PAGE
 
 export default () => {
   const [user, setUser] = useState([])
-  
-  useEffect(()=>{console.log(user)}, [user])
+  const [createdRecipes, setCreated] = useState([])
+
+  useEffect(()=>{
+    console.log(user)
+    getCreatedRecipes().then((result) => {
+      console.log(result)
+    })
+  }, [user])
 
   useEffect(()=>{
     async function getUser(){
@@ -28,6 +37,7 @@ export default () => {
       setUser(result)
     }
     )
+    
   }, [])
 
   return (

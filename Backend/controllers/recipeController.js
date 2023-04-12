@@ -74,7 +74,6 @@ const recipe_create_post = (req, res) => {
         instructions: req.body.instructions,
         user_num: req.session.userId
     })
-    console.log(recipe)
     recipe.save()
     .then((result) => {
         res.redirect('/');
@@ -115,6 +114,13 @@ const recipe_upload_image = (req, res) => {
     return res.json({"path": pathString})
 }
  
+const recipe_get_created = (req, res) => {
+    console.log(req.session)
+    Recipe.find({user_num:req.session.userId})
+    .then((result) => {
+        res.send(result)
+    })
+}
 
 module.exports = {
     recipe_index,
@@ -123,5 +129,6 @@ module.exports = {
     recipe_create_post,
     recipe_delete,
     recipe_patch, 
-    recipe_upload_image
+    recipe_upload_image,
+    recipe_get_created
 };
