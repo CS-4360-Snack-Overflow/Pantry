@@ -53,6 +53,7 @@ const recipe_create_get = (req, res) => {
     //render from front-end here
     //res.render('create', { title: 'create' });
 };
+
 const recipe_create_post = (req, res) => {
     const recipe = new Recipe({
         name: req.body.name,
@@ -60,7 +61,7 @@ const recipe_create_post = (req, res) => {
         alt_image_url: req.body.alt_image_url,
         num_servings: req.body.num_servings,
         prep_time: req.body.prep_time,
-        credits: req.body.credits,
+        credits: req.session.name,
         cook_time: req.body.cook_time,
         description: req.body.description,
         nutrition: req.body.nutrition,
@@ -74,7 +75,7 @@ const recipe_create_post = (req, res) => {
         instructions: req.body.instructions,
         user_num: req.session.userId
     })
-    console.log(recipe)
+    console.log(req.session.userId)
     recipe.save()
     .then((result) => {
         res.redirect('/');
@@ -115,6 +116,12 @@ const recipe_upload_image = (req, res) => {
     return res.json({"path": pathString})
 }
  
+const recipe_get_created = (req, res) => {
+    Recipe.find({user_num : req.session.userId})
+    .then((result) => {
+        res.send(result)
+    })
+}
 
 module.exports = {
     recipe_index,
@@ -123,5 +130,6 @@ module.exports = {
     recipe_create_post,
     recipe_delete,
     recipe_patch, 
-    recipe_upload_image
+    recipe_upload_image,
+    recipe_get_created
 };
