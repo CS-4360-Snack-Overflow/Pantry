@@ -57,10 +57,10 @@ export default ({
   }
 
   // Add an parameter to filter the search by
-  const addParameter = () => {
+  const addParameter = (param) => {
     const elements = new Set(parameters);
-    if(!elements.has(query) && query !== ""){
-      setParameters([...parameters, query]);
+    if(!elements.has(param) && param !== ""){
+      setParameters([...parameters, param]);
     }
   }
 
@@ -90,7 +90,7 @@ export default ({
                   name="search"
                   placeholder="Search for recipes here ..." 
                   onKeyUp={handleQuery}/>
-                <AddButton type="button" onClick={addParameter}>{addButtonText}</AddButton>
+                <AddButton type="button" onClick={addParameter(query)}>{addButtonText}</AddButton>
             </Search>
             <TagContainer>
               {parameters.map((parameter, index) => (

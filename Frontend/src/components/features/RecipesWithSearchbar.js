@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { SectionHeading } from "components/misc/Headings.js";
 import tw from "twin.macro";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
+import { MultiSelectWithCategories } from "components/forms/Inputs.js";
 
 export default () => {
     const [loading, setLoading] = useState(true);
@@ -25,11 +26,11 @@ export default () => {
         })
     }, [url])
 
-    const loadRecipes = (selectedIngredients, filter = loadedFilter, writeUrl = true) => {
+    const loadRecipes = (parameters, filter = loadedFilter, writeUrl = true) => {
         let query
         if(writeUrl){
-            query = new URLSearchParams(selectedIngredients.map(value => ['ingredients', value]));
-            setIngredients(selectedIngredients);
+            query = new URLSearchParams(parameters.map(value => ['ingredients', value]));
+            setIngredients(parameters);
         }
         else {
             query = new URLSearchParams(loadedIngredients.map(value => ['ingredients', value]));
@@ -43,6 +44,7 @@ export default () => {
     return (
         <div>
             <RecipeSearchBar searchFor={loadRecipes}/> 
+            <MultiSelectWithCategories></MultiSelectWithCategories>
             <SectionHeading>Loading...</SectionHeading>
         </div>
     );
