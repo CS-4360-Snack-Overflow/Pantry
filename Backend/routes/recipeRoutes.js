@@ -10,9 +10,9 @@ router.post('/create', recipeController.recipe_create_post);
 
 router.get('/create', recipeController.recipe_create_get);
 
-router.get('/:id', recipeController.recipe_details);
+router.get('/created', recipeController.recipe_get_created);
 
-router.get('/user_created', recipeController.recipe_get_created);
+router.get('/:id', recipeController.recipe_details);
 
 router.delete('/:id', recipeController.recipe_delete);
 

@@ -9,7 +9,7 @@ export async function getRecipes(url) {
 
 export async function getCreatedRecipes() {
 	let recipes = []
-	await fetch("/recipes/user_created")
+	await fetch("/recipes/created")
 	.then((res) => {
 	  recipes = res.json()
 	})

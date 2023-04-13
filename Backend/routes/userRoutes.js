@@ -29,6 +29,8 @@ async function loginUser(credentials, session) {
   }
 
   session.userId = user._id;
+  session.name = user.fullName;
+
 }
 
 // Create a new user
@@ -63,7 +65,6 @@ router.post('/userCreate', async (req, res) => {
 router.get('/userRead', requireAuth, async (req, res) => {
   console.log("message: Accessed userRead route");
   try {
-    console.log(session.userId)
     const user = await User.findById(req.session.userId);
     res.json(user);
   } catch (err) {
