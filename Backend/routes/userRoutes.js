@@ -29,6 +29,8 @@ async function loginUser(credentials, session) {
   }
 
   session.userId = user._id;
+  session.name = user.fullName;
+
 }
 
 // Create a new user
@@ -63,7 +65,6 @@ router.post('/userCreate', async (req, res) => {
 router.get('/userRead', requireAuth, async (req, res) => {
   console.log("message: Accessed userRead route");
   try {
-    console.log(session.userId)
     const user = await User.findById(req.session.userId);
     res.json(user);
   } catch (err) {
@@ -78,7 +79,6 @@ router.post('/userUpdate', async (req, res) => {
 
     // first access the username attribute from the model
     const username = req.body.username;
-    console.log(`user.username=${username}`);
     const updates = req.body;
     const updatedFields = {};
 
@@ -121,7 +121,6 @@ router.post('/userDelete', requireAuth, async (req, res) => {
 router.post('/userLoginProc', async (req, res) => {
   try{
     await loginUser(req.body, req.session);
-    console.log("here")
     res.redirect('/');
   } catch (error) {
     res.status(401).json({ error: error.message });
