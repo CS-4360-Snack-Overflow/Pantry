@@ -1,5 +1,4 @@
 import React from "react";
-import Select, { IndicatorSeparatorProps } from "react-select"
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";

@@ -4,42 +4,15 @@ import tw from "twin.macro";
 
 import { SectionHeading } from "components/misc/Headings.js";
 
+// This is the styling for the form
 const Heading = tw(SectionHeading)`mt-4 font-black text-right text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
+const Container = styled.div` display: flex; flex-direction: column; align-items: center;`;
+const RecipeList = styled.ul` list-style: none; padding: 0; margin-top: 20px; width: 100%; max-width: 600px;`;
+const RecipeListItem = styled.li` display: flex; align-items: center; justify-content: space-between; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;`;
+const RecipeTitle = styled.div` font-weight: bold; font-size: 18px;`;
+const RecipeDescription = styled.div` font-size: 14px; color: #777;`;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const RecipeList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
-  width: 100%;
-  max-width: 600px;
-`;
-
-const RecipeListItem = styled.li`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 10px;
-`;
-
-const RecipeTitle = styled.div`
-  font-weight: bold;
-  font-size: 18px;
-`;
-
-const RecipeDescription = styled.div`
-  font-size: 14px;
-  color: #777;
-`;
-
+// Shows the favorites recipes of the user
 const UserFavoritesPage = () => {
   const favoriteRecipes = [
     { id: 1, title: "Chocolate Tart", description: "Brianna Smith" },
@@ -47,6 +20,7 @@ const UserFavoritesPage = () => {
     { id: 3, title: "BBQ Pulled pork", description: "Chris Rosa" },
   ];
 
+  //Sets up the body of the form
   return (
     <Container>
       <Heading>My Favorite Recipes</Heading>
@@ -64,5 +38,5 @@ const UserFavoritesPage = () => {
     </Container>
   );
 };
-
+// Exports the form
 export default UserFavoritesPage;

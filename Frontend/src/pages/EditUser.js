@@ -4,35 +4,14 @@ import UserPage from "components/forms/UserForm";
 import { SectionHeading } from "components/misc/Headings.js";
 import tw from "twin.macro";
 
-
+// This is the styling for the form
 const Heading = tw(SectionHeading)`mt-4 font-black text-right text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
+const Container = styled.div` display: flex; flex-direction: column; align-items: start;`;
+const Label = styled.div` font-weight: bold; margin-bottom: 5px;`;
+const Input = styled.input` margin-bottom: 10px;`;
+const Button = styled.button` background-color: #F58023; color: white; font-weight: bold; padding: 10px 20px; border: none; border-radius: 5px; margin-top: 20px; cursor: pointer;`;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-`;
-
-const Label = styled.div`
-  font-weight: bold;
-  margin-bottom: 5px;
-`;
-
-const Input = styled.input`
-  margin-bottom: 10px;
-`;
-
-const Button = styled.button`
-  background-color: #F58023;
-  color: white;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 20px;
-  cursor: pointer;
-`;
-
+//Set's up a User Edit Form that shows the user's information and allows them to edit it
 const EditUser = () => {
 const [name, setName] = useState("Name Will Go Here");
 const [bio, setBio] = useState("User Bio Will go Here.");
@@ -48,7 +27,7 @@ event.preventDefault();
 // save user information to the server/database
 // and redirect to the user page
 };
-
+//Sets up the body of the form to receive the user's information
 return (
 <Container>
 <form onSubmit={handleSubmit}>
@@ -77,5 +56,5 @@ return (
 </Container>
 );
 };
-
+//Exports the form to be used in other files
 export default EditUser;
