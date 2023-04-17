@@ -5,20 +5,23 @@ const fs = require("fs");
 const path = require('path');
 require('dotenv').config();
 const recipe_index = (req, res) => {
-    const retrieveRecipes = (ingredients, filter) => {
+    const retrieveRecipes = (parameters, filter) => {
         let recipes;
-        if(!ingredients){
+        if(!parameters){
             recipes = Recipe.find();
         }
-        else if(typeof(ingredients) === "string") {
-            recipes = Recipe.find({ingredients:RegExp(ingredients)})
+
+        else if(typeof(parameters) === "string") {
+            const param = RegExp(parameters, "i")
+            console.log(param)
+            recipes = Recipe.find({$or: [{ingredients:param}, {name:param}, {tags: param}]})
         }
         else {
             let regexp = [];
-            for(let i = 0; i < ingredients.length; i++) {
-                regexp.push({ingredients: RegExp(ingredients[i])})
+            for(let i = 0; i < parameters.length; i++) {
+                const param = RegExp(parameters[i], "i")
+                regexp.push({$or: [{name: param}, {tags: param}, {ingredients: param}]})
             }
-            console.log(regexp)
             recipes = Recipe.find({$and : regexp});
         }
         switch(filter){
@@ -33,13 +36,14 @@ const recipe_index = (req, res) => {
         }
         return recipes
     }
-    retrieveRecipes(req.query.ingredients, req.query.filter).then((result) => {
+    retrieveRecipes(req.query.parameter, req.query.filter).then((result) => {
         res.send(result);
     })
     .catch((err) => {
         console.log(err);
     });
 };
+
 const recipe_details = (req, res) => {
     const id = req.params.id;
     Recipe.findById(id)
@@ -53,6 +57,7 @@ const recipe_create_get = (req, res) => {
     //render from front-end here
     //res.render('create', { title: 'create' });
 };
+
 const recipe_create_post = (req, res) => {
     const recipe = new Recipe({
         name: req.body.name,
@@ -60,7 +65,7 @@ const recipe_create_post = (req, res) => {
         alt_image_url: req.body.alt_image_url,
         num_servings: req.body.num_servings,
         prep_time: req.body.prep_time,
-        credits: req.body.credits,
+        credits: req.session.name,
         cook_time: req.body.cook_time,
         description: req.body.description,
         nutrition: req.body.nutrition,
@@ -74,7 +79,7 @@ const recipe_create_post = (req, res) => {
         instructions: req.body.instructions,
         user_num: req.session.userId
     })
-    console.log(recipe)
+    console.log(req.session.userId)
     recipe.save()
     .then((result) => {
         res.redirect('/');
@@ -115,6 +120,12 @@ const recipe_upload_image = (req, res) => {
     return res.json({"path": pathString})
 }
  
+const recipe_get_created = (req, res) => {
+    Recipe.find({user_num : req.session.userId})
+    .then((result) => {
+        res.send(result)
+    })
+}
 
 module.exports = {
     recipe_index,
@@ -123,5 +134,6 @@ module.exports = {
     recipe_create_post,
     recipe_delete,
     recipe_patch, 
-    recipe_upload_image
+    recipe_upload_image,
+    recipe_get_created
 };

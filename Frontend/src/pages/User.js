@@ -6,11 +6,10 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import Header from "components/headers/light.js";
 import Footer from "components/footers/MiniCenteredFooter";
 import UserForm from "components/forms/UserForm";
-import UserRecipe from "components/forms/UserRecipe";
-import FavoriteRecipes from "components/forms/FavoriteRecipes"
+import UserRecipes from "components/forms/UserRecipes"
 import { useState } from "react";
+import {getCreatedRecipes} from "../helpers/RecipeService"
 
-// This is the styling for the form
 const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-left pt-10 md:pt-24 w-full`;
 const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
 const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-2 w-full md:w-2/5`;
@@ -18,18 +17,22 @@ const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-l
 
 export default () => {
   const [user, setUser] = useState([])
-  
-  useEffect(()=>{console.log(user)}, [user])
-  //Gets the user data from the database
+  const [createdRecipes, setCreated] = useState([])
+  const [favoritedRecipes, setFavorited] = useState([])
+
   useEffect(()=>{
     async function getUser(){
       const res = await fetch("/user/userRead")
       return await res.json()
     }
+
     getUser().then((result) => {
       setUser(result)
-    }
-    )
+    })
+
+    getCreatedRecipes().then((result) => {
+      setCreated(result)
+    })
   }, [])
 
   //Sets up the every component of the pages to create the profile page
@@ -37,17 +40,16 @@ export default () => {
     <AnimationRevealPage>
       <Header />
       <Heading><HighlightedText>Profile</HighlightedText></Heading>
-      <p>Password stored in DataBase: {user.password}</p>
-      <div css={tw`flex flex-wrap justify-center md:justify-between`}>
+      <div css={tw`flex flex-wrap justify-center md:justify-between pb-10`}>
         <UserForm userData={user} css={tw`w-full md:w-2/5 mx-2`} />
         <RecipeContainer>
-        <FavoriteRecipes css={tw`w-full md:w-2/5 mx-2`} />
+        <UserRecipes css={tw`w-full md:w-2/5 mx-2`} heading="Favorited Recipes" recipes={favoritedRecipes}/>
         </RecipeContainer>
         <RecipeContainer>
-        <UserRecipe css={tw`w-full md:w-2/5 mx-2 float-right`} />
+        <UserRecipes css={tw`w-full md:w-2/5 mx-2 float-right`} heading="My Recipes" recipes={createdRecipes}/>
         </RecipeContainer>
       </div>
-      
+
       <Footer />
     </AnimationRevealPage>
   );
