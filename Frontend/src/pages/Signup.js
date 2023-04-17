@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
@@ -7,6 +7,7 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import illustration from "images/login-pantry.svg";
 import logo from "images/logo-p.svg";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
+import { uploadImage } from "helpers/RecipeService";
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -21,7 +22,7 @@ const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 borde
   focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
 const IllustrationContainer = tw.div`sm:rounded-r-lg flex-1 bg-purple-100 text-center hidden lg:flex justify-center`;
 const SubmitButton = styled.button`
-  ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 w-full py-4 rounded-lg hover:bg-primary-900 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
+  ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 w-1/2 py-4 rounded-lg mb-3 mx-auto hover:bg-primary-900 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
   .icon {
     ${tw`w-6 h-6 -ml-2`}
   }
@@ -32,6 +33,13 @@ const SubmitButton = styled.button`
 const IllustrationImage = styled.div`
   ${props => `background-image: url("${props.imageSrc}");`}
   ${tw`m-12 xl:m-16 w-full max-w-lg bg-contain bg-center bg-no-repeat`}
+`;
+const ProfilePicture = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  ${tw`mx-auto`}
 `;
 
 export default ({
@@ -45,17 +53,38 @@ export default ({
   signInUrl = "/login",
   fields = {
     "fullName" : "Name",
-    "emailAddress": "Emai",
+    "emailAddress": "Email",
     "username": "Username",
-    "profilePicture": "Picture",
     "password": "Password",
-    "profilePicture": "Picture",
     "bio": "Bio",
     "phoneNumber": "Phone",
     "dateOfBirth": "DOB",
-    "countryRegion": "Country"
+    "countryRegion": "Country",
+  "gender" : "Favorite dish"
   }
-}) => (
+}) => {
+  const [image, setImage] = useState(null)
+  const [imUrl, setUrl] = useState("/placeholder.webp")
+
+  function handleFileChange(e) {
+    if(e.target.files) {
+      setImage(e.target.files[0]);
+    }
+  }
+
+  async function handleFileUpload(e) {
+    e.preventDefault()
+    let form = new FormData();
+    if(image) {
+      form.append('files', image);
+    let res = await uploadImage(form);
+    res = await res.json().then((result) =>{
+      setUrl(__dirname + result.path)
+    })
+    }
+  }
+
+  return (
   <AnimationRevealPage>
     <Container>
       <Content>
@@ -67,6 +96,13 @@ export default ({
             <Heading>{headingText}</Heading>
             <FormContainer>
               <Form action="/user/userCreate" method="POST">
+                <label class="mx-auto">Profile picture</label>
+                <ProfilePicture src={imUrl} alt="Profile Picture" />
+                <div class="flex-row">
+                <Input type="file" onChange={handleFileChange} required></Input>
+                <SubmitButton type="add" onClick={handleFileUpload}>Upload Photo</SubmitButton>
+                </div>
+                <Input type="text" hidden={true} id="profilePicture" name="profilePicture" value={imUrl}></Input>
                 {Object.keys(fields).map((field, index) => (
                   <div key={index}>
                     <label>{fields[field]}</label>
@@ -103,4 +139,4 @@ export default ({
       </Content>
     </Container>
   </AnimationRevealPage>
-);
+)};

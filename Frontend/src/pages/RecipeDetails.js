@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import tw from "twin.macro";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import styled from "styled-components";
@@ -30,8 +30,8 @@ export default () => {
   const fiber = recipe.nutrition.fiber ? recipe.nutrition.fiber : 0;
   const review = recipe.review ? recipe.review : 0;
   const numReviews = recipe.total_reviews ? recipe.total_reviews : 0;
-  var likes = recipe.user_ratings.count_positive ? recipe.user_ratings.count_positive : 0;
-  var dislikes = recipe.user_ratings.count_negative ? recipe.user_ratings.count_negative : 0;
+  const [likes, setLikes] = useState(recipe.user_ratings.count_positive ? recipe.user_ratings.count_positive : 0);
+  const [dislikes, setDislikes] = useState(recipe.user_ratings.count_negative ? recipe.user_ratings.count_negative : 0);
 
 
   const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-center pt-10 md:pt-24`;
@@ -46,7 +46,7 @@ export default () => {
   const SmallColumn = tw.div`flex flex-col md:flex-row justify-start max-w-screen-xl mx-auto py-4 md:py-4`;
   const CardReview = tw.div`font-medium justify-center text-xs text-gray-600`;
   const CardRatingContainer = tw.div`leading-none absolute inline-flex bg-gray-100 bottom-0 left-0 ml-4 mb-4 rounded-full px-5 py-2 items-end`;
-  const CardLikeContainer = tw(PrimaryButtonBase)`leading-none absolute inline-flex bg-gray-100 bottom-0 right-[110px] ml-4 mb-4 rounded-full px-5 py-2 items-end`;
+  const CardLikeContainer = tw(PrimaryButtonBase)`leading-none absolute inline-flex bg-gray-100 bottom-0 right-[90px] ml-4 mb-4 rounded-full px-5 py-2 items-end`;
   const CardDislikeContainer = tw(PrimaryButtonBase)`leading-none absolute inline-flex bg-gray-100 bottom-0 right-[18px] ml-4 mb-4 rounded-full px-5 py-2 items-end`;
   const CardRating = styled.div`
     ${tw`mr-1 text-sm font-bold flex items-end`}
@@ -75,20 +75,20 @@ export default () => {
       <div css={tw`flex flex-initial justify-start md:justify-items-start`}>
         <CardContainer>
           <Card>
-            <CardImageContainer imageSrc={recipe.poster_image_url}>
+            <CardImageContainer imageSrc={recipe.alt_image_url}>
               <CardRatingContainer>
                 <CardRating>
                   <StarIcon />
                 </CardRating>
                 <CardReview>{review ? Math.round(review*10)/10 : "No reviews yet"}</CardReview>
               </CardRatingContainer>
-              <CardLikeContainer type="like" onClick={null}>
+              <CardLikeContainer type="like" onClick={()=>setLikes(likes + 1)}>
                 <CardRating>
                   <LikeIcon />
                 </CardRating>
                 <CardReview>{likes}</CardReview>
               </CardLikeContainer>
-              <CardDislikeContainer type="dislike" onClick={null}>
+              <CardDislikeContainer type="dislike" onClick={()=>setDislikes(dislikes + 1)}>
                 <CardRating>
                   <DislikeIcon />
                 </CardRating>

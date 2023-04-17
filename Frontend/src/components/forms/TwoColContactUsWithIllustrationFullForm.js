@@ -35,9 +35,13 @@ export default ({
       </RowForm>
       <Column>
         <ColForm action={formAction} method={formMethod}>
+          <label>Email</label>
           <Input type="email" name="email" placeholder="Your Email Address" />
+          <label>Name</label>
           <Input type="text" name="name" placeholder="Your Full Name" />
+          <label>Message Subject</label>
           <Input type="text" name="subject" placeholder="Email Subject" />
+          <label>Message Content</label>
           <Textarea name="message" placeholder="Your Message Here" />
         </ColForm>
       </Column>

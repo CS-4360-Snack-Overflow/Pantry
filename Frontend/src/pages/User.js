@@ -34,6 +34,7 @@ export default () => {
     <AnimationRevealPage>
       <Header />
       <Heading><HighlightedText>Profile</HighlightedText></Heading>
+      <p>Password stored in DataBase: {user.password}</p>
       <div css={tw`flex flex-wrap justify-center md:justify-between`}>
         <UserForm userData={user} css={tw`w-full md:w-2/5 mx-2`} />
         <RecipeContainer>
