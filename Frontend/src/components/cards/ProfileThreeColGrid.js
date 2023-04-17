@@ -8,6 +8,12 @@ import {SectionDescription} from "components/misc/Typography";
 //import { ReactComponent as TwitterIcon} from "images/twitter-icon.svg";
 import { ReactComponent as LinkedinIcon} from "images/linkedin-icon.svg";
 import { ReactComponent as GithubIcon } from "images/github-icon.svg";
+import JadenHeadShot from "images/J-500H-70Q.jpg";
+import CesarHeadShot from "images/CesarSquare.png";
+import JoseHeadShot from "images/J-500H-70Q.jpg";
+import WolfyHeadShot from "images/Wolfy-500H-70Q.jpg";
+import DJHeadShot from "images/DJSquare.png";
+import RyanHeadShot from "images/Ryan-500H-70Q.jpg";
 
 const HeadingContainer = tw.div``
 const Heading = tw(SectionHeading)``
@@ -46,7 +52,8 @@ export default ({
   description = " ",
   cards = [
     {
-      imageSrc: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
+      imageSrc: JadenHeadShot,
+      //imageSrc: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
       position: "UI-UX Designer",
       name: "Jaden Cua",
       links: [
@@ -61,7 +68,7 @@ export default ({
       ],
     },
     {
-      imageSrc: "https://images.unsplash.com/photo-1517070208541-6ddc4d3efbcb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
+      imageSrc: CesarHeadShot,
       position: "UI-UX Designer",
       name: "Cesar Huizar",
       links: [
@@ -76,7 +83,7 @@ export default ({
       ],
     },
     {
-      imageSrc: "https://images.unsplash.com/photo-1546820389-44d77e1f3b31?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=3.45&w=512&h=512&q=80",
+      imageSrc: RyanHeadShot,
       position: "UI-UX Designer",
       name: "Ryan Baertlein",
       links: [
@@ -91,7 +98,7 @@ export default ({
       ],
     },
     {
-      imageSrc: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
+      imageSrc: WolfyHeadShot,
       position: "Back-end Designer",
       name: "Jonathon Fiorini",
       links: [
@@ -106,7 +113,7 @@ export default ({
       ],
     },
     {
-      imageSrc: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
+      imageSrc: JoseHeadShot,
       position: "Back-end Designer",
       name: "Jose Rios",
       links: [
@@ -122,7 +129,7 @@ export default ({
     },
 
     {
-      imageSrc: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=3.45&w=512&h=512&q=80",
+      imageSrc: DJHeadShot,
       position: "Back-end Designer",
       name: "Diptanshu Giri",
       links: [
