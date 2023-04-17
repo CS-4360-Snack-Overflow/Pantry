@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-
+import { Link } from "react-router-dom";
 import { SectionHeading } from "components/misc/Headings.js";
+import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
+import { deleteRecipe } from "helpers/RecipeService";
 
 const Heading = tw(SectionHeading)`mt-4 font-black text-right text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
+const Button = tw(PrimaryButtonBase)`inline-block`
 
 const Container = styled.div`
   display: flex;
@@ -40,29 +43,24 @@ const RecipeDescription = styled.div`
   color: #777;
 `;
 
-const UserFavoritesPage = () => {
-  const favoriteRecipes = [
-    { id: 1, title: "Chocolate Tart", description: "Brianna Smith" },
-    { id: 2, title: "Quick and easy BLT", description: "Tyler Lopez" },
-    { id: 3, title: "BBQ Pulled pork", description: "Chris Rosa" },
-  ];
-
+export default ({recipes = [], heading = ""}) => {
   return (
     <Container>
-      <Heading>My Favorite Recipes</Heading>
+      <Heading>{heading}</Heading>
       <RecipeList>
-        {favoriteRecipes.map((recipe) => (
-          <RecipeListItem key={recipe.id}>
+        {recipes.map((recipe, index) => (
+          <RecipeListItem key={index}>
             <div>
               <RecipeTitle>{recipe.title}</RecipeTitle>
               <RecipeDescription>{recipe.description}</RecipeDescription>
             </div>
-            <button>Edit</button>
+            <Link to="/addrecipe" state= {{recipe:recipe}}>
+              <Button type="Edit">Edit</Button>
+            </Link>
+            <Button onClick={()=>{deleteRecipe(recipe._id); window.location.href='/user'}}>Delete Recipe</Button>
           </RecipeListItem>
         ))}
       </RecipeList>
     </Container>
   );
 };
-
-export default UserFavoritesPage;
