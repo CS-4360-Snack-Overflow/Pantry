@@ -66,7 +66,7 @@ export const MultiSelectWithCategories = ({
 		<Select
 			onChange={setValue}
 			options={tags} 
-			closeMenuOnSelect={false}
+			closeMenuOnSelect={true}
 			placeholder={"Select some tags ... "}
 			>
 			styles={groupStyles}
