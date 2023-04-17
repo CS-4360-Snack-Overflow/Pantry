@@ -12,7 +12,7 @@ export default () => {
     const [recipes, setRecipes] = useState([]);
     const [url, setUrl] = useState("");
     const [loadedFilter, setFilter] = useState("");
-    const [loadedIngredients, setIngredients] = useState([])
+    const [loadedParameters, setParameters] = useState([])
 
     useEffect(() => {
         loadRecipes([], "All");
@@ -29,11 +29,11 @@ export default () => {
     const loadRecipes = (parameters, filter = loadedFilter, writeUrl = true) => {
         let query
         if(writeUrl){
-            query = new URLSearchParams(parameters.map(value => ['ingredients', value]));
-            setIngredients(parameters);
+            query = new URLSearchParams(parameters.map(value => ['parameter', value]));
+            setParameters(parameters);
         }
         else {
-            query = new URLSearchParams(loadedIngredients.map(value => ['ingredients', value]));
+            query = new URLSearchParams(loadedParameters.map(value => ['parameter', value]));
             setFilter(filter)
         }
         query.append('filter', filter);

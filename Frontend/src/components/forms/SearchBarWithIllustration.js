@@ -49,7 +49,7 @@ export default ({
   // Update the search query while user types, and add it to search when enter is pressed
   const handleQuery = event => {
     const newValue = event.target.value;
-    setQuery(newValue.toLowerCase());
+    setQuery(newValue);
     if(event.key === "Enter"){
       addParameter(query);
     }
@@ -66,7 +66,7 @@ export default ({
   const handleParameter = () => {
     addParameter(query)
   }
-  
+
   // Remove an entered Parameter
   const removeParameter = index => {
     setParameters([...parameters.filter(parameter => parameters.indexOf(parameter) !== index)])
