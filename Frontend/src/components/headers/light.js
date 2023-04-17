@@ -9,6 +9,8 @@ import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 //import { NavLink } from "react-router-dom";
 
+import { useState } from 'react';
+
 const Header = tw.header`
   flex justify-between items-center
   max-w-screen-xl mx-auto
@@ -23,7 +25,7 @@ export const NavLink = tw.a`
   text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
   font-semibold tracking-wide transition duration-300
   pb-1 border-b-2 border-transparent hover:border-primary-500 hocus:text-primary-500
-  
+
 `;
 
 export const PrimaryLink = tw(NavLink)`
@@ -70,15 +72,26 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
    * changing the defaultLinks variable below below.
    * If you manipulate links here, all the styling on the links is already done for you. If you pass links yourself though, you are responsible for styling the links or use the helper styled components that are defined here (NavLink)
    */
+
+  /*dj: the navlink /user, /login and /signup needs to be hidden depending on whether user session is active or not. fire the event when the page loads, execute route '/user/testAuth' to recieve json file, parse 'active' attribute of json file to get if TRUE or FALSE. Then according to that value, toggle navlink visibility On or Off for these three navlink components.
+  Do the opposite for a new navlink that shows profile picture with text 'Signed in as <username>'. when session=true, this_navlink.visiblity is true.
+  */
+
+  const [isNavVisible, setIsNavVisible] = useState(true);
+
+  function toggleNav() {
+    setIsNavVisible(!isNavVisible);
+  }
+
   const defaultLinks = [
     <NavLinks key={1}>
-      <NavLink href="/recipes" >Recipes</NavLink>
-      <NavLink href="/addrecipe">Add Recipe</NavLink>
-      <NavLink href="/about">About Us</NavLink>
-      <NavLink href="/contact">Contact Us</NavLink>
-      <NavLink href="/user">Profile</NavLink>
-      <NavLink href="/login" tw="lg:ml-12!">Login</NavLink>
-      <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
+    <NavLink href="/recipes" >Recipes</NavLink>
+    <NavLink href="/addrecipe">Add Recipe</NavLink>
+    <NavLink href="/about">About Us</NavLink>
+    <NavLink href="/contact">Contact Us</NavLink>
+    <NavLink href="/user">Profile</NavLink>
+    <NavLink href="/login" tw="lg:ml-12!">Login</NavLink>
+    <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
     </NavLinks>
   ];
 
@@ -87,8 +100,8 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
 
   const defaultLogoLink = (
     <LogoLink href="/">
-      <img src={logo} alt="PLogo" />
-      Pantry
+    <img src={logo} alt="PLogo" />
+    Pantry
     </LogoLink>
   );
 
@@ -97,20 +110,22 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
 
   return (
     <Header className={className || "header-light"}>
-      <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
-        {logoLink}
-        {links}
-      </DesktopNavLinks>
+    <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
+    {logoLink}
+    <button onClick={toggleNav}>Toggle Nav</button>
+    {links}
+    {isNavVisible && (<li>yo</li>)}
+    </DesktopNavLinks>
 
-      <MobileNavLinksContainer css={collapseBreakpointCss.mobileNavLinksContainer}>
-        {logoLink}
-        <MobileNavLinks initial={{ x: "150%", display: "none" }} animate={animation} css={collapseBreakpointCss.mobileNavLinks}>
-          {links}
-        </MobileNavLinks>
-        <NavToggle onClick={toggleNavbar} className={showNavLinks ? "open" : "closed"}>
-          {showNavLinks ? <CloseIcon tw="w-6 h-6" /> : <MenuIcon tw="w-6 h-6" />}
-        </NavToggle>
-      </MobileNavLinksContainer>
+    <MobileNavLinksContainer css={collapseBreakpointCss.mobileNavLinksContainer}>
+    {logoLink}
+    <MobileNavLinks initial={{ x: "150%", display: "none" }} animate={animation} css={collapseBreakpointCss.mobileNavLinks}>
+    {links}
+    </MobileNavLinks>
+    <NavToggle onClick={toggleNavbar} className={showNavLinks ? "open" : "closed"}>
+    {showNavLinks ? <CloseIcon tw="w-6 h-6" /> : <MenuIcon tw="w-6 h-6" />}
+    </NavToggle>
+    </MobileNavLinksContainer>
     </Header>
   );
 };
