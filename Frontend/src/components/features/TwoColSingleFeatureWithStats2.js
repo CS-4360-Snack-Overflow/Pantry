@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-//import StatsIllustrationSrc from "images/stats-illustration.svg";
+import StatsIllustrationSrc from "images/msuAeroScience.jpg";
 import { ReactComponent as SvgDotPattern } from "images/dot-pattern.svg";
 
 const Container = tw.div`relative`;
@@ -49,7 +49,7 @@ export default ({
   description = "It can be exasperating having to open 20+ tabs to find some decent recipes. Here, we can pull recipes from popular websites and display them all in one place. We can also help accomodate searches with our superior filters that allow for more complex searches.",
   primaryButtonText = "Learn More",
   primaryButtonUrl = "https://timerse.com",
-  //imageSrc = StatsIllustrationSrc,
+  imageSrc = StatsIllustrationSrc,
   imageCss = null,
   imageContainerCss = null,
   imageDecoratorBlob = false,
@@ -80,10 +80,10 @@ export default ({
   return (
     <Container>
       <TwoColumn css={!imageInsideDiv && tw`md:items-center`}>
-        {/* <ImageColumn css={imageContainerCss}>
+        <ImageColumn css={imageContainerCss}>
           {imageInsideDiv ? <Image imageSrc={imageSrc} css={imageCss} /> : <img src={imageSrc} css={imageCss} alt="" />}
           {imageDecoratorBlob && <DecoratorBlob css={imageDecoratorBlobCss} />}
-        </ImageColumn> */}
+        </ImageColumn>
         <TextColumn textOnLeft={textOnLeft}>
           <TextContent>
             {subheading && <Subheading>{subheading}</Subheading>}
