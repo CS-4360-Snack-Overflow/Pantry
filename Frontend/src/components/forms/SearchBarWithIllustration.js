@@ -5,7 +5,7 @@ import { SectionHeading, Subheading as SubheadingBase } from "components/misc/He
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { useNavigate } from "react-router-dom";
-
+import { MultiSelectWithCategories } from "./MultiSelect";
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
@@ -45,23 +45,26 @@ export default ({
 }) => {
   const [parameters, setParameters] = useState([]);
   const [query, setQuery] = useState("");
-  const ref = useRef(null);
   let navigate = useNavigate();
   // Update the search query while user types, and add it to search when enter is pressed
   const handleQuery = event => {
     const newValue = event.target.value;
-    setQuery(newValue.toLowerCase());
+    setQuery(newValue);
     if(event.key === "Enter"){
-      addParameter();
+      addParameter(query);
     }
   }
 
   // Add an parameter to filter the search by
-  const addParameter = () => {
+  const addParameter = (param) => {
     const elements = new Set(parameters);
-    if(!elements.has(query) && query !== ""){
-      setParameters([...parameters, query]);
+    if(!elements.has(param) && param !== ""){
+      setParameters([...parameters, param]);
     }
+  }
+
+  const handleParameter = () => {
+    addParameter(query)
   }
 
   // Remove an entered Parameter
@@ -90,8 +93,9 @@ export default ({
                   name="search"
                   placeholder="Search for recipes here ..." 
                   onKeyUp={handleQuery}/>
-                <AddButton type="button" onClick={addParameter}>{addButtonText}</AddButton>
+                <AddButton type="button" onClick={handleParameter}>Add</AddButton>
             </Search>
+            <MultiSelectWithCategories addOption={addParameter}></MultiSelectWithCategories>
             <TagContainer>
               {parameters.map((parameter, index) => (
                 <Tag key={parameter}>
