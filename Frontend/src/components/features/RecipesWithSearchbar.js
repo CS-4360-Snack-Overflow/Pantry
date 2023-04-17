@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { SectionHeading } from "components/misc/Headings.js";
 import tw from "twin.macro";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-import { MultiSelectWithCategories } from "components/forms/Inputs.js";
+import { MultiSelectWithCategories } from "components/forms/MultiSelect.js";
 
 export default () => {
     const [loading, setLoading] = useState(true);

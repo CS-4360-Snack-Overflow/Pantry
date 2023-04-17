@@ -67,7 +67,7 @@ export const MultiSelectWithCategories = ({
 			onChange={setValue}
 			options={tags} 
 			closeMenuOnSelect={false}
-			label={"Select Tags"}
+			placeholder={"Select some tags ... "}
 			>
 			styles={groupStyles}
 		</Select>

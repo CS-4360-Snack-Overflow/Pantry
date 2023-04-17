@@ -5,7 +5,7 @@ import { SectionHeading, Subheading as SubheadingBase } from "components/misc/He
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { useNavigate } from "react-router-dom";
-import { MultiSelectWithCategories } from "./Inputs";
+import { MultiSelectWithCategories } from "./MultiSelect";
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
