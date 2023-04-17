@@ -44,7 +44,6 @@ export default () => {
     return (
         <div>
             <RecipeSearchBar searchFor={loadRecipes}/> 
-            <MultiSelectWithCategories></MultiSelectWithCategories>
             <SectionHeading>Loading...</SectionHeading>
         </div>
     );
