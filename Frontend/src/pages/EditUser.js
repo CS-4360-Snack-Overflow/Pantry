@@ -14,7 +14,7 @@ const Row = styled.div` display: flex; flex-wrap: wrap; margin-bottom: 10px;`;
 const Column = styled.div` flex: 1; margin-right: 10px;`;
 const Label = styled.div` font-weight: bold; margin-bottom: 5px;`;
 const Input = styled.input` margin-bottom: 10px;`;
-const Button = styled.button` position: absolute; top: 62%; left: 50%; transform: translate(-50%, -50%); background-color: #F58023; color: white; font-weight: bold;
+const Button = styled.button` position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%); background-color: #F58023; color: white; font-weight: bold;
   padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;`;
 
 //Set's up a User Edit Form that shows the user's information and allows them to edit it
