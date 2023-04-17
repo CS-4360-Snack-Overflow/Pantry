@@ -53,7 +53,6 @@ export default ({
   cards = [
     {
       imageSrc: JadenHeadShot,
-      //imageSrc: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
       position: "UI-UX Designer",
       name: "Jaden Cua",
       links: [
