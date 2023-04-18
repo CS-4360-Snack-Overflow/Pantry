@@ -17,6 +17,7 @@ const Header = tw.header`
 `;
 
 export const NavLinks = tw.div`inline-block`;
+export const UserNavLinks = tw.div`inline-block`;
 
 /* hocus: stands for "on hover or focus"
  * hocus:bg-primary-700 will apply the bg-primary-700 class on hover or focus
@@ -28,7 +29,13 @@ export const NavLink = tw.a`
 
 `;
 
-export const PrimaryLink = tw(NavLink)`
+export const UserNavLink = tw.a`
+  text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
+  font-semibold tracking-wide transition duration-300
+  pb-1 border-b-2 border-transparent hover:border-primary-500 hocus:text-primary-500
+`;
+
+export const PrimaryLink = tw(UserNavLink)`
   lg:mx-0
   px-8 py-3 rounded bg-primary-500 text-gray-100
   hocus:text-white 
@@ -58,7 +65,7 @@ export const DesktopNavLinks = tw.nav`
   hidden lg:flex flex-1 justify-between items-center
 `;
 
-export default ({ roundedHeaderButton = false, logoLink, links, className, collapseBreakpointClass = "lg" }) => {
+export default ({ roundedHeaderButton = false, logoLink, links, links2, className, collapseBreakpointClass = "lg" }) => {
   /*
    * This header component accepts an optionals "links" prop that specifies the links to render in the navbar.
    * This links props should be an array of "NavLinks" components which is exported from this file.
@@ -89,11 +96,17 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
     <NavLink href="/addrecipe">Add Recipe</NavLink>
     <NavLink href="/about">About Us</NavLink>
     <NavLink href="/contact">Contact Us</NavLink>
-    <NavLink href="/user">Profile</NavLink>
-    <NavLink href="/login" tw="lg:ml-12!">Login</NavLink>
-    <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
     </NavLinks>
   ];
+
+  const userLinks = [
+    <UserNavLinks key={2}>
+    <UserNavLink href="/user">Profile</UserNavLink>
+    <UserNavLink href="/login" tw="lg:ml-12!">Login</UserNavLink>
+    <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
+    </UserNavLinks>
+  ];
+
 
   const { showNavLinks, animation, toggleNavbar } = useAnimatedNavToggler();
   const collapseBreakpointCss = collapseBreakPointCssMap[collapseBreakpointClass];
@@ -112,9 +125,9 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
     <Header className={className || "header-light"}>
     <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
     {logoLink}
-    <button onClick={toggleNav}>Toggle Nav</button>
     {links}
-    {isNavVisible && (<li>yo</li>)}
+    {isNavVisible && (userLinks)}
+    <button onClick={toggleNav}>Toggle Nav</button>
     </DesktopNavLinks>
 
     <MobileNavLinksContainer css={collapseBreakpointCss.mobileNavLinksContainer}>
