@@ -30,7 +30,7 @@ export default function App() {
           <Route path="/recipes" element={<RecipeSearchPage />} />
           <Route path="/addrecipe" element={<AddRecipePage />} />
           <Route path="/recipedetails" element={<RecipeDetails />} />
-          <Route path="/User" element={<UserPage />} />
+          <Route path="/user" element={<UserPage />} />
           <Route path="/EditUser" element={<EditUser/>} />
         </Routes>
       </Router>

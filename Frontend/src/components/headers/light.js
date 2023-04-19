@@ -11,6 +11,8 @@ import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 
 import { useState, useEffect } from 'react';
 
+import { useHistory } from "react-router-dom";
+
 const Header = tw.header`
   flex justify-between items-center
   max-w-screen-xl mx-auto
@@ -77,18 +79,29 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
   Do the opposite for a new navlink that shows profile picture with text 'Signed in as <username>'. when session=true, this_navlink.visiblity is true.
   */
 
-  const [isVisible, setIsVisible] = useState(true);
+  const [isActive, setIsActive] = useState(true);
+
+  const profileVar = isActive ? "/user" : "/login";
+
+  function getSessionActive(){
+    fetch('/user/testAuth')
+      .then(response => response.json())
+      .then(data => {
+	{data.active ? setIsActive(true) : setIsActive(false)}
+	profileVar = isActive ? "/user" : "/login";
+	console.log(data.active);
+      })
+      .catch(error => {
+	console.error(error);
+      });
+  }
+
+  function handleClick() {
+    window.location.href = '/contact';
+  }
 
   useEffect(() => {
-    fetch('/user/testAuth')
-    .then(response => response.json())
-    .then(data => {
-      {data.active ? setIsVisible(false) : setIsVisible(true)}
-      console.log(data.active);
-    })
-    .catch(error => {
-      console.error(error);
-    });
+    getSessionActive();
   }, []);
 
   const defaultLinks = [
@@ -97,9 +110,14 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     <NavLink href="/addrecipe">Add Recipe</NavLink>
     <NavLink href="/about">About Us</NavLink>
     <NavLink href="/contact">Contact Us</NavLink>
+    <NavLink onClick={handleClick}>onClick test</NavLink>
 
-    <div style={{ display: isVisible ? 'inline' : 'none' }}>
-    <NavLink href="/user">Profile</NavLink>
+    <div style={{ display: isActive ? 'inline' : 'none' }}>
+    <NavLink href={profileVar}>Profile</NavLink></div>
+    <div style={{ display: isActive ? 'none' : 'inline' }}>
+    <NavLink>       </NavLink></div>
+
+    <div style={{ display: isActive ? 'none' : 'inline' }}>
     <NavLink href="/login" tw="lg:ml-12!">Login</NavLink>
     <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
     </div>
@@ -125,7 +143,7 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
     {logoLink}
     {links}
-    <div style={{ display: isVisible ? 'none' : 'inline' }}>Propic and signed in as bla</div>
+    <div style={{ display: isActive ? 'inline' : 'none' }}>Propic and signed in as bla</div>
     </DesktopNavLinks>
 
     <MobileNavLinksContainer css={collapseBreakpointCss.mobileNavLinksContainer}>

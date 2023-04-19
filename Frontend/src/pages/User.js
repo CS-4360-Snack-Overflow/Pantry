@@ -16,8 +16,6 @@ const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-l
 
 export default () => {
   const [user, setUser] = useState([])
-  
-  useEffect(()=>{console.log(user)}, [user])
 
   useEffect(()=>{
     async function getUser(){
@@ -34,7 +32,6 @@ export default () => {
     <AnimationRevealPage>
       <Header />
       <Heading><HighlightedText>Profile</HighlightedText></Heading>
-      <p>Password stored in DataBase: {user.password}</p>
       <div css={tw`flex flex-wrap justify-center md:justify-between`}>
         <UserForm userData={user} css={tw`w-full md:w-2/5 mx-2`} />
         <RecipeContainer>
