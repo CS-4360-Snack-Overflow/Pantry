@@ -67,15 +67,16 @@ export default () => {
       ${tw`w-4 h-4 fill-current text-orange-400 mr-1`}
     }
   `;
-  const CardContainer = tw.div`mt-10 flex flex-wrap max-w-md sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md:pr-6 lg:pr-12`;
-  const CardContainer2 = tw.div`mt-10 min-w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:px-16 md:px-32 lg:px-32`;
-  const CardContainerLarge = tw.div`mt-10 min-w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:px-16 md:px-32 lg:px-32`;
-  const Card = tw(motion.a)`bg-gray-200 rounded-b aspect-square block mx-auto sm:max-w-none sm:mx-0`;
+  //const CardContainer = tw.div`mt-10 flex flex-wrap max-w-md sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md:pr-6 lg:pr-12`;
+  const CardContainer2 = tw.div`mt-10 min-w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pl-8 md:pl-8 lg:pl-32 xl:pl-32 2xl:pl-32`;
+  const CardContainerLarge = tw.div`mt-10 min-w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pl-8 md:pl-8 lg:pl-32 xl:pl-32 2xl:pl-32`;
+  const CardContainer = tw.div`mt-10 w-full sm:min-w-[100%] md:min-w-[56%] lg:min-w-[25%] xl:min-w-[25%] 2xl:min-w-[25%] sm:w-1/2 md:w-1/3 lg:w-1/4`;
+  const Card = tw(motion.div)`relative bg-gray-200 rounded-b aspect-square block max-w-xs mx-auto sm:max-w-none sm:mx-0`;
   const CardImageContainer = styled.div`
-    ${props => css`background-image: url("${props.imageSrc}");`}
-    ${tw`h-[24rem] aspect-square bg-center bg-cover relative rounded-t`}
+  ${props => css`background-image:url("${props.imageSrc}");`}
+  ${tw`w-full bg-center bg-cover relative aspect-square rounded-t`}
   `;
-  const RecipeContainer = tw.div`border-2 border-solid bottom-0 left-0 border-white rounded-lg p-4 mx-2 w-full md:w-2/5`;
+  const RecipeContainer = tw.div`border-2 border-solid bottom-0 left-0 border-white rounded-lg p-4 mx-2 w-full md:w-2/5 sm:pl-8 md:pl-8 lg:pl-32 xl:pl-32 2xl:pl-32`;
 
   return (
     <ScrollToTop>
@@ -88,7 +89,7 @@ export default () => {
         <Tag key={index}><span>{tag}</span></Tag>
       ))}</TagContainer>
       <SingleColumn></SingleColumn>
-      <div css={tw`md:flex md:flex-initial lg:flex lg:flex-initial justify-start md:justify-items-start sm:pl-16 md:pl-32 lg:pl-32`}>
+      <div css={tw`flex flex-wrap justify-start justify-items-start sm:pl-8 md:pl-8 lg:pl-32 xl:pl-32 2xl:pl-32`}>
         <CardContainer>
           <Card>
             <CardImageContainer imageSrc={recipe.alt_image_url}>

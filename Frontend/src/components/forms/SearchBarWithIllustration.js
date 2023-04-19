@@ -7,9 +7,9 @@ import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { useNavigate } from "react-router-dom";
 import { MultiSelectWithCategories } from "./MultiSelect";
 const Container = tw.div`relative`;
-const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
+const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto leading-snug py-20 md:py-24`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
-const ImageColumn = tw(Column)`md:w-5/12 flex-shrink-0 h-80 md:h-auto`;
+const ImageColumn = tw(Column)`md:w-5/12 flex-shrink-0 h-80 sm:my-0 md:h-auto`;
 const TextColumn = styled(Column)(props => [
   tw`md:w-7/12 mt-16 md:mt-0`,
   props.textOnLeft ? tw`md:mr-12 lg:mr-16 md:order-first` : tw`md:ml-12 lg:ml-16 md:order-last`
@@ -79,8 +79,6 @@ export default ({
   return (
     <Container>
       <TwoColumn>
-        <ImageColumn>
-        </ImageColumn>
         <TextColumn textOnLeft={textOnLeft}>
           <TextContent>
             {subheading && <Subheading>{subheading}</Subheading>}
