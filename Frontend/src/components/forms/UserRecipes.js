@@ -43,7 +43,8 @@ const RecipeDescription = styled.div`
   color: #777;
 `;
 
-export default ({recipes = [], heading = ""}) => {
+export default ({recipes = [], heading = "", authorized=false}) => {
+  console.log(recipes)
   return (
     <Container>
       <Heading>{heading}</Heading>
@@ -51,13 +52,23 @@ export default ({recipes = [], heading = ""}) => {
         {recipes.map((recipe, index) => (
           <RecipeListItem key={index}>
             <div>
-              <RecipeTitle>{recipe.title}</RecipeTitle>
-              <RecipeDescription>{recipe.description}</RecipeDescription>
+              <RecipeTitle>{recipe.name}</RecipeTitle>
             </div>
-            <Link to="/addrecipe" state= {{recipe:recipe}}>
-              <Button type="Edit">Edit</Button>
-            </Link>
-            <Button onClick={()=>{deleteRecipe(recipe._id); window.location.href='/user'}}>Delete Recipe</Button>
+            {authorized && (
+              <div>
+                <Link to="/addrecipe" state= {{recipe:recipe}}>
+                  <Button type="Edit">Edit</Button>
+                </Link>
+                <Button onClick={()=>{deleteRecipe(recipe._id); window.location.href='/user'}}>Delete Recipe</Button>
+              </div>
+
+            )}
+
+            {!authorized && ( 
+              <Link to="/recipedetails" state= {{clickedRecipe:recipe}}>
+                <Button type="Edit">View Recipe</Button>
+              </Link>
+            )}
           </RecipeListItem>
         ))}
       </RecipeList>

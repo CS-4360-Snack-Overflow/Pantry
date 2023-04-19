@@ -8,8 +8,8 @@ import Footer from "components/footers/MiniCenteredFooter";
 import UserForm from "components/forms/UserForm";
 import UserRecipes from "components/forms/UserRecipes"
 import { useState } from "react";
-import {getCreatedRecipes} from "../helpers/RecipeService"
-
+import {getCreatedRecipes, getFavoritedRecipes} from "../helpers/RecipeService"
+import {getUser} from "../helpers/UserService"
 const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-left pt-10 md:pt-24 w-full`;
 const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
 
@@ -20,19 +20,26 @@ export default () => {
   const [createdRecipes, setCreated] = useState([])
   const [favoritedRecipes, setFavorited] = useState([])
 
+  useEffect(() => {
+    console.log(favoritedRecipes)
+  }, [favoritedRecipes])
   useEffect(()=>{
-    async function getUser(){
-      const res = await fetch("/user/userRead")
-      return await res.json()
+    async function retrieveData() {
+      await getUser().then((result) => {
+        setUser(result)
+      })
+  
+      await getCreatedRecipes().then((result) => {
+        setCreated(result)
+      })
+  
+      await getFavoritedRecipes().then((result) => {
+        setFavorited(result);
+      })
     }
-
-    getUser().then((result) => {
-      setUser(result)
-    })
-
-    getCreatedRecipes().then((result) => {
-      setCreated(result)
-    })
+    
+    retrieveData()
+    
   }, [])
 
   return (

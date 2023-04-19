@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import tw from "twin.macro";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import styled from "styled-components";
@@ -14,11 +14,11 @@ import { ReactComponent as DislikeIcon } from "images/dislike.svg";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { motion } from "framer-motion";
 import { deleteRecipe } from "helpers/RecipeService";
+import { addFavoriteRecipe, checkAuth } from "helpers/UserService";
 import { Link } from "react-router-dom";
 
 export default () => {
   const recipe = useLocation().state.clickedRecipe;
-  console.log(recipe);
   const prepTime = recipe.prep_time ? recipe.prep_time : 0;
   const cookTime = recipe.cook_time ? recipe.cook_time : 0;
   const numServings = recipe.num_servings ? recipe.num_servings : 0;
@@ -29,10 +29,9 @@ export default () => {
   const carbs = recipe.nutrition.carbohydrates ? recipe.nutrition.carbohydrates : 0;
   const fiber = recipe.nutrition.fiber ? recipe.nutrition.fiber : 0;
   const review = recipe.review ? recipe.review : 0;
-  const numReviews = recipe.total_reviews ? recipe.total_reviews : 0;
   const [likes, setLikes] = useState(recipe.user_ratings.count_positive ? recipe.user_ratings.count_positive : 0);
   const [dislikes, setDislikes] = useState(recipe.user_ratings.count_negative ? recipe.user_ratings.count_negative : 0);
-
+  const [isAuthorized, setAuthorized] = useState(false)
 
   const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-center pt-10 md:pt-24`;
   const Subheading = tw.div`uppercase tracking-wider text-base text-center justify-center text-orange-600 font-bold`;
@@ -62,9 +61,18 @@ export default () => {
   `;
   const RecipeContainer = tw.div`border-2 border-solid bottom-0 left-0 border-white rounded-lg p-4 mx-2 w-full md:w-2/5`;
 
+  useEffect(() => {
+    checkAuth(recipe.user_num).then(
+      (res) =>{
+        setAuthorized(res)
+      }
+    )
+  }, [])
+  
   return (
     <AnimationRevealPage>
       <Header/>
+      <h1>{isAuthorized}</h1>
       <Heading>{recipe.name}</Heading>
       <Subheading>by {recipe.credits ? recipe.credits : "Unknown"}</Subheading>
       <TagContainer>
@@ -103,10 +111,17 @@ export default () => {
         <Text>Cook time: {cookTime} minutes</Text>
         <Text>Number of servings: {numServings}</Text>
         <SmallColumn></SmallColumn>
-        <Link to="/addrecipe" state= {{recipe:recipe}}>
-          <AddButton type="Edit">Edit Recipe</AddButton>
-        </Link>
-        <AddButton onClick={()=>{deleteRecipe(recipe._id); window.location.href='/recipes/'}}>Delete Recipe</AddButton>
+        {isAuthorized && (
+          <div>
+            <Link to="/addrecipe" state= {{recipe:recipe}}>
+              <AddButton type="Edit">Edit Recipe</AddButton>
+            </Link>
+            <AddButton onClick={()=>{deleteRecipe(recipe._id); window.location.href='/recipes/'}}>Delete Recipe</AddButton>
+          </div>
+        )}
+        {!isAuthorized && (
+          <AddButton onClick={()=>addFavoriteRecipe(recipe._id)}>Favorite Recipe</AddButton>
+        )}
         </RecipeContainer>
       </div>
       <SmallColumn></SmallColumn>

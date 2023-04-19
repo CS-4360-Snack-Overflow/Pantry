@@ -1,4 +1,5 @@
 const Recipe = require('../models/recipe');
+const User = require('../models/user')
 const escapeRegExp = require('escape-string-regexp');
 const session = require('express-session');
 const fs = require("fs");
@@ -123,6 +124,19 @@ const recipe_get_created = (req, res) => {
     })
 }
 
+const recipe_get_favorited = (req, res) => {
+    async function retrieveFavorites(){
+        let recipes
+        await User.findById(req.session.userId)
+        .then(async (user) => {
+            recipes = await Recipe.find({ _id: { $in: user.favoriteRecipes } })
+        })
+        return recipes
+    }
+    
+    retrieveFavorites().then((results) => res.send(results))
+} 
+
 module.exports = {
     recipe_index,
     recipe_details,
@@ -131,5 +145,6 @@ module.exports = {
     recipe_delete,
     recipe_patch, 
     recipe_upload_image,
-    recipe_get_created
+    recipe_get_created, 
+    recipe_get_favorited
 };
