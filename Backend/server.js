@@ -1,4 +1,26 @@
-// Import dependencies
+/**
+ * This is the main file for the Recipe App. It sets up the application, initializes the main components, and starts the server.
+ *
+ * Dependencies:
+ * - Express.js: A web application framework for Node.js
+ * - Mongoose: A MongoDB object modeling tool
+ * - Morgan: A HTTP request logger middleware for Node.js
+ * - Dotenv: A zero-dependency module that loads environment variables from a .env file into process.env
+ * - Express-Session: Manages user sessions and requires a session store to persist the session data between requests.
+ * - Connect-Mongo: Popular session store for express-session.
+ * 
+ * Environment Variables:
+ * - PORT: The port number on which the server will listen for incoming requests 
+ * - MONGODB_URI: The URI of the MongoDB database used by the application
+ *
+ * File Structure:
+ * - The `routes` directory contains all the route definitions for the application
+ *
+ * Usage:
+ * - To start the application, run `npm start` or 'nodemon app' in the command line
+ */
+
+// Importing dependencies
 require('dotenv').config();
 const express = require('express');
 const testRoutes = require('./routes/testroutes');
@@ -6,38 +28,33 @@ const recipeRoutes = require('./routes/recipeRoutes');
 const userRoutes = require('./routes/userRoutes');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const bodyParser = require("body-parser")
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
 // Express app instance
 const app = express();
 
-//connect to db
-mongoose.connect(process.env.MONGO_URI, { //remember to change it back to MONGO_URI in two places 
+// Connect to db using environment variables
+mongoose.connect(process.env.MONGO_URI, { 
 	useNewUrlParser: true, 
 	useUnifiedTopology: true
 })
 .then((result) => {app.listen(process.env.PORT)})
 .catch( (err) => {console.log(err)});
 
-//some req data to console
+// Setting up middleware
 app.use(morgan('dev'));
-
-//lets server see front-end data 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json())
 
-//set the session middleware up
-//first make mongoStore instance
- 
-const store = MongoStore.create({ //'MongoStore' needs to be capital just like that, for some reason
+
+// Setting up a session store instance
+const store = MongoStore.create({
   mongoUrl: process.env.MONGO_URI,
-  /* ttl: 14 * 24 * 60 * 60, //session will expire in 14 days*/
   ttl: 10 * 60, //session will expire in 10 minutes
 });
 
-// now pass the connect-mongo object into the express-session object
+// Setting up session middleware and linking it to the session store
 app.use(session({
   secret: 'my-secret',
   resave: false,
@@ -45,28 +62,21 @@ app.use(session({
   store: store,
 }));
 
-// Handle test requests
-app.use('/test/', testRoutes);
-
-// redirect from local to /recipes
-/*app.get('/', (req,res) => {
-	res.redirect('/recipes');
-});*/
-
+// Get homepage
 app.get('/', (req,res) => {
 	res.sendFile('./index.html', { root: __dirname });
 });
-// route to display login page
+
+// check if the userId property exist in the req.session object
 app.get('/login', (req, res) => {
   if (!req.session.userId){ // if user is already logged in, redirect to '/'
     res.sendFile('./login.html', { root: __dirname } );
   } else {
     res.redirect('/');
   }
-
 });
-// this route isn't inside userRoutes.js because login.html is in root folder
 
+// this route isn't inside userRoutes.js because login.html is in root folder
 app.get('/user-id', (req, res) => {
   res.json({ userId: req.session.userId });
 });
@@ -80,5 +90,6 @@ app.get('/getProPic', (req, res) => {
   res.sendFile('./sample1.png', { root: __dirname});
 });
 
+app.use('/test/', testRoutes);
 app.use('/recipes', recipeRoutes);
 app.use('/user', userRoutes);
