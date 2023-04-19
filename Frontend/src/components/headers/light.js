@@ -11,8 +11,6 @@ import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 
 import { useState, useEffect } from 'react';
 
-import { useHistory } from "react-router-dom";
-
 const Header = tw.header`
   flex justify-between items-center
   max-w-screen-xl mx-auto
@@ -79,16 +77,13 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
   Do the opposite for a new navlink that shows profile picture with text 'Signed in as <username>'. when session=true, this_navlink.visiblity is true.
   */
 
-  const [isActive, setIsActive] = useState(true);
-
-  const profileVar = isActive ? "/user" : "/login";
+  const [isActive, setIsActive] = useState(false);
 
   function getSessionActive(){
     fetch('/user/testAuth')
       .then(response => response.json())
       .then(data => {
 	{data.active ? setIsActive(true) : setIsActive(false)}
-	profileVar = isActive ? "/user" : "/login";
 	console.log(data.active);
       })
       .catch(error => {
@@ -97,7 +92,8 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
   }
 
   function handleClick() {
-    window.location.href = '/contact';
+    getSessionActive();
+    {isActive ? window.location.href = "/user" : window.location.href = "/login"}
   }
 
   useEffect(() => {
@@ -110,10 +106,9 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     <NavLink href="/addrecipe">Add Recipe</NavLink>
     <NavLink href="/about">About Us</NavLink>
     <NavLink href="/contact">Contact Us</NavLink>
-    <NavLink onClick={handleClick}>onClick test</NavLink>
 
-    <div style={{ display: isActive ? 'inline' : 'none' }}>
-    <NavLink href={profileVar}>Profile</NavLink></div>
+    <div style={{ display: isActive ? 'inline' : 'inline' }}>
+    <NavLink onClick={handleClick}>Profile</NavLink></div>
     <div style={{ display: isActive ? 'none' : 'inline' }}>
     <NavLink>       </NavLink></div>
 
