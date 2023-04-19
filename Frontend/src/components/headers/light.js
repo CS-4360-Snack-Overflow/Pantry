@@ -9,7 +9,7 @@ import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 //import { NavLink } from "react-router-dom";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Header = tw.header`
   flex justify-between items-center
@@ -77,13 +77,19 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
   Do the opposite for a new navlink that shows profile picture with text 'Signed in as <username>'. when session=true, this_navlink.visiblity is true.
   */
 
-  const [isNavVisible, setIsNavVisible] = useState(true);
-
   const [isVisible, setIsVisible] = useState(true);
 
-  function toggleNav() {
-    setIsNavVisible(!isNavVisible);
-  }
+  useEffect(() => {
+    fetch('/user/testAuth')
+    .then(response => response.json())
+    .then(data => {
+      {data.active ? setIsVisible(false) : setIsVisible(true)}
+      console.log(data.active);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }, []);
 
   const defaultLinks = [
     <NavLinks key={1}>
@@ -98,18 +104,8 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
     </div>
 
-
     </NavLinks>
   ];
-
-  const userLinks = [
-    <NavLinks key={1}>
-    <NavLink href="/user">Profile</NavLink>
-    <NavLink href="/login" tw="lg:ml-12!">Login</NavLink>
-    <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
-    </NavLinks>
-  ];
-
 
   const { showNavLinks, animation, toggleNavbar } = useAnimatedNavToggler();
   const collapseBreakpointCss = collapseBreakPointCssMap[collapseBreakpointClass];
@@ -129,7 +125,6 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
     {logoLink}
     {links}
-    <button onClick={() => setIsVisible(!isVisible)}>Toggle Visibility</button>
     <div style={{ display: isVisible ? 'none' : 'inline' }}>Propic and signed in as bla</div>
     </DesktopNavLinks>
 
@@ -145,6 +140,8 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     </Header>
   );
 };
+
+/*dj: tiny spacing difference when toggled between signed in text, and user links. Assuming users won't notice such tiny difference*/
 
 /* The below code is for generating dynamic break points for navbar.
  * Using this you can specify if you want to switch
