@@ -91,6 +91,14 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     <NavLink href="/addrecipe">Add Recipe</NavLink>
     <NavLink href="/about">About Us</NavLink>
     <NavLink href="/contact">Contact Us</NavLink>
+
+    <div style={{ display: isVisible ? 'inline' : 'none' }}>
+    <NavLink href="/user">Profile</NavLink>
+    <NavLink href="/login" tw="lg:ml-12!">Login</NavLink>
+    <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
+    </div>
+
+
     </NavLinks>
   ];
 
@@ -121,10 +129,8 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
     {logoLink}
     {links}
-    {isVisible && (userLinks)}
-    <div style={{ display: isVisible ? 'none' : 'block' }}>propic and signed in as bla</div>
     <button onClick={() => setIsVisible(!isVisible)}>Toggle Visibility</button>
-
+    <div style={{ display: isVisible ? 'none' : 'inline' }}>Propic and signed in as bla</div>
     </DesktopNavLinks>
 
     <MobileNavLinksContainer css={collapseBreakpointCss.mobileNavLinksContainer}>
