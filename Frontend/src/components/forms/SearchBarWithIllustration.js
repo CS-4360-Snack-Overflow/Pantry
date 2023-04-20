@@ -21,7 +21,7 @@ const Subheading = tw(SubheadingBase)`text-left md:text-left`;
 const Heading = tw(SectionHeading)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`
 
-const Search = tw.div`inline-flex w-full`
+const Search = tw.div`inline-flex w-full pb-2`
 const Form = tw.form`mt-8 md:mt-10 text-sm flex flex-col max-w-md mx-auto md:mx-0`
 const Input = tw.input`mt-6 first:mt-0 border-b-2 py-3 focus:outline-none font-medium transition duration-300 hocus:border-primary-500 basis-3/4`
 
