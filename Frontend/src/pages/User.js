@@ -11,7 +11,7 @@ import { useState } from "react";
 import {getCreatedRecipes} from "../helpers/RecipeService"
 
 const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-left pt-10 md:pt-24 w-full`;
-const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
+const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 pt-6 transform -skew-x-12 inline-block`;
 
 const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-2 w-full md:w-2/5`;
 
@@ -37,11 +37,10 @@ export default () => {
 
   return (
     <AnimationRevealPage>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <Header />
       <Heading><HighlightedText>Profile</HighlightedText></Heading>
-      <div css={tw`flex flex-initial max-[900px]:flex-col justify-center justify-between pb-10`}>
-        <UserForm userData={user} css={tw`w-full md:w-2/5 mx-2`} />
+      <div css={tw`flex flex-initial max-[1023px]:flex-col justify-center justify-between pb-10`}>
+        <UserForm userData={user} css={tw`w-full md:w-2/5 mx-2`}/>
         <RecipeContainer>
         <UserRecipes css={tw`w-full md:w-2/5 mx-2`} heading="Favorited Recipes" recipes={favoritedRecipes}/>
         </RecipeContainer>
