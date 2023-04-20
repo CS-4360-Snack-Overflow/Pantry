@@ -37,18 +37,18 @@ export default () => {
 
   return (
     <AnimationRevealPage>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <Header />
       <Heading><HighlightedText>Profile</HighlightedText></Heading>
-      <div css={tw`flex flex-col lg:flex-initial 2xl:flex-initial justify-center justify-between pb-10`}>
+      <div css={tw`flex flex-initial max-[900px]:flex-col justify-center justify-between pb-10`}>
         <UserForm userData={user} css={tw`w-full md:w-2/5 mx-2`} />
         <RecipeContainer>
         <UserRecipes css={tw`w-full md:w-2/5 mx-2`} heading="Favorited Recipes" recipes={favoritedRecipes}/>
         </RecipeContainer>
         <RecipeContainer>
-        <UserRecipes css={tw`w-full md:w-2/5 mx-2 float-right`} heading="My Recipes" recipes={createdRecipes}/>
+        <UserRecipes css={tw`w-full md:w-2/5 mx-2`} heading="My Recipes" recipes={createdRecipes}/>
         </RecipeContainer>
       </div>
-      
       <Footer />
     </AnimationRevealPage>
   );
