@@ -18,8 +18,14 @@ export default () => {
   const [user, setUser] = useState([])
 
   useEffect(()=>{
+    fetch('/user/testAuth')
+      .then(response => response.json())
+      .then(data => {
+	console.log(data)
+      });
     async function getUser(){
       const res = await fetch("/user/userRead")
+      console.log("userRead");
       return await res.json()
     }
     getUser().then((result) => {
@@ -30,19 +36,19 @@ export default () => {
 
   return (
     <AnimationRevealPage>
-      <Header />
-      <Heading><HighlightedText>Profile</HighlightedText></Heading>
-      <div css={tw`flex flex-wrap justify-center md:justify-between`}>
-        <UserForm userData={user} css={tw`w-full md:w-2/5 mx-2`} />
-        <RecipeContainer>
-        <FavoriteRecipes css={tw`w-full md:w-2/5 mx-2`} />
-        </RecipeContainer>
-        <RecipeContainer>
-        <UserRecipe css={tw`w-full md:w-2/5 mx-2 float-right`} />
-        </RecipeContainer>
-      </div>
-      
-      <Footer />
+    <Header />
+    <Heading><HighlightedText>Profile</HighlightedText></Heading>
+    <div css={tw`flex flex-wrap justify-center md:justify-between`}>
+    <UserForm userData={user} css={tw`w-full md:w-2/5 mx-2`} />
+    <RecipeContainer>
+    <FavoriteRecipes css={tw`w-full md:w-2/5 mx-2`} />
+    </RecipeContainer>
+    <RecipeContainer>
+    <UserRecipe css={tw`w-full md:w-2/5 mx-2 float-right`} />
+    </RecipeContainer>
+    </div>
+
+    <Footer />
     </AnimationRevealPage>
   );
 };

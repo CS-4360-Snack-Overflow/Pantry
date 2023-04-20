@@ -126,8 +126,12 @@ router.post('/userLoginProc', async (req, res) => {
   }
 });
 
-router.get('/testAuth', requireAuth, async (req, res) => {
-  res.json({active:true});
+router.get('/testAuth', async (req, res) => {
+  if (req.session.userId){
+    res.json({active:true});
+  }else{
+    res.json({active:false});
+  }
 });
 
 

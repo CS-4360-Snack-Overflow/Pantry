@@ -78,7 +78,7 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
   */
 
   const [isActive, setIsActive] = useState(false);
-
+  
   function getSessionActive(){
     fetch('/user/testAuth')
       .then(response => response.json())
@@ -89,11 +89,6 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
       .catch(error => {
 	console.error(error);
       });
-  }
-
-  function handleClick() {
-    getSessionActive();
-    {isActive ? window.location.href = "/user" : window.location.href = "/login"}
   }
 
   useEffect(() => {
@@ -107,8 +102,8 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     <NavLink href="/about">About Us</NavLink>
     <NavLink href="/contact">Contact Us</NavLink>
 
-    <div style={{ display: isActive ? 'inline' : 'inline' }}>
-    <NavLink onClick={handleClick}>Profile</NavLink></div>
+    <div style={{ display: isActive ? 'inline' : 'none' }}>
+    <NavLink href="/user">Profile</NavLink></div>
     <div style={{ display: isActive ? 'none' : 'inline' }}>
     <NavLink>       </NavLink></div>
 
