@@ -90,6 +90,10 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
 	console.error(error);
       });
   }
+  function logoutAction() {
+    fetch('/user/logout');
+    window.location.href = "/";
+  }
 
   useEffect(() => {
     getSessionActive();
@@ -103,7 +107,8 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     <NavLink href="/contact">Contact Us</NavLink>
 
     <div style={{ display: isActive ? 'inline' : 'none' }}>
-    <NavLink href="/user">Profile</NavLink></div>
+    <NavLink href="/user">Profile</NavLink>
+    <NavLink onClick={logoutAction}>Logout</NavLink></div>
     <div style={{ display: isActive ? 'none' : 'inline' }}>
     <NavLink>       </NavLink></div>
 

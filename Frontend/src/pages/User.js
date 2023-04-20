@@ -21,7 +21,9 @@ export default () => {
     fetch('/user/testAuth')
       .then(response => response.json())
       .then(data => {
-	console.log(data)
+	if(!data.active) {
+	  window.location.href = "/login";
+	}
       });
     async function getUser(){
       const res = await fetch("/user/userRead")
