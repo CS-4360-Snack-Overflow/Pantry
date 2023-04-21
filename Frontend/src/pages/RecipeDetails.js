@@ -15,6 +15,17 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { motion } from "framer-motion";
 import { deleteRecipe } from "helpers/RecipeService";
 import { Link } from "react-router-dom";
+import { useEffect } from 'react';
+
+const ScrollToTop = ({ children }) => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return children || null;
+};
 
 export default () => {
   const recipe = useLocation().state.clickedRecipe;
@@ -40,29 +51,35 @@ export default () => {
   const Text = tw.div`tracking-wider text-sm text-left justify-start text-black font-bold`;
   const Tag = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-400 hover:bg-gray-300 text-gray-600 rounded-full`
   const TagContainer = tw.div`w-full flex flex-wrap justify-center` 
-  const AddButton = tw(PrimaryButtonBase)`inline-block`
+  const AddButton = tw(PrimaryButtonBase)`inline-block text-sm text-center text-white font-bold bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white py-2 px-4 rounded-full`;
   const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
   const SingleColumn = tw.div`flex flex-col md:flex-row justify-start max-w-screen-xl mx-auto py-8 md:py-8`;
   const SmallColumn = tw.div`flex flex-col md:flex-row justify-start max-w-screen-xl mx-auto py-4 md:py-4`;
+  const SmallColumn2 = tw.div`flex flex-col md:flex-row justify-start max-w-screen-xl mx-auto py-6 md:py-6`;
+  const TwoRow = tw.div`flex flex-row md:flex-col justify-start max-w-screen-xl mx-auto py-4 md:py-4`;
   const CardReview = tw.div`font-medium justify-center text-xs text-gray-600`;
   const CardRatingContainer = tw.div`leading-none absolute inline-flex bg-gray-100 bottom-0 left-0 ml-4 mb-4 rounded-full px-5 py-2 items-end`;
-  const CardLikeContainer = tw(PrimaryButtonBase)`leading-none absolute inline-flex bg-gray-100 bottom-0 right-[90px] ml-4 mb-4 rounded-full px-5 py-2 items-end`;
-  const CardDislikeContainer = tw(PrimaryButtonBase)`leading-none absolute inline-flex bg-gray-100 bottom-0 right-[18px] ml-4 mb-4 rounded-full px-5 py-2 items-end`;
+  const CardLikeContainer = tw(PrimaryButtonBase)`leading-none absolute inline-flex bg-gray-100 bottom-0 right-[112px] ml-4 mb-4 rounded-full px-5 py-2 items-end`;
+  const CardDislikeContainer = tw(PrimaryButtonBase)`leading-none absolute inline-flex bg-gray-100 bottom-0 right-[20px] ml-4 mb-4 rounded-full px-5 py-2 items-end`;
   const CardRating = styled.div`
     ${tw`mr-1 text-sm font-bold flex items-end`}
     svg {
       ${tw`w-4 h-4 fill-current text-orange-400 mr-1`}
     }
   `;
-  const CardContainer = tw.div`mt-10 max-w-md sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md:pr-6 lg:pr-12`;
-  const Card = tw(motion.a)`bg-gray-200 rounded-b block max-w-xs mx-auto sm:max-w-none sm:mx-0`;
+  //const CardContainer = tw.div`mt-10 flex flex-wrap max-w-md sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md:pr-6 lg:pr-12`;
+  const CardContainer2 = tw.div`mt-10 min-w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pl-8 md:pl-8 lg:pl-32 xl:pl-32 2xl:pl-32`;
+  const CardContainerLarge = tw.div`mt-10 min-w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pl-8 md:pl-8 lg:pl-32 xl:pl-32 2xl:pl-32`;
+  const CardContainer = tw.div`mt-10 w-full sm:min-w-[100%] md:min-w-[56%] lg:min-w-[25%] xl:min-w-[25%] 2xl:min-w-[25%] sm:w-1/2 md:w-1/3 lg:w-1/4`;
+  const Card = tw(motion.div)`relative bg-gray-200 rounded-b aspect-square block max-w-xs mx-auto sm:max-w-none sm:mx-0`;
   const CardImageContainer = styled.div`
-    ${props => css`background-image: url("${props.imageSrc}");`}
-    ${tw`h-56 bg-center bg-cover relative rounded-t`}
+  ${props => css`background-image:url("${props.imageSrc}");`}
+  ${tw`w-full bg-center bg-cover relative aspect-square rounded-t`}
   `;
-  const RecipeContainer = tw.div`border-2 border-solid bottom-0 left-0 border-white rounded-lg p-4 mx-2 w-full md:w-2/5`;
+  const RecipeContainer = tw.div`border-2 border-solid bottom-0 left-0 border-white rounded-lg p-4 mx-2 w-full md:w-2/5 sm:pl-8 md:pl-8 lg:pl-32 xl:pl-32 2xl:pl-32`;
 
   return (
+    <ScrollToTop>
     <AnimationRevealPage>
       <Header/>
       <Heading>{recipe.name}</Heading>
@@ -72,7 +89,7 @@ export default () => {
         <Tag key={index}><span>{tag}</span></Tag>
       ))}</TagContainer>
       <SingleColumn></SingleColumn>
-      <div css={tw`flex flex-initial justify-start md:justify-items-start`}>
+      <div css={tw`flex flex-wrap justify-start justify-items-start sm:pl-8 md:pl-8 lg:pl-32 xl:pl-32 2xl:pl-32`}>
         <CardContainer>
           <Card>
             <CardImageContainer imageSrc={recipe.alt_image_url}>
@@ -98,43 +115,51 @@ export default () => {
           </Card>
         </CardContainer>
         <RecipeContainer>
-        <SmallColumn></SmallColumn>
-        <Text>Prep time: {prepTime} minutes</Text>
-        <Text>Cook time: {cookTime} minutes</Text>
-        <Text>Number of servings: {numServings}</Text>
-        <SmallColumn></SmallColumn>
-        <Link to="/addrecipe" state= {{recipe:recipe}}>
-          <AddButton type="Edit">Edit Recipe</AddButton>
-        </Link>
-        <AddButton onClick={()=>{deleteRecipe(recipe._id); window.location.href='/recipes/'}}>Delete Recipe</AddButton>
+          <SmallColumn></SmallColumn>
+          <SubheadingLeft>Cooking Information</SubheadingLeft>
+          <Text>Prep time: {prepTime} minutes</Text>
+          <Text>Cook time: {cookTime} minutes</Text>
+          <Text>Number of servings: {numServings}</Text>
+          <SmallColumn></SmallColumn>
+          <SubheadingLeft>Nutrition Facts</SubheadingLeft>
+          <Text>{calories} calories</Text>
+          <Text>{protein}g of protein</Text>
+          <Text>{fat}g of fat</Text>
+          <Text>{carbs}g of carbs</Text>
+          <Text>{sugar}g of sugar</Text>
+          <Text>{fiber}g of fiber</Text>
+          <SmallColumn2></SmallColumn2>
+          <Link to="/addrecipe" state= {{recipe:recipe}}>
+            <AddButton type="Edit">Edit Recipe</AddButton>
+          </Link>
+          <AddButton onClick={()=>{deleteRecipe(recipe._id); window.location.href='/recipes/'}}>Delete Recipe</AddButton>
         </RecipeContainer>
       </div>
       <SmallColumn></SmallColumn>
-      <SubheadingLeft>Ingredients</SubheadingLeft>
-      <ol>
-      {recipe.ingredients.map((ingredient, index)=>(
-        <li key={index}>- {ingredient}</li>
-      ))}
-      </ol>
-      <SmallColumn></SmallColumn>
-      <SubheadingLeft>Cooking Instructions</SubheadingLeft>
-      <ol>
-      {recipe.instructions.map((step, index)=>(
-        <li key={index}>{index + 1}. {step}</li>
-      ))}
-      </ol>
-      <SmallColumn></SmallColumn>
-      <SubheadingLeft>Nutrition Facts</SubheadingLeft>
-      <Text>{calories} calories</Text>
-      <Text>{protein}g of protein</Text>
-      <Text>{fat}g of fat</Text>
-      <Text>{carbs}g of carbs</Text>
-      <Text>{sugar}g of sugar</Text>
-      <Text>{fiber}g of fiber</Text>
-      <SingleColumn></SingleColumn>
-      <AddButton onClick={event =>  window.location.href='/recipes'}>Back</AddButton>
+      <CardContainer2>
+        <SubheadingLeft>Ingredients</SubheadingLeft>
+        <ol>
+        {recipe.ingredients.map((ingredient, index)=>(
+          <li key={index}>{index + 1}. {ingredient}</li>
+        ))}
+        </ol>
+        <SmallColumn></SmallColumn>
+      </CardContainer2>
+      <CardContainerLarge>
+        <SubheadingLeft>Cooking Instructions</SubheadingLeft>
+        <ol>
+        {recipe.instructions.map((step, index)=>(
+          <li key={index}>{index + 1}. {step}</li>
+        ))}
+        </ol>
+        <SmallColumn></SmallColumn>
+      </CardContainerLarge>
+      <CardContainer2>
+        <AddButton onClick={event =>  window.location.href='/recipes'}>Back</AddButton>
+      </CardContainer2>
       <TwoColumn></TwoColumn>
       <Footer />
     </AnimationRevealPage>
+    </ScrollToTop>
   );
 };

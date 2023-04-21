@@ -5,13 +5,14 @@ import { useState, useEffect } from "react";
 import { SectionHeading } from "components/misc/Headings.js";
 import tw from "twin.macro";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
+import { MultiSelectWithCategories } from "components/forms/MultiSelect.js";
 
 export default () => {
     const [loading, setLoading] = useState(true);
     const [recipes, setRecipes] = useState([]);
     const [url, setUrl] = useState("");
     const [loadedFilter, setFilter] = useState("");
-    const [loadedIngredients, setIngredients] = useState([])
+    const [loadedParameters, setParameters] = useState([])
 
     useEffect(() => {
         loadRecipes([], "All");
@@ -25,14 +26,14 @@ export default () => {
         })
     }, [url])
 
-    const loadRecipes = (selectedIngredients, filter = loadedFilter, writeUrl = true) => {
+    const loadRecipes = (parameters, filter = loadedFilter, writeUrl = true) => {
         let query
         if(writeUrl){
-            query = new URLSearchParams(selectedIngredients.map(value => ['ingredients', value]));
-            setIngredients(selectedIngredients);
+            query = new URLSearchParams(parameters.map(value => ['parameter', value]));
+            setParameters(parameters);
         }
         else {
-            query = new URLSearchParams(loadedIngredients.map(value => ['ingredients', value]));
+            query = new URLSearchParams(loadedParameters.map(value => ['parameter', value]));
             setFilter(filter)
         }
         query.append('filter', filter);
