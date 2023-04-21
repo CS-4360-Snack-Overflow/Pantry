@@ -15,7 +15,7 @@ const Column = styled.div` flex: 1; margin-right: 10px;`;
 const Label = styled.div` font-weight: bold; margin-bottom: 5px;`;
 const Input = styled.input` margin-bottom: 10px;`;
 const Button = styled.button` position: center; top: 60%; left: 50%;  background-color: #F58023; color: white; font-weight: bold;
-  padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: fit-content; left: 0; right: 0; margin-left: auto; margin-right: auto;`;
+padding: 10px 20px; border: none; border-radius: 50px; cursor: pointer; width: fit-content; left: 0; right: 0; margin-left: auto; margin-right: auto;`;
 
 //Set's up a User Edit Form that shows the user's information and allows them to edit it
 const EditUser = () => {
@@ -86,6 +86,7 @@ return (
             </Column>
         </Row>
             <Button type="submit">Save Changes</Button>
+            <Button type="sign out">Sign Out</Button>
         </form>
     </Container>
         <Footer/>
