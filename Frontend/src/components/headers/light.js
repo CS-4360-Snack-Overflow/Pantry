@@ -138,7 +138,6 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
     {logoLink}
     {links}
-    <div style={{ display: isActive ? 'inline' : 'none' }}>Propic and signed in as bla</div>
     </DesktopNavLinks>
 
     <MobileNavLinksContainer css={collapseBreakpointCss.mobileNavLinksContainer}>
