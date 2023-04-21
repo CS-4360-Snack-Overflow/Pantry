@@ -10,7 +10,7 @@ import ContactUsPage from "pages/ContactUs.js";
 import AddRecipePage from "pages/AddRecipe";
 import ComponentRenderer from "ComponentRenderer.js";
 import UserPage from "pages/User.js";
-import EditUser from "pages/EditUser";
+import EditUser from "pages/EditUser2.js";
 import RecipeDetails from "pages/RecipeDetails";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
