@@ -5,8 +5,8 @@ import { SectionHeading } from "components/misc/Headings.js";
 import tw from "twin.macro";
 import Header from "components/headers/light.js";
 import Footer from "components/footers/MiniCenteredFooter";
+import { useEffect } from 'react';
 
-// This is the styling for the form
 const Heading = tw(SectionHeading)`mt-4 font-black text-right text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 const Container = styled.div` display: flex; flex-direction: column; align-items: center; justify-content: center;
   border: 2px solid orange; padding: 70px; border-radius: 100px; margin-top: 50px; max-width: 100%; 100% width: 100%; margin-bottom: 50px;`;
@@ -28,11 +28,22 @@ const [dob, setDob] = useState("01/01/0000");
 const [gender, setGender] = useState("Male");
 const [country, setCountry] = useState("United States");
 
-const handleSubmit = (event) => {
-event.preventDefault();
-// save user information to the server/database
-// and redirect to the user page
-};
+
+  useEffect(()=>{
+    fetch('/user/testAuth')
+      .then(response => response.json())
+      .then(data => {
+	if(!data.active) {
+	 window.location.href = "/login";
+	}
+      });
+  }, [])
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // save user information to the server/database
+    // and redirect to the user page
+  };
 
 //Sets up the body of the form to receive the user's information
 return (

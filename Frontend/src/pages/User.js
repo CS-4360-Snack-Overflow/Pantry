@@ -22,10 +22,19 @@ const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 pt-6 transform
 
 export default () => {
   const [user, setUser] = useState([])
+
   const [createdRecipes, setCreated] = useState([])
   const [favoritedRecipes, setFavorited] = useState([])
 
   useEffect(()=>{
+    fetch('/user/testAuth')
+      .then(response => response.json())
+      .then(data => {
+	if(!data.active) {
+	  window.location.href = "/login";
+	}
+      });
+
     async function retrieveData() {
       await getUser().then((result) => {
         setUser(result)
@@ -47,6 +56,7 @@ export default () => {
   //Sets up the every component of the pages to create the profile page
   return (
     <AnimationRevealPage>
+
       <Header />
       <Heading><HighlightedText>Profile</HighlightedText></Heading>
       <div css={tw`flex flex-initial max-w-[1023px] flex-col justify-center justify-between pb-10`}>
