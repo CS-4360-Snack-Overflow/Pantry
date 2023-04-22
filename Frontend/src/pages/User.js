@@ -9,22 +9,15 @@ import UserForm from "components/forms/UserForm";
 import UserRecipes from "components/forms/UserRecipes"
 import { useState } from "react";
 import styled from "styled-components";
-
-// This is the styling for the form
-const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-left pt-10 md:pt-24 w-full`;
-const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 pt-6 transform -skew-x-12 inline-block`;
+import {getCreatedRecipes, getFavoritedRecipes} from "../helpers/RecipeService"
+import {getUser} from "../helpers/UserService"
 
 const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-2 w-full md:w-2/5`;
-const Button = styled.button`
-background-color: #F58023;
-color: white;
-font-weight: bold;
-padding: 10px 20px;
-border: none;
-border-radius: 5px;
-margin-top: 20px;
-cursor: pointer;
-`;
+const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-left pt-10 md:pt-24 w-full`;
+const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 pt-6 transform -skew-x-12 inline-block`;
+// This is the styling for the form
+
+
 
 
 export default () => {
@@ -56,7 +49,7 @@ export default () => {
     <AnimationRevealPage>
       <Header />
       <Heading><HighlightedText>Profile</HighlightedText></Heading>
-      <div css={tw`flex flex-initial max-[1023px]:flex-col justify-center justify-between pb-10`}>
+      <div css={tw`flex flex-initial max-w-[1023px] flex-col justify-center justify-between pb-10`}>
         <UserForm userData={user} css={tw`w-full md:w-2/5 mx-2`}/>
         <RecipeContainer>
         <UserRecipes css={tw`w-full md:w-2/5 mx-2`} heading="Favorited Recipes" recipes={favoritedRecipes}/>
@@ -65,7 +58,7 @@ export default () => {
         <UserRecipes css={tw`w-full md:w-2/5 mx-2`} heading="My Recipes" recipes={createdRecipes}/>
         </RecipeContainer>
       </div>
-      <Button type="sign out">Sign Out</Button>
+    
       <Footer />
     </AnimationRevealPage>
   );

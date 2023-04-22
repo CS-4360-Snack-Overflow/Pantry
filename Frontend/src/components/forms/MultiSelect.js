@@ -68,7 +68,8 @@ export const MultiSelectWithCategories = ({
 			options={tags} 
 			closeMenuOnSelect={true}
 			placeholder={"Select some tags ... "}
-			>
+			
 			styles={groupStyles}
-		</Select>
-	)}
+		/>
+	);
+};
