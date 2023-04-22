@@ -79,7 +79,8 @@ router.post('/userUpdate', async (req, res) => {
   try {
 
     // first access the username attribute from the model
-    const username = req.body.username ? req.body.username : req.session.username;
+    const user = await User.findById(req.session.userId);
+    const username = user.username;
     const updates = req.body;
     const updatedFields = {};
 
@@ -94,7 +95,7 @@ router.post('/userUpdate', async (req, res) => {
 
     // if update was successful, there's that
     if (updatedUser) {
-      res.json(updatedUser);
+      res.redirect('/user'); 
     } else {
       res.status(404).json( { message: 'User not found' });
     }
@@ -128,8 +129,12 @@ router.post('/userLoginProc', async (req, res) => {
   }
 });
 
-router.get('/testAuth', requireAuth, async (req, res) => {
-  res.json({active:true});
+router.get('/testAuth', async (req, res) => {
+  if (req.session.userId){
+    res.json({active:true});
+  }else{
+    res.json({active:false});
+  }
 });
 
 

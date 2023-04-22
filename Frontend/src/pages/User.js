@@ -17,10 +17,19 @@ const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-l
 
 export default () => {
   const [user, setUser] = useState([])
+
   const [createdRecipes, setCreated] = useState([])
   const [favoritedRecipes, setFavorited] = useState([])
 
   useEffect(()=>{
+    fetch('/user/testAuth')
+      .then(response => response.json())
+      .then(data => {
+	if(!data.active) {
+	  window.location.href = "/login";
+	}
+      });
+
     async function retrieveData() {
       await getUser().then((result) => {
         setUser(result)
@@ -41,6 +50,7 @@ export default () => {
 
   return (
     <AnimationRevealPage>
+
       <Header />
       <Heading><HighlightedText>Profile</HighlightedText></Heading>
       <div css={tw`flex flex-initial max-[1023px]:flex-col justify-center justify-between pb-10`}>
