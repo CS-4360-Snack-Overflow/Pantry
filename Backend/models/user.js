@@ -44,6 +44,9 @@ const userSchema = new mongoose.Schema({
   countryRegion: {
     type: String,
     required: true
+  },
+  favoriteRecipes: {
+    type: [String]
   }
 }, {timestamps: true});
 

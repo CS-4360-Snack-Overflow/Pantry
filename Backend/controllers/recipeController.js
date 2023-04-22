@@ -1,9 +1,11 @@
 const Recipe = require('../models/recipe');
+const User = require('../models/user')
 const escapeRegExp = require('escape-string-regexp');
 const session = require('express-session');
 const fs = require("fs");
 const path = require('path');
 require('dotenv').config();
+
 const recipe_index = (req, res) => {
     const retrieveRecipes = (parameters, filter) => {
         let recipes;
@@ -52,10 +54,6 @@ const recipe_details = (req, res) => {
     }).catch((err) => {
         console.log(err);
     });
-};
-const recipe_create_get = (req, res) => {
-    //render from front-end here
-    //res.render('create', { title: 'create' });
 };
 
 const recipe_create_post = (req, res) => {
@@ -127,13 +125,26 @@ const recipe_get_created = (req, res) => {
     })
 }
 
+const recipe_get_favorited = (req, res) => {
+    async function retrieveFavorites(){
+        let recipes
+        await User.findById(req.session.userId)
+        .then(async (user) => {
+            recipes = await Recipe.find({ _id: { $in: user.favoriteRecipes } })
+        })
+        return recipes
+    }
+    
+    retrieveFavorites().then((results) => res.send(results))
+} 
+
 module.exports = {
     recipe_index,
     recipe_details,
-    recipe_create_get,
     recipe_create_post,
     recipe_delete,
     recipe_patch, 
     recipe_upload_image,
-    recipe_get_created
+    recipe_get_created, 
+    recipe_get_favorited
 };

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { SectionHeading } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { deleteRecipe } from "helpers/RecipeService";
+import { removeFavoriteRecipe } from "helpers/UserService";
 
 const Heading = tw(SectionHeading)`mt-4 font-black text-right text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 const Button = tw(PrimaryButtonBase)`inline-block`
@@ -43,7 +44,7 @@ const RecipeDescription = styled.div`
   color: #777;
 `;
 
-export default ({recipes = [], heading = ""}) => {
+export default ({recipes = [], heading = "", authorized=false}) => {
   return (
     <Container>
       <Heading>{heading}</Heading>
@@ -51,13 +52,26 @@ export default ({recipes = [], heading = ""}) => {
         {recipes.map((recipe, index) => (
           <RecipeListItem key={index}>
             <div>
-              <RecipeTitle>{recipe.title}</RecipeTitle>
-              <RecipeDescription>{recipe.description}</RecipeDescription>
+              <RecipeTitle>{recipe.name}</RecipeTitle>
             </div>
-            <Link to="/addrecipe" state= {{recipe:recipe}}>
-              <Button type="Edit">Edit</Button>
-            </Link>
-            <Button onClick={()=>{deleteRecipe(recipe._id); window.location.href='/user'}}>Delete Recipe</Button>
+            {authorized && (
+              <div>
+                <Link to="/addrecipe" state= {{recipe:recipe}}>
+                  <Button type="Edit">Edit</Button>
+                </Link>
+                <Button onClick={()=>{deleteRecipe(recipe._id); window.location.href='/user'}}>Delete Recipe</Button>
+              </div>
+
+            )}
+
+            {!authorized && ( 
+              <div>
+                <Link to="/recipedetails" state= {{clickedRecipe:recipe}}>
+                  <Button type="View">View Recipe</Button>
+                </Link>
+                <Button onClick={() => {removeFavoriteRecipe(recipe._id); window.location.href='/user'}}>Unfavorite</Button>
+              </div>
+            )}
           </RecipeListItem>
         ))}
       </RecipeList>
