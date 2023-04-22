@@ -8,14 +8,14 @@ import Footer from "components/footers/MiniCenteredFooter";
 
 // This is the styling for the form
 const Heading = tw(SectionHeading)`mt-4 font-black text-right text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
-const Container = styled.div` display: flex; flex-direction: column; align-items: center;  // center horizontally justify-content: center;
-  border: 2px solid orange; padding: 40px; border-radius: 10px; margin-top: 50px; max-width: 100%; 100% width: 100%;`;
+const Container = styled.div` display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 2px solid orange; padding: 70px; border-radius: 100px; margin-top: 50px; max-width: 100%; 100% width: 100%; margin-bottom: 50px;`;
 const Row = styled.div` display: flex; flex-wrap: wrap; margin-bottom: 10px;`;
 const Column = styled.div` flex: 1; margin-right: 10px;`;
 const Label = styled.div` font-weight: bold; margin-bottom: 5px;`;
 const Input = styled.input` margin-bottom: 10px;`;
-const Button = styled.button` position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%); background-color: #F58023; color: white; font-weight: bold;
-  padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;`;
+const Button = styled.button` position: center; top: 60%; left: 50%;  background-color: #F58023; color: white; font-weight: bold;
+padding: 10px 20px; border: none; border-radius: 50px; cursor: pointer; width: fit-content; left: 0; right: 0; margin-left: auto; margin-right: auto;`;
 
 //Set's up a User Edit Form that shows the user's information and allows them to edit it
 const EditUser = () => {
@@ -86,6 +86,7 @@ return (
             </Column>
         </Row>
             <Button type="submit">Save Changes</Button>
+            <Button type="sign out">Sign Out</Button>
         </form>
     </Container>
         <Footer/>

@@ -8,12 +8,23 @@ import Footer from "components/footers/MiniCenteredFooter";
 import UserForm from "components/forms/UserForm";
 import UserRecipes from "components/forms/UserRecipes"
 import { useState } from "react";
-import {getCreatedRecipes, getFavoritedRecipes} from "../helpers/RecipeService"
-import {getUser} from "../helpers/UserService"
+import styled from "styled-components";
+
+// This is the styling for the form
 const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-left pt-10 md:pt-24 w-full`;
 const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 pt-6 transform -skew-x-12 inline-block`;
 
 const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-2 w-full md:w-2/5`;
+const Button = styled.button`
+background-color: #F58023;
+color: white;
+font-weight: bold;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+margin-top: 20px;
+cursor: pointer;
+`;
 
 
 export default () => {
@@ -54,6 +65,7 @@ export default () => {
         <UserRecipes css={tw`w-full md:w-2/5 mx-2`} heading="My Recipes" recipes={createdRecipes}/>
         </RecipeContainer>
       </div>
+      <Button type="sign out">Sign Out</Button>
       <Footer />
     </AnimationRevealPage>
   );
