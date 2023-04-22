@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { useLocation} from "react-router";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
@@ -61,6 +62,7 @@ export default ({
     "gender" : "Favorite dish"
   }
 }) => {
+  const user = useLocation().state.user;
   const [image, setImage] = useState(null)
   const [imUrl, setUrl] = useState("/placeholder.webp")
 
@@ -97,7 +99,7 @@ export default ({
     {Object.keys(fields).map((field, index) => (
       <div key={index}>
       <label>{fields[field]}</label>
-      <Input type="text" id={field} name={field}></Input>
+      <Input type={field==="password" ? "password" : "text"} id={field} name={field} defaultValue={user[field]}></Input>
       </div>
     ))}
     <SubmitButton type="submit">

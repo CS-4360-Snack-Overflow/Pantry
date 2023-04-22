@@ -60,7 +60,7 @@ export default ({
     "phoneNumber": "Phone",
     "dateOfBirth": "DOB",
     "countryRegion": "Country",
-  "gender" : "Favorite dish"
+    "gender" : "Gender"
   }
 }) => {
   const [image, setImage] = useState(null)
