@@ -61,7 +61,7 @@ const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-l
 const ImageContainer = tw.div`border-2 border-solid border-white rounded-lg p-4 m-2 w-full md:w-2/5`;
 const Images = styled.div`
 ${props => css`background-image:url("${props.imageSrc}");max-width:80%;`}
-${tw`h-128 w-full bg-center bg-cover relative rounded-t mx-auto flex-row`}`
+${tw`h-32 sm:h-48 md:h-48 lg:h-128 xl:h-128 2xl:h-128 w-full bg-center bg-cover relative rounded-t mx-auto flex-row`}`
 
 
 export default ({
