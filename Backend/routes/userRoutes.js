@@ -29,6 +29,7 @@ async function loginUser(credentials, session) {
   }
 
   session.userId = user._id;
+  session.username = user.username;
   session.name = user.fullName;
 
 }
@@ -78,7 +79,7 @@ router.post('/userUpdate', async (req, res) => {
   try {
 
     // first access the username attribute from the model
-    const username = req.body.username;
+    const username = req.body.username ? req.body.username : req.session.username;
     const updates = req.body;
     const updatedFields = {};
 
@@ -145,6 +146,27 @@ router.get('/logout', requireAuth, async (req, res) => {
 
 //router.post('/recipe_create', recipeController.recipe_create_post);
 
+// Add a recipe ID to user's favorites
+router.post('/favorite/:id', async (req, res) => {
+  User.findOneAndUpdate({_id: req.session.userId}, {$addToSet: {favoriteRecipes: req.params.id}}, 
+                        (err) => {console.log(err)});
+})
+
+// Remove a recipe ID from user's favorites
+router.delete('/unfavorite/:id', async (req, res) => {
+  User.findOneAndUpdate({_id: req.session.userId}, {$pull: {favoriteRecipes: req.params.id}}, 
+                        (err) => {console.log(err)});
+})
+
+router.get('/isfavorite/:id', async (req, res) => {
+  // Checks if recipe id is in favorites array
+  const user = await User.findById(req.session.userId);
+  if(user.favoriteRecipes.includes(req.params.id)) {
+    res.json({result: true})
+  } else {
+    res.send({result: false})
+  }
+});
 
 module.exports = router;
 

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { SectionHeading } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { deleteRecipe } from "helpers/RecipeService";
+import { removeFavoriteRecipe } from "helpers/UserService";
 
 // This is the styling for the form
 const Heading = tw(SectionHeading)`mt-4 font-black text-right text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
@@ -61,8 +62,12 @@ const RecipeDescription = styled.div`
   color: #777;
 `;
 
+<<<<<<< HEAD
 export default ({recipes = [], heading = ""}) => {
 >>>>>>> 2ef9cbe798d1531f8875f5b0e9d635c4332ba2eb:Frontend/src/components/forms/UserRecipes.js
+=======
+export default ({recipes = [], heading = "", authorized=false}) => {
+>>>>>>> 78ab58cbdda2b127dd45094f1040751a73d356bc
   return (
     <Container>
       <Heading>{heading}</Heading>
@@ -70,13 +75,26 @@ export default ({recipes = [], heading = ""}) => {
         {recipes.map((recipe, index) => (
           <RecipeListItem key={index}>
             <div>
-              <RecipeTitle>{recipe.title}</RecipeTitle>
-              <RecipeDescription>{recipe.description}</RecipeDescription>
+              <RecipeTitle>{recipe.name}</RecipeTitle>
             </div>
-            <Link to="/addrecipe" state= {{recipe:recipe}}>
-              <Button type="Edit">Edit</Button>
-            </Link>
-            <Button onClick={()=>{deleteRecipe(recipe._id); window.location.href='/user'}}>Delete Recipe</Button>
+            {authorized && (
+              <div>
+                <Link to="/addrecipe" state= {{recipe:recipe}}>
+                  <Button type="Edit">Edit</Button>
+                </Link>
+                <Button onClick={()=>{deleteRecipe(recipe._id); window.location.href='/user'}}>Delete Recipe</Button>
+              </div>
+
+            )}
+
+            {!authorized && ( 
+              <div>
+                <Link to="/recipedetails" state= {{clickedRecipe:recipe}}>
+                  <Button type="View">View Recipe</Button>
+                </Link>
+                <Button onClick={() => {removeFavoriteRecipe(recipe._id); window.location.href='/user'}}>Unfavorite</Button>
+              </div>
+            )}
           </RecipeListItem>
         ))}
       </RecipeList>

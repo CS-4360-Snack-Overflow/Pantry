@@ -54,7 +54,7 @@ const Step = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-200 hover:bg-gray-300 text
 const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-auto w-full`;
 const Images = styled.div`
 ${props => css`background-image:url("${props.imageSrc}");max-width:80%;`}
-${tw`h-128 w-full bg-center bg-cover relative rounded-t mx-auto flex-row`}`
+${tw`h-32 sm:h-48 md:h-48 lg:h-128 xl:h-128 2xl:h-128 w-full bg-center bg-cover relative rounded-t mx-auto flex-row`}`
 
 export default ({
   recipeId = null,
