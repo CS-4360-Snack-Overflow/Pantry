@@ -10,7 +10,7 @@ import { ReactComponent as LinkedinIcon} from "images/linkedin-icon.svg";
 import { ReactComponent as GithubIcon } from "images/github-icon.svg";
 import JadenHeadShot from "images/J-500H-70Q.jpg";
 import CesarHeadShot from "images/CesarSquare.png";
-import JoseHeadShot from "images/J-500H-70Q.jpg";
+import JoseHeadShot from "images/Jose-500H-80Q.jpg";
 import WolfyHeadShot from "images/Wolfy-500H-70Q.jpg";
 import DJHeadShot from "images/DJSquare.png";
 import RyanHeadShot from "images/Ryan-500H-70Q.jpg";
