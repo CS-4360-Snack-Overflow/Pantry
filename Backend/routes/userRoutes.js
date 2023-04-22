@@ -54,7 +54,7 @@ router.post('/userCreate', async (req, res) => {
     const savedUser = await user.save();
     //res.status(201).json(savedUser);
     await loginUser(req.body, req.session);
-    res.redirect('/'); //might wanna direct users to profile page later
+    res.redirect('/'); 
 
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -125,7 +125,7 @@ router.post('/userLoginProc', async (req, res) => {
     await loginUser(req.body, req.session);
     res.redirect('/');
   } catch (error) {
-    res.status(401).json({ error: error.message });
+    res.redirect('/login');
   }
 });
 
