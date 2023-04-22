@@ -8,8 +8,6 @@ router.get('/', recipeController.recipe_index);
 
 router.post('/create', recipeController.recipe_create_post);
 
-router.get('/create', recipeController.recipe_create_get);
-
 router.get('/created', recipeController.recipe_get_created);
 
 router.get('/favorited', recipeController.recipe_get_favorited);

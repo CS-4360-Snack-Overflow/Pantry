@@ -20,9 +20,6 @@ export default () => {
   const [createdRecipes, setCreated] = useState([])
   const [favoritedRecipes, setFavorited] = useState([])
 
-  useEffect(() => {
-    console.log(favoritedRecipes)
-  }, [favoritedRecipes])
   useEffect(()=>{
     async function retrieveData() {
       await getUser().then((result) => {

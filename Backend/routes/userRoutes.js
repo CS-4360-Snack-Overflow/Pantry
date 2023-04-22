@@ -146,10 +146,27 @@ router.get('/logout', requireAuth, async (req, res) => {
 
 //router.post('/recipe_create', recipeController.recipe_create_post);
 
+// Add a recipe ID to user's favorites
 router.post('/favorite/:id', async (req, res) => {
   User.findOneAndUpdate({_id: req.session.userId}, {$addToSet: {favoriteRecipes: req.params.id}}, 
                         (err) => {console.log(err)});
 })
+
+// Remove a recipe ID from user's favorites
+router.delete('/unfavorite/:id', async (req, res) => {
+  User.findOneAndUpdate({_id: req.session.userId}, {$pull: {favoriteRecipes: req.params.id}}, 
+                        (err) => {console.log(err)});
+})
+
+router.get('/isfavorite/:id', async (req, res) => {
+  // Checks if recipe id is in favorites array
+  const user = await User.findById(req.session.userId);
+  if(user.favoriteRecipes.includes(req.params.id)) {
+    res.json({result: true})
+  } else {
+    res.send({result: false})
+  }
+});
 
 module.exports = router;
 

@@ -5,6 +5,7 @@ const session = require('express-session');
 const fs = require("fs");
 const path = require('path');
 require('dotenv').config();
+
 const recipe_index = (req, res) => {
     const retrieveRecipes = (ingredients, filter) => {
         let recipes;
@@ -49,10 +50,6 @@ const recipe_details = (req, res) => {
     }).catch((err) => {
         console.log(err);
     });
-};
-const recipe_create_get = (req, res) => {
-    //render from front-end here
-    //res.render('create', { title: 'create' });
 };
 
 const recipe_create_post = (req, res) => {
@@ -140,7 +137,6 @@ const recipe_get_favorited = (req, res) => {
 module.exports = {
     recipe_index,
     recipe_details,
-    recipe_create_get,
     recipe_create_post,
     recipe_delete,
     recipe_patch, 

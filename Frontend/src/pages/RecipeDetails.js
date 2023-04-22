@@ -14,11 +14,15 @@ import { ReactComponent as DislikeIcon } from "images/dislike.svg";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { motion } from "framer-motion";
 import { deleteRecipe } from "helpers/RecipeService";
-import { addFavoriteRecipe, checkAuth } from "helpers/UserService";
+import { addFavoriteRecipe, checkAuth, checkFavorited, removeFavoriteRecipe } from "helpers/UserService";
 import { Link } from "react-router-dom";
 
 export default () => {
+  // Load the recipe in from recipe grid
   const recipe = useLocation().state.clickedRecipe;
+
+  // Set all the fields if they aren't null
+  // (note: pretty sure this is a stupid way to do this but it works)
   const prepTime = recipe.prep_time ? recipe.prep_time : 0;
   const cookTime = recipe.cook_time ? recipe.cook_time : 0;
   const numServings = recipe.num_servings ? recipe.num_servings : 0;
@@ -29,10 +33,13 @@ export default () => {
   const carbs = recipe.nutrition.carbohydrates ? recipe.nutrition.carbohydrates : 0;
   const fiber = recipe.nutrition.fiber ? recipe.nutrition.fiber : 0;
   const review = recipe.review ? recipe.review : 0;
+
+  // Initialize any variables that might change
   const [likes, setLikes] = useState(recipe.user_ratings.count_positive ? recipe.user_ratings.count_positive : 0);
   const [dislikes, setDislikes] = useState(recipe.user_ratings.count_negative ? recipe.user_ratings.count_negative : 0);
   const [isAuthorized, setAuthorized] = useState(false)
-
+  const [isFavorite, setFavorite] = useState(false)
+  
   const Heading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-center pt-10 md:pt-24`;
   const Subheading = tw.div`uppercase tracking-wider text-base text-center justify-center text-orange-600 font-bold`;
   const SubheadingLeft = tw.div`uppercase tracking-wider text-base text-left justify-start text-orange-600 font-bold`;
@@ -61,18 +68,31 @@ export default () => {
   `;
   const RecipeContainer = tw.div`border-2 border-solid bottom-0 left-0 border-white rounded-lg p-4 mx-2 w-full md:w-2/5`;
 
+  // When the page loads, check if user owns recipe and if they have it favorited
   useEffect(() => {
-    checkAuth(recipe.user_num).then(
-      (res) =>{
-        setAuthorized(res)
-      }
-    )
+    checkAuth(recipe.user_num)
+    .then((res) =>{
+      setAuthorized(res)
+    })
+
+    checkFavorited(recipe._id)
+    .then((res) => {
+      setFavorite(res)
+    })
   }, [])
   
+  const handleFavorite = () => {
+    if(isFavorite){
+      removeFavoriteRecipe(recipe._id)
+    } else {
+      addFavoriteRecipe(recipe._id)
+    }
+
+    setFavorite(!isFavorite)
+  }
   return (
     <AnimationRevealPage>
       <Header/>
-      <h1>{isAuthorized}</h1>
       <Heading>{recipe.name}</Heading>
       <Subheading>by {recipe.credits ? recipe.credits : "Unknown"}</Subheading>
       <TagContainer>
@@ -111,6 +131,8 @@ export default () => {
         <Text>Cook time: {cookTime} minutes</Text>
         <Text>Number of servings: {numServings}</Text>
         <SmallColumn></SmallColumn>
+
+        {/* Show edit/delete buttons if user created the recipe */}
         {isAuthorized && (
           <div>
             <Link to="/addrecipe" state= {{recipe:recipe}}>
@@ -119,8 +141,11 @@ export default () => {
             <AddButton onClick={()=>{deleteRecipe(recipe._id); window.location.href='/recipes/'}}>Delete Recipe</AddButton>
           </div>
         )}
-        {!isAuthorized && (
-          <AddButton onClick={()=>addFavoriteRecipe(recipe._id)}>Favorite Recipe</AddButton>
+        {/* Show favorite/unfavorite button if user didn't create the recipe */}
+        {!isAuthorized &&(
+          <AddButton onClick={()=>{handleFavorite()}}>
+            {!isFavorite ? "Favorite Recipe" : "Unfavorite Recipe"}
+          </AddButton>
         )}
         </RecipeContainer>
       </div>
