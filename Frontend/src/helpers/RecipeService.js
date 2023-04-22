@@ -8,12 +8,15 @@ export async function getRecipes(url) {
 }
 
 export async function getCreatedRecipes() {
-	let recipes = []
-	await fetch("/recipes/created")
-	.then((res) => {
-	  recipes = res.json()
-	})
-	  return recipes
+	let created = await fetch("/recipes/created")
+	created = await created.json()
+	return created
+}
+
+export async function getFavoritedRecipes() {
+	let favorites = await fetch("/recipes/favorited")
+	favorites = await favorites.json()
+	return favorites
 }
 
 export async function getOneRecipe(id) {
