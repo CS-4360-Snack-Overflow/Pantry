@@ -1,0 +1,257 @@
+/**
+ * This is the logic used to seed the database from the Recipe-Food-Nutrition API
+ */
+
+ const options = {
+    method: 'GET',
+    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
+    params: {number: '300'},
+    headers: {
+    }
+  };
+const recipe_api = (req, res) => {
+    axios.request(options).then(function (response) {
+        let arr = response.data.recipes
+        arr.forEach(element => {
+            let tags = []
+            let instructions = []
+            let ingredients = []
+            let recipe_id = []
+            let nutrition = []
+            // query all ids
+            recipe_id.push(element.id)
+            // query all tags
+            if (element.vegetarian == true) {
+                tags.push('vegetarian')
+            }
+            if (element.vegan == true) {
+                tags.push('vegan')
+            }
+            if (element.glutenFree == true) {
+                tags.push('gluten free')
+            }
+            if (element.dairyFree == true) {
+                tags.push('dairy free')
+            }
+            if (element.veryHealthy == true) {
+                tags.push('very healthy')
+            }
+            if (element.cheap == true) {
+                tags.push('cheap')
+            }
+            if (element.veryPopular == true) {
+                tags.push('very popular')
+            }
+            if (element.sustainable == true) {
+                tags.push('sustainable')
+            }
+            if (element.cuisines.length > 0) {
+                element.cuisines.forEach(element => {
+                    tags.push(element)
+                });
+            }
+            if (element.dishTypes.length > 0) {
+                element.dishTypes.forEach(element => {
+                    tags.push(element)
+                });
+            }
+            if (element.diets.length > 0) {
+                element.diets.forEach(element => {
+                    tags.push(element)
+                });
+            }
+            if (element.occasions.length > 0) {
+                element.occasions.forEach(element => {
+                    tags.push(element)
+                });
+            }
+            // query all ingredients
+            element.extendedIngredients.forEach(element => {
+                ingredients.push(element.original)
+            });
+            // query all steps
+            element.analyzedInstructions[0].steps.forEach(element => {
+                instructions.push(element.step)
+            })
+            // query nutrition by id
+            const options2 = {
+                method: 'GET',
+                url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/' + recipe_id[0] + '/nutritionWidget.json',
+                headers: {
+                }
+              };
+            axios.request(options2).then(function (response) {
+                nutrition.push(Number(response.data.protein.substring(0, response.data.protein.indexOf('g'))))
+                nutrition.push(Number(response.data.fat.substring(0, response.data.fat.indexOf('g'))))
+                nutrition.push(Number(response.data.calories))
+                response.data.bad.forEach(element => {
+                    if (element.title == 'Sugar') {
+                        nutrition.push(Number(element.amount.substring(0, element.amount.indexOf('g'))))
+                    }
+                })
+                nutrition.push(Number(response.data.carbs.substring(0, response.data.carbs.indexOf('g'))))
+                response.data.good.forEach(element => {
+                    if (element.title == 'Fiber') {
+                        nutrition.push(Number(element.amount.substring(0, element.amount.indexOf('g'))))
+                    }
+                })
+                let recipes = new Recipe({
+                    name: element.title,
+                    video_url: '',
+                    poster_image_url: element.image,
+                    alt_image_url: element.image,
+                    num_servings: element.servings,
+                    prep_time: element.preperationMinutes,
+                    credits: element.creditsText,
+                    cook_time: element.cookingMinutes,
+                    description: element.summary,
+                    nutrition: {
+                        protein: nutrition[0],
+                        fat: nutrition[1],
+                        calories: nutrition[2],
+                        sugar: nutrition[3],
+                        carbohydrates: nutrition[4],
+                        fiber: nutrition[5]
+                    },
+                    user_ratings: {
+                        count_positive: 0,
+                        count_negative: 0
+                    },
+                    review: 0,
+                        tags: tags,
+                        ingredients: ingredients,
+                        instructions: instructions,
+                        user_num: "-1"
+                });
+                recipes.save()
+            }).catch(function (error) {
+                console.error(error);
+            });
+        });
+    }).catch(function (error) {
+        console.error(error);
+    });
+};
+
+
+/**
+ * This is the logic used to seed the database from the Tasty API
+ */
+
+const options = {
+    method: 'GET',
+    url: 'https://tasty.p.rapidapi.com/recipes/list',
+    params: {from: '0', size: '500'},
+    headers: {
+    }
+  };
+  
+  const recipe_api = (req, res) => {
+   axios.request(options).then(function (response) {
+        //console.log(typeof response.data);
+        //console.log(response.data.results[0].recipes)
+        let arr = response.data.results
+        console.log(arr[0].recipes)
+        //console.log(arr[0].user_ratings)
+        // console.log(typeof arr)
+        // const recipe = new Recipe_API(arr)
+        // recipe.save()
+        //res.render('tasty', {recipes: response.data.results.slice(0,1), title: 'tasty API'})
+        if(arr.length > 0) {
+            arr.forEach(recipe => {
+                // let linked_recipes = []
+                if (Object.hasOwn(recipe, 'recipes')) {
+                    let arr_2 = recipe.recipes
+                    arr_2.forEach(recipe => {
+                        let arr_tags = []
+                        recipe.tags.forEach(tag => {arr_tags.push(tag.display_name)})
+                        let arr_ingredients = []
+                        recipe.sections[0].components.forEach(ingredient => {
+                            arr_ingredients.push(ingredient.raw_text)
+                        })
+                        let arr_instructions = []
+                        recipe.instructions.forEach(instruction => {
+                            arr_instructions.push(instruction.display_text)
+                        })
+                        let recipes = new Recipe({
+                            name: recipe.name,
+                            video_url: recipe.renditions[0].url,
+                            poster_image_url: recipe.renditions[0].poster_url,
+                            alt_image_url: recipe.thumbnail_url,
+                            num_servings: recipe.num_servings,
+                            prep_time: recipe.prep_time_minutes,
+                            credits: recipe.credits[0].name,
+                            cook_time: recipe.cook_time_minutes,
+                            description: recipe.description,
+                            nutrition: {
+                                protein: recipe.nutrition.protein,
+                                fat: recipe.nutrition.fat,
+                                calories: recipe.nutrition.calories,
+                                sugar: recipe.nutrition.sugar,
+                                carbohydrates: recipe.nutrition.carbohydrates,
+                                fiber: recipe.nutrition.fiber
+                            },
+                            user_ratings: {
+                                count_positive: recipe.user_ratings.count_positive,
+                                count_negative: recipe.user_ratings.count_negative
+                            },
+                            review: (((recipe.user_ratings.count_positive)/(recipe.user_ratings.count_positive + recipe.user_ratings.count_negative)) * 5).toFixed(1),
+                            tags: arr_tags,
+                            ingredients: arr_ingredients,
+                            instructions: arr_instructions,
+                            user_num: "0"
+                        });
+                        recipes.save()
+                        // recipes.save(function(err, recipe_id) {
+                        //     linked_recipes.push(recipe_id.id)
+                        // })
+                    })
+                }
+                else {
+                    let arr_tags = []
+                    recipe.tags.forEach(tag => {arr_tags.push(tag.display_name)})
+                    let arr_ingredients = []
+                    recipe.sections[0].components.forEach(ingredient => {
+                        arr_ingredients.push(ingredient.raw_text)
+                    })
+                    let arr_instructions = []
+                    recipe.instructions.forEach(instruction => {
+                        arr_instructions.push(instruction.display_text)
+                    })
+                    let recipes = new Recipe({
+                        name: recipe.name,
+                        video_url: recipe.renditions[0].url,
+                        poster_image_url: recipe.renditions[0].poster_url,
+                        alt_image_url: recipe.thumbnail_url,
+                        num_servings: recipe.num_servings,
+                        prep_time: recipe.prep_time_minutes,
+                        credits: recipe.credits[0].name,
+                        cook_time: recipe.cook_time_minutes,
+                        description: recipe.description,
+                        nutrition: {
+                            protein: recipe.nutrition.protein,
+                            fat: recipe.nutrition.fat,
+                            calories: recipe.nutrition.calories,
+                            sugar: recipe.nutrition.sugar,
+                            carbohydrates: recipe.nutrition.carbohydrates,
+                            fiber: recipe.nutrition.fiber
+                        },
+                        user_ratings: {
+                            count_positive: recipe.user_ratings.count_positive,
+                            count_negative: recipe.user_ratings.count_negative
+                        },
+                        tags: arr_tags,
+                        ingredients: arr_ingredients,
+                        instructions: arr_instructions,
+                        user_num:"0"
+                    });
+                    recipes.save()
+                }
+            });
+        
+    }
+        res.render('tasty', {recipes: arr, title: 'tasty API'})
+    }).catch(function (error) {
+        console.error(error);
+    });
+};
