@@ -123,11 +123,8 @@ router.post('/userDelete', requireAuth, async (req, res) => {
 router.post('/userLoginProc', async (req, res) => {
   try{
     await loginUser(req.body, req.session);
-    //res.redirect('/');
     res.send({ message: 'valid'})
   } catch (error) {
-    //throw new Error('Invalid credentials');
-    //res.redirect('/login');
     res.send({ message: 'invalid'})
   }
 });

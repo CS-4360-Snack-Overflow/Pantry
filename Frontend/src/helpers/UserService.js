@@ -24,3 +24,15 @@ export async function getUser(){
     const res = await fetch("/user/userRead")
     return await res.json()
 }
+
+export async function login(username, password){
+    let response = await fetch('/user/userLoginProc', {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+          },
+        body: JSON.stringify({username: username, password: password})
+      })
+    response = await response.json()
+    return response
+}

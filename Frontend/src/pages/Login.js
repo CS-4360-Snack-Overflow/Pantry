@@ -8,9 +8,8 @@ import illustration from "images/login-pantry.svg";
 import logo from "images/logo-p.svg";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-
+import { login } from "helpers/UserService";
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
 const MainContainer = tw.div`lg:w-1/2 xl:w-5/12 p-6 sm:p-12`;
@@ -61,16 +60,14 @@ export default ({
       event.preventDefault();
       
       try {
-        const response = await axios.post('/user/userLoginProc', {
-          username: event.target.username.value,
-          password: event.target.password.value
-        });
-        console.log(response.data);
-        if (response.data.message == 'valid') {
-          navigate('/user')
-        } else{
-          setError('Invalid username or password. Please try again.');
-        }
+        login(event.target.username.value, event.target.password.value)
+        .then((response) => {
+          if (response.message == 'valid') {
+            navigate('/user')
+          } else{
+            setError('Invalid username or password. Please try again.');
+          }
+        })
       } catch (error) {
         console.error(error);
         setError('Invalid username or password. Please try again.');
