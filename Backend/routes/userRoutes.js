@@ -125,7 +125,8 @@ router.post('/userLoginProc', async (req, res) => {
     await loginUser(req.body, req.session);
     res.redirect('/');
   } catch (error) {
-    res.redirect('/login');
+    throw new Error('Invalid credentials');
+    //res.redirect('/login');
   }
 });
 
