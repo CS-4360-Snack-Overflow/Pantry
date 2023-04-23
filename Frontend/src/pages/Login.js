@@ -48,6 +48,13 @@ export default ({
   signupUrl = "/signup",
 
 }) =>  {
+  const ErrorPopup = styled.div`
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 10px;
+`;
     const [error, setError] = useState('');
     const navigate = useNavigate();
     async function handleLogin(event) {
@@ -123,7 +130,7 @@ export default ({
               <MainContent>
                 <Heading>{headingText}</Heading>
                 {error && (
-                  <div className="error-popup">{error}</div>
+                  <ErrorPopup>{error}</ErrorPopup>
                 )}
                 <FormContainer>
                   <form onSubmit={handleLogin}>
