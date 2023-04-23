@@ -9,6 +9,7 @@ import logo from "images/logo-p.svg";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -48,7 +49,7 @@ export default ({
 
 }) =>  {
     const [error, setError] = useState('');
-    
+    const navigate = useNavigate();
     async function handleLogin(event) {
       event.preventDefault();
       
@@ -58,6 +59,11 @@ export default ({
           password: event.target.password.value
         });
         console.log(response.data);
+        if (response.data.message == 'valid') {
+          navigate('/user')
+        } else{
+          setError('Invalid username or password. Please try again.');
+        }
       } catch (error) {
         console.error(error);
         setError('Invalid username or password. Please try again.');
@@ -120,7 +126,7 @@ export default ({
                   <div className="error-popup">{error}</div>
                 )}
                 <FormContainer>
-                  <form onSubmit={handleLogin()}>
+                  <form onSubmit={handleLogin}>
                     <Input type="username" placeholder="Username" id="username" name="username" required />
                     <Input type="password" id="password" name="password" required />
                     <SubmitButton type="submit">
