@@ -70,7 +70,28 @@ userSchema.pre('save', async function(next) {
     next(error);
   }
 });
+
 //findOneAndUpdate
+userSchema.pre('findOneAndUpdate', async function (next) {
+  // only hash the password if it has been modified (or is new)
+  if (!this._update.password) {
+    return next();
+  }
+
+  try {
+    // generate a salt with a complexity of 10
+    const salt = await bcrypt.genSalt(10);
+    // hash the password with the salt
+    const hash = await bcrypt.hash(this._update.password, salt);
+    // replace the plaintext password with the hash
+    this._update.password = hash;
+    next();
+  }
+  catch (error) {
+    next(error);
+  }
+});
+
 
 // Create a Mongoose model based on the schema
 const User = mongoose.model('User', userSchema);
