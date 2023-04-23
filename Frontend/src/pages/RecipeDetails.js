@@ -17,6 +17,7 @@ import { deleteRecipe } from "helpers/RecipeService";
 import { addFavoriteRecipe, checkAuth, checkFavorited, removeFavoriteRecipe } from "helpers/UserService";
 import { Link } from "react-router-dom";
 
+
 const ScrollToTop = ({ children }) => {
   const { pathname } = useLocation();
 

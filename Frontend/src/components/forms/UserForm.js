@@ -4,35 +4,12 @@ import { Link } from "react-router-dom";
 
 
 
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-`;
-
-const ProfilePicture = styled.img`
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-`;
-
-const UserInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  margin-top: 20px;
-`;
-
-const Label = styled.div`
-  font-weight: bold;
-  margin-bottom: 5px;
-`;
-
-const Info = styled.div`
-  margin-bottom: 10px;
-`;
+// This is the styling for the form
+const Container = styled.div` display: flex; flex-direction: column; align-items: start;`;
+const ProfilePicture = styled.img` width: 150px; height: 150px; border-radius: 50%; object-fit: cover;`;
+const UserInfo = styled.div` display: flex; flex-direction: column; align-items: start; margin-top: 20px;`;
+const Label = styled.div` font-weight: bold; margin-bottom: 5px;`;
+const Info = styled.div` margin-bottom: 10px;`;
 
 const Button = styled(Link)`
 background-color: #F58023;
@@ -49,11 +26,11 @@ cursor: pointer;
 export default ({
   userData = null
 }) => {
-
+// Checks to see If userData is null or undefined
   if (!userData) {
     return <div>Loading...</div>;
   }
-  
+  // If userData is not null or undefined, it will return the following
   return (
     <Container>
       <ProfilePicture src={userData.profilePicture} alt="Profile Picture" />

@@ -1356,6 +1356,19 @@
   dependencies:
     "@floating-ui/core" "^1.2.4"
 
+
+"@floating-ui/core@^1.2.4":
+  version "1.2.5"
+  resolved "https://registry.npmjs.org/@floating-ui/core/-/core-1.2.5.tgz"
+  integrity sha512-qrcbyfnRVziRlB6IYwjCopYhO7Vud750JlJyuljruIXcPxr22y8zdckcJGsuOdnQ639uVD1tTXddrcH3t3QYIQ==
+
+"@floating-ui/dom@^1.0.1":
+  version "1.2.5"
+  resolved "https://registry.npmjs.org/@floating-ui/dom/-/dom-1.2.5.tgz"
+  integrity sha512-+sAUfpQ3Frz+VCbPCqj+cZzvEESy3fjSeT/pDWkYCWOBXYNNKZfuVsHuv8/JO2zze8+Eb/Q7a6hZVgzS81fLbQ==
+  dependencies:
+    "@floating-ui/core" "^1.2.4"
+
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.8.tgz"
@@ -6685,6 +6698,7 @@ memfs@^3.1.2, memfs@^3.4.3:
   version "3.5.1"
   resolved "https://registry.npmjs.org/memfs/-/memfs-3.5.1.tgz"
   integrity sha512-UWbFJKvj5k+nETdteFndTpYxdeTMox/ULeqX5k/dpaQJCCFmj5EeKv3dBcyO2xmkRAx2vppRu5dVG7SOtsGOzA==
+
   dependencies:
     fs-monkey "^1.0.3"
 
@@ -9186,6 +9200,7 @@ terser@^5.0.0, terser@^5.10.0, terser@^5.16.5:
   version "5.17.1"
   resolved "https://registry.npmjs.org/terser/-/terser-5.17.1.tgz"
   integrity sha512-hVl35zClmpisy6oaoKALOpS0rDYLxRFLHhRuDlEGTKey9qHjS1w9GMORjuwIMt70Wan4lwsLYyWDVnWgF+KUEw==
+
   dependencies:
     "@jridgewell/source-map" "^0.3.2"
     acorn "^8.5.0"
