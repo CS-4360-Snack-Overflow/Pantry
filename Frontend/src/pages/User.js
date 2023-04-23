@@ -59,7 +59,7 @@ export default () => {
 
       <Header />
       <Heading><HighlightedText>Profile</HighlightedText></Heading>
-      <div css={tw`flex flex-wrap justify-center md:justify-between pb-10`}>
+      <div css={tw`flex flex-wrap justify-center md:justify-between py-10`}>
         <UserForm userData={user} css={tw`w-full md:w-2/5 mx-2`}/>
         <RecipeContainer>
         <UserRecipes css={tw`w-full md:w-2/5 mx-2`} heading="Favorited Recipes" recipes={favoritedRecipes}/>

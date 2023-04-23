@@ -10,7 +10,7 @@ import { removeFavoriteRecipe } from "helpers/UserService";
 // This is the styling for the form
 
 const Heading = tw(SectionHeading)`mt-4 font-black text-right text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
-const Button = tw(PrimaryButtonBase)`inline-block`
+const Button = tw(PrimaryButtonBase)`inline-block p-3`
 
 const Container = styled.div`
   display: flex;
