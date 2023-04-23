@@ -65,7 +65,7 @@ export default () => {
         <UserRecipes css={tw`w-full md:w-2/5 mx-2`} heading="Favorited Recipes" recipes={favoritedRecipes}/>
         </RecipeContainer>
         <RecipeContainer>
-        <UserRecipes css={tw`w-full md:w-2/5 mx-2`} heading="My Recipes" recipes={createdRecipes}/>
+        <UserRecipes css={tw`w-full md:w-2/5 mx-2`} heading="My Recipes" recipes={createdRecipes} authorized={true}/>
         </RecipeContainer>
       </div>
     
