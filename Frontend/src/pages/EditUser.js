@@ -6,6 +6,7 @@ import tw from "twin.macro";
 import Header from "components/headers/light.js";
 import Footer from "components/footers/MiniCenteredFooter";
 import { useEffect } from 'react';
+import { useLocation} from "react-router";
 
 const Heading = tw(SectionHeading)`mt-4 font-black text-right text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 const Container = styled.div` display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -19,14 +20,8 @@ padding: 10px 20px; border: none; border-radius: 50px; cursor: pointer; width: f
 
 //Set's up a User Edit Form that shows the user's information and allows them to edit it
 const EditUser = () => {
-const [name, setName] = useState("Name ");
-const [bio, setBio] = useState("User Bio ");
-const [email, setEmail] = useState("Email Here");
-const [username, setUsername] = useState("User Name ");
-const [password, setPassword] = useState("Password");
-const [dob, setDob] = useState("01/01/0000");
-const [gender, setGender] = useState("Male");
-const [country, setCountry] = useState("United States");
+const user = useLocation().state.user;
+const [gender, setGender] = useState(user.gender);
 
 
   useEffect(()=>{
@@ -54,34 +49,34 @@ return (
     <Container>
 
         <Heading>Edit User</Heading>
-            <form onSubmit={handleSubmit}>
+            <form action="/user/userUpdate" method="POST">
         <Row>
 
           <Column>
             <Label>Name:</Label>
-            <Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            <Input type="text" id="fullName" name="fullName" defaultValue={user.fullName} />
           </Column>
           <Column>
             <Label>Bio:</Label>
-            <Input type="text" value={bio} onChange={(e) => setBio(e.target.value)} />
+            <Input type="text" id="bio" name="bio" defaultValue={user.bio}  />
           </Column>
           <Column>
             <Label>Email:</Label>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Input type="email" id="emailAddress" name="emailAddress" defaultValue={user.emailAddress}  />
           </Column>
           <Column>
             <Label>Username:</Label>
-            <Input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <Input type="text" id="username" name="username" defaultValue={user.username}  />
           </Column>
         </Row>
         <Row>
           <Column>
             <Label>Password:</Label>
-            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <Input type="password" id="password" name="password" defaultValue={user.password}  />
           </Column>
           <Column>
             <Label>Date of Birth:</Label>
-            <Input type="date" value={dob} onChange={(e) => setDob(e.target.value)} />
+            <Input type="date" id="dob" name="dob" defaultValue={user.dob}  />
           </Column>
           <Column>
             <Label>Gender:</Label>
@@ -93,7 +88,7 @@ return (
           </Column>
             <Column>
                 <Label>Country/Region:</Label>
-                    <Input type="text" value={country} onChange={(e) => setCountry(e.target.value)} />
+                    <Input type="text" id="countryRegion" name="countryRegion" defaultValue={user.countryRegion} />
             </Column>
         </Row>
             <Button type="submit">Save Changes</Button>

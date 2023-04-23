@@ -33,7 +33,7 @@ export default ({
   // If userData is not null or undefined, it will return the following
   return (
     <Container>
-      <ProfilePicture src={userData.profilePicture} alt="Profile Picture" />
+      <ProfilePicture src={userData.profilePicture ? userData.profilePicture : "/profilepic.png"} alt="Profile Picture" />
       <UserInfo>
         <Label>Name:</Label>
         <Info>{userData.fullName}</Info>
