@@ -21,14 +21,7 @@ padding: 10px 20px; border: none; border-radius: 50px; cursor: pointer; width: f
 //Set's up a User Edit Form that shows the user's information and allows them to edit it
 const EditUser = () => {
 const user = useLocation().state.user;
-const [name, setName] = useState(user.fullName);
-const [bio, setBio] = useState(user.bio);
-const [email, setEmail] = useState(user.emailAddress);
-const [username, setUsername] = useState(user.username);
-const [password, setPassword] = useState(user.password);
-const [dob, setDob] = useState(user.dob);
 const [gender, setGender] = useState(user.gender);
-const [country, setCountry] = useState(user.countryRegion);
 
 
   useEffect(()=>{
@@ -61,29 +54,29 @@ return (
 
           <Column>
             <Label>Name:</Label>
-            <Input type="text" id="fullName" name="fullName" defaultValue={user.fullName} onChange={(e) => setName(e.target.value)} />
+            <Input type="text" id="fullName" name="fullName" defaultValue={user.fullName} />
           </Column>
           <Column>
             <Label>Bio:</Label>
-            <Input type="text" id="bio" name="bio" defaultValue={user.bio} onChange={(e) => setBio(e.target.value)} />
+            <Input type="text" id="bio" name="bio" defaultValue={user.bio}  />
           </Column>
           <Column>
             <Label>Email:</Label>
-            <Input type="email" id="emailAddress" name="emailAddress" defaultValue={user.emailAddress} onChange={(e) => setEmail(e.target.value)} />
+            <Input type="email" id="emailAddress" name="emailAddress" defaultValue={user.emailAddress}  />
           </Column>
           <Column>
             <Label>Username:</Label>
-            <Input type="text" id="username" name="username" defaultValue={user.username} onChange={(e) => setUsername(e.target.value)} />
+            <Input type="text" id="username" name="username" defaultValue={user.username}  />
           </Column>
         </Row>
         <Row>
           <Column>
             <Label>Password:</Label>
-            <Input type="password" id="password" name="password" defaultValue={user.password} onChange={(e) => setPassword(e.target.value)} />
+            <Input type="password" id="password" name="password" defaultValue={user.password}  />
           </Column>
           <Column>
             <Label>Date of Birth:</Label>
-            <Input type="date" id="dob" name="dob" defaultValue={user.dob} onChange={(e) => setDob(e.target.value)} />
+            <Input type="date" id="dob" name="dob" defaultValue={user.dob}  />
           </Column>
           <Column>
             <Label>Gender:</Label>
@@ -95,7 +88,7 @@ return (
           </Column>
             <Column>
                 <Label>Country/Region:</Label>
-                    <Input type="text" id="countryRegion" name="countryRegion" defaultValue={user.countryRegion} onChange={(e) => setCountry(e.target.value)} />
+                    <Input type="text" id="countryRegion" name="countryRegion" defaultValue={user.countryRegion} />
             </Column>
         </Row>
             <Button type="submit">Save Changes</Button>

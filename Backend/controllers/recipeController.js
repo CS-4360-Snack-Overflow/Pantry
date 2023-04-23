@@ -109,7 +109,7 @@ const recipe_upload_image = (req, res) => {
     if(fs.existsSync(newPath)) {
         fs.unlink(newPath, ()=>{})
     }
-    fs.writeFile(newPath, req.body, err => {if(err) {console.log(err)}});
+    fs.rename(req.file.path, newPath, err => {if(err) {console.log(err)}});
     return res.json({"path": pathString})
 }
  
