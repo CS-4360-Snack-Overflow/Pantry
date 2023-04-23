@@ -5,21 +5,25 @@ const session = require('express-session');
 const fs = require("fs");
 const path = require('path');
 require('dotenv').config();
+
 const recipe_index = (req, res) => {
-    const retrieveRecipes = (ingredients, filter) => {
+    const retrieveRecipes = (parameters, filter) => {
         let recipes;
-        if(!ingredients){
+        if(!parameters){
             recipes = Recipe.find();
         }
-        else if(typeof(ingredients) === "string") {
-            recipes = Recipe.find({ingredients:RegExp(ingredients)})
+
+        else if(typeof(parameters) === "string") {
+            const param = RegExp(parameters, "i")
+            console.log(param)
+            recipes = Recipe.find({$or: [{ingredients:param}, {name:param}, {tags: param}]})
         }
         else {
             let regexp = [];
-            for(let i = 0; i < ingredients.length; i++) {
-                regexp.push({ingredients: RegExp(ingredients[i])})
+            for(let i = 0; i < parameters.length; i++) {
+                const param = RegExp(parameters[i], "i")
+                regexp.push({$or: [{name: param}, {tags: param}, {ingredients: param}]})
             }
-            console.log(regexp)
             recipes = Recipe.find({$and : regexp});
         }
         switch(filter){
@@ -34,13 +38,14 @@ const recipe_index = (req, res) => {
         }
         return recipes
     }
-    retrieveRecipes(req.query.ingredients, req.query.filter).then((result) => {
+    retrieveRecipes(req.query.parameter, req.query.filter).then((result) => {
         res.send(result);
     })
     .catch((err) => {
         console.log(err);
     });
 };
+
 const recipe_details = (req, res) => {
     const id = req.params.id;
     Recipe.findById(id)
@@ -140,6 +145,6 @@ module.exports = {
     recipe_delete,
     recipe_patch, 
     recipe_upload_image,
-    recipe_get_created,
+    recipe_get_created, 
     recipe_get_favorited
 };
