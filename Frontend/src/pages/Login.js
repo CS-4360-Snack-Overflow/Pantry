@@ -46,7 +46,24 @@ export default ({
   forgotPasswordUrl = "#",
   signupUrl = "/signup",
 
-}) => (
+}) =>  {
+    const [error, setError] = useState('');
+    
+    async function handleLogin(event) {
+      event.preventDefault();
+      
+      try {
+        const response = await axios.post('/user/userLoginProc', {
+          username: event.target.username.value,
+          password: event.target.password.value
+        });
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+        setError('Invalid username or password. Please try again.');
+      }
+    }
+  
   // <AnimationRevealPage>
   //   <Container>
   //     <Content>
@@ -85,23 +102,8 @@ export default ({
   //     </Content>
   //   </Container>
   // </AnimationRevealPage>
-  function LoginPage() {
-    const [error, setError] = useState('');
-    
-    async function handleLogin(event) {
-      event.preventDefault();
-      
-      try {
-        const response = await axios.post('/user/userLoginProc', {
-          username: event.target.username.value,
-          password: event.target.password.value
-        });
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-        setError('Invalid username or password. Please try again.');
-      }
-    }
+
+
     
     return (
       <div>
@@ -148,5 +150,4 @@ export default ({
       </AnimationRevealPage>
       </div>
     );
-  }
-);
+};
