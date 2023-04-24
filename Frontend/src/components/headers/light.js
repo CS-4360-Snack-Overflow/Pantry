@@ -106,13 +106,13 @@ export default ({ roundedHeaderButton = false, logoLink, links, links2, classNam
     <NavLink href="/about">About Us</NavLink>
     <NavLink href="/contact">Contact Us</NavLink>
 
-    <div style={{ display: isActive ? 'inline' : 'none' }}>
-    <NavLink href="/user">Profile</NavLink>
-    <NavLink onClick={logoutAction}>Logout</NavLink></div>
-    <div style={{ display: isActive ? 'none' : 'inline' }}>
-    <NavLink>       </NavLink></div>
-
-    <div style={{ display: isActive ? 'none' : 'inline' }}>
+    <div style={{ display: isActive ? 'inline-flex' : 'none' }}>
+      <NavLink href="/user">Profile</NavLink>
+    </div>
+    <div style={{ display: isActive ? 'inline-flex' : 'none' }}>
+      <NavLink onClick={logoutAction}>Logout</NavLink>
+    </div>
+    <div style={{ display: isActive ? 'none' : 'inline-flex' }}>
     <NavLink href="/login" tw="lg:ml-12!">Login</NavLink>
     <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
     </div>
