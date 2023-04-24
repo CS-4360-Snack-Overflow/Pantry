@@ -51,17 +51,17 @@ const RowInputLong = tw.input`border-2 px-5 py-3 w-full rounded focus:outline-no
 const RowInputLong2 = tw.input`border-2 px-5 py-3 w-full rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
 const RowSelect = tw.select`border-2 px-5 py-3 w-1/6 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
 const RowSelectLong = tw.select`border-2 px-5 py-3 w-1/4 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
-const RowMultiSelect = tw.select`border-2 px-5 py-3 min-h-48 w-1/3 rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
+const RowMultiSelect = tw.select`border-2 px-5 py-3 min-h-48 w-full rounded focus:outline-none font-medium transition duration-150 focus:border-primary-500 hover:border-primary-500`
 const AddButton = tw(PrimaryButtonBase)`inline-block`
 const SubmitButtonRow = tw(PrimaryButtonBase)``
 const Tag = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-400 hover:bg-gray-300 text-gray-600 rounded-full`
 const TagContainer = tw.div`w-full`
 const Step = tw.div`inline-flex p-2 mt-2 mx-1 bg-gray-200 hover:bg-gray-300 text-black w-full`
-const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-auto w-full`;
+const RecipeContainer = tw.div`border-2 border-solid border-orange-500 rounded-lg p-4 mx-auto sm:w-full md:w-4/5 lg:w-3/5`;
 const ImageContainer = tw.div`border-2 border-solid border-white rounded-lg p-4 m-2 w-full md:w-2/5`;
 const Images = styled.div`
 ${props => css`background-image:url("${props.imageSrc}");max-width:80%;`}
-${tw`h-32 sm:h-48 md:h-48 lg:h-128 xl:h-128 2xl:h-128 w-full bg-center bg-cover relative rounded-t mx-auto flex-row`}`
+${tw`h-32 sm:h-48 md:h-48 lg:h-128 xl:h-128 2xl:h-128 sm:w-4/5 md:w-3/5 lg:w-1/2 bg-center bg-cover relative rounded-t mx-auto flex-row`}`
 
 
 export default ({
