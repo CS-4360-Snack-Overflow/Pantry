@@ -9,6 +9,8 @@ import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 //import { NavLink } from "react-router-dom";
 
+import { useState, useEffect } from 'react';
+
 const Header = tw.header`
   flex justify-between items-center
   max-w-screen-xl mx-auto
@@ -23,7 +25,7 @@ export const NavLink = tw.a`
   text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
   font-semibold tracking-wide transition duration-300
   pb-1 border-b-2 border-transparent hover:border-primary-500 hocus:text-primary-500
-  
+
 `;
 
 export const PrimaryLink = tw(NavLink)`
@@ -56,7 +58,7 @@ export const DesktopNavLinks = tw.nav`
   hidden lg:flex flex-1 justify-between items-center
 `;
 
-export default ({ roundedHeaderButton = false, logoLink, links, className, collapseBreakpointClass = "lg" }) => {
+export default ({ roundedHeaderButton = false, logoLink, links, links2, className, collapseBreakpointClass = "lg" }) => {
   /*
    * This header component accepts an optionals "links" prop that specifies the links to render in the navbar.
    * This links props should be an array of "NavLinks" components which is exported from this file.
@@ -70,15 +72,51 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
    * changing the defaultLinks variable below below.
    * If you manipulate links here, all the styling on the links is already done for you. If you pass links yourself though, you are responsible for styling the links or use the helper styled components that are defined here (NavLink)
    */
+
+  /*dj: the navlink /user, /login and /signup needs to be hidden depending on whether user session is active or not. fire the event when the page loads, execute route '/user/testAuth' to recieve json file, parse 'active' attribute of json file to get if TRUE or FALSE. Then according to that value, toggle navlink visibility On or Off for these three navlink components.
+  Do the opposite for a new navlink that shows profile picture with text 'Signed in as <username>'. when session=true, this_navlink.visiblity is true.
+  */
+
+  const [isActive, setIsActive] = useState(false);
+  
+  function getSessionActive(){
+    fetch('/user/testAuth')
+      .then(response => response.json())
+      .then(data => {
+	{data.active ? setIsActive(true) : setIsActive(false)}
+	console.log(data.active);
+      })
+      .catch(error => {
+	console.error(error);
+      });
+  }
+  function logoutAction() {
+    fetch('/user/logout');
+    window.location.href = "/";
+  }
+
+  useEffect(() => {
+    getSessionActive();
+  }, []);
+
   const defaultLinks = [
     <NavLinks key={1}>
-      <NavLink href="/recipes" >Recipes</NavLink>
-      <NavLink href="/addrecipe">Add Recipe</NavLink>
-      <NavLink href="/about">About Us</NavLink>
-      <NavLink href="/contact">Contact Us</NavLink>
+    <NavLink href="/recipes" >Recipes</NavLink>
+    <NavLink href="/addrecipe">Add Recipe</NavLink>
+    <NavLink href="/about">About Us</NavLink>
+    <NavLink href="/contact">Contact Us</NavLink>
+
+    <div style={{ display: isActive ? 'inline-flex' : 'none' }}>
       <NavLink href="/user">Profile</NavLink>
-      <NavLink href="/login" tw="lg:ml-12!">Login</NavLink>
-      <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
+    </div>
+    <div style={{ display: isActive ? 'inline-flex' : 'none' }}>
+      <NavLink onClick={logoutAction}>Logout</NavLink>
+    </div>
+    <div style={{ display: isActive ? 'none' : 'inline-flex' }}>
+    <NavLink href="/login" tw="lg:ml-12!">Login</NavLink>
+    <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/signup">Sign Up</PrimaryLink>
+    </div>
+
     </NavLinks>
   ];
 
@@ -87,8 +125,8 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
 
   const defaultLogoLink = (
     <LogoLink href="/">
-      <img src={logo} alt="PLogo" />
-      Pantry
+    <img src={logo} alt="PLogo" />
+    Pantry
     </LogoLink>
   );
 
@@ -97,23 +135,25 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
 
   return (
     <Header className={className || "header-light"}>
-      <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
-        {logoLink}
-        {links}
-      </DesktopNavLinks>
+    <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
+    {logoLink}
+    {links}
+    </DesktopNavLinks>
 
-      <MobileNavLinksContainer css={collapseBreakpointCss.mobileNavLinksContainer}>
-        {logoLink}
-        <MobileNavLinks initial={{ x: "150%", display: "none" }} animate={animation} css={collapseBreakpointCss.mobileNavLinks}>
-          {links}
-        </MobileNavLinks>
-        <NavToggle onClick={toggleNavbar} className={showNavLinks ? "open" : "closed"}>
-          {showNavLinks ? <CloseIcon tw="w-6 h-6" /> : <MenuIcon tw="w-6 h-6" />}
-        </NavToggle>
-      </MobileNavLinksContainer>
+    <MobileNavLinksContainer css={collapseBreakpointCss.mobileNavLinksContainer}>
+    {logoLink}
+    <MobileNavLinks initial={{ x: "150%", display: "none" }} animate={animation} css={collapseBreakpointCss.mobileNavLinks}>
+    {links}
+    </MobileNavLinks>
+    <NavToggle onClick={toggleNavbar} className={showNavLinks ? "open" : "closed"}>
+    {showNavLinks ? <CloseIcon tw="w-6 h-6" /> : <MenuIcon tw="w-6 h-6" />}
+    </NavToggle>
+    </MobileNavLinksContainer>
     </Header>
   );
 };
+
+/*dj: tiny spacing difference when toggled between signed in text, and user links. Assuming users won't notice such tiny difference*/
 
 /* The below code is for generating dynamic break points for navbar.
  * Using this you can specify if you want to switch

@@ -7,7 +7,9 @@ import {css} from "styled-components/macro"; //eslint-disable-line
 import illustration from "images/login-pantry.svg";
 import logo from "images/logo-p.svg";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
-
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { login } from "helpers/UserService";
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
 const MainContainer = tw.div`lg:w-1/2 xl:w-5/12 p-6 sm:p-12`;
@@ -44,43 +46,118 @@ export default ({
   forgotPasswordUrl = "#",
   signupUrl = "/signup",
 
-}) => (
-  <AnimationRevealPage>
-    <Container>
-      <Content>
-        <MainContainer>
-          <LogoLink href={logoLinkUrl}>
-            <LogoImage src={logo} />
-          </LogoLink>
-          <MainContent>
-            <Heading>{headingText}</Heading>
-            <FormContainer>
-              <Form action="/user/userLoginProc" method="POST">
-                <Input type="username" placeholder="Username" id="username" name="username" required />
-                <Input type="password" id="password" name="password" required />
-                <SubmitButton type="submit">
-                  <SubmitButtonIcon className="icon" />
-                  <span className="text">{submitButtonText}</span>
-                </SubmitButton>
-              </Form>
-              <p tw="mt-6 text-xs text-gray-600 text-center">
-                <a href={forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
-                  Forgot Password ?
-                </a>
-              </p>
-              <p tw="mt-8 text-sm text-gray-600 text-center">
-                Dont have an account?{" "}
-                <a href={signupUrl} tw="border-b border-gray-500 border-dotted">
-                  Sign Up
-                </a>
-              </p>
-            </FormContainer>
-          </MainContent>
-        </MainContainer>
-        <IllustrationContainer>
-          <IllustrationImage imageSrc={illustrationImageSrc} />
-        </IllustrationContainer>
-      </Content>
-    </Container>
-  </AnimationRevealPage>
-);
+}) =>  {
+  const ErrorPopup = styled.div`
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 10px;
+`;
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+    async function handleLogin(event) {
+      event.preventDefault();
+      
+      try {
+        login(event.target.username.value, event.target.password.value)
+        .then((response) => {
+          if (response.message == 'valid') {
+            navigate('/user')
+          } else{
+            setError('Invalid username or password. Please try again.');
+          }
+        })
+      } catch (error) {
+        console.error(error);
+        setError('Invalid username or password. Please try again.');
+      }
+    }
+  
+  // <AnimationRevealPage>
+  //   <Container>
+  //     <Content>
+  //       <MainContainer>
+  //         <LogoLink href={logoLinkUrl}>
+  //           <LogoImage src={logo} />
+  //         </LogoLink>
+  //         <MainContent>
+  //           <Heading>{headingText}</Heading>
+  //           <FormContainer>
+  //             <Form action="/user/userLoginProc" method="POST">
+  //               <Input type="username" placeholder="Username" id="username" name="username" required />
+  //               <Input type="password" id="password" name="password" required />
+  //               <SubmitButton type="submit">
+  //                 <SubmitButtonIcon className="icon" />
+  //                 <span className="text">{submitButtonText}</span>
+  //               </SubmitButton>
+  //             </Form>
+  //             <p tw="mt-6 text-xs text-gray-600 text-center">
+  //               <a href={forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
+  //                 Forgot Password ?
+  //               </a>
+  //             </p>
+  //             <p tw="mt-8 text-sm text-gray-600 text-center">
+  //               Dont have an account?{" "}
+  //               <a href={signupUrl} tw="border-b border-gray-500 border-dotted">
+  //                 Sign Up
+  //               </a>
+  //             </p>
+  //           </FormContainer>
+  //         </MainContent>
+  //       </MainContainer>
+  //       <IllustrationContainer>
+  //         <IllustrationImage imageSrc={illustrationImageSrc} />
+  //       </IllustrationContainer>
+  //     </Content>
+  //   </Container>
+  // </AnimationRevealPage>
+
+
+    
+    return (
+      <div>
+      <AnimationRevealPage>
+        <Container>
+          <Content>
+            <MainContainer>
+              <LogoLink href={logoLinkUrl}>
+                <LogoImage src={logo} />
+              </LogoLink>
+              <MainContent>
+                <Heading>{headingText}</Heading>
+                {error && (
+                  <ErrorPopup>{error}</ErrorPopup>
+                )}
+                <FormContainer>
+                  <form onSubmit={handleLogin}>
+                    <Input type="username" placeholder="Username" id="username" name="username" required />
+                    <Input type="password" id="password" name="password" required />
+                    <SubmitButton type="submit">
+                      <SubmitButtonIcon className="icon" />
+                      <span className="text">{submitButtonText}</span>
+                    </SubmitButton>
+                  </form>
+                  <p tw="mt-6 text-xs text-gray-600 text-center">
+                    <a href={forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
+                      Forgot Password ?
+                    </a>
+                  </p>
+                  <p tw="mt-8 text-sm text-gray-600 text-center">
+                    Dont have an account?{" "}
+                    <a href={signupUrl} tw="border-b border-gray-500 border-dotted">
+                      Sign Up
+                    </a>
+                  </p>
+                </FormContainer>
+              </MainContent>
+            </MainContainer>
+            <IllustrationContainer>
+              <IllustrationImage imageSrc={illustrationImageSrc} />
+            </IllustrationContainer>
+          </Content>
+        </Container>
+      </AnimationRevealPage>
+      </div>
+    );
+};

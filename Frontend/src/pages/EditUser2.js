@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { useLocation} from "react-router";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
@@ -45,24 +46,23 @@ const ProfilePicture = styled.img`
 export default ({
   logoLinkUrl = "/",
   illustrationImageSrc = illustration,
-  headingText = "Sign Up For Pantry",
-  submitButtonText = "Sign Up",
+  headingText = "Edit Profile",
+  submitButtonText = "Submit",
   SubmitButtonIcon = SignUpIcon,
   tosUrl = "#",
   privacyPolicyUrl = "#",
   signInUrl = "/login",
   fields = {
     "fullName" : "Name",
-    "emailAddress": "Email",
-    "username": "Username",
-    "password": "Password",
-    "bio": "Bio",
-    "phoneNumber": "Phone",
-    "dateOfBirth": "DOB",
-    "countryRegion": "Country",
-    "gender" : "Gender"
+      "password": "Password",
+      "bio": "Bio",
+      "phoneNumber": "Phone",
+      "dateOfBirth": "DOB",
+      "countryRegion": "Country",
+    "gender" : "Favorite dish"
   }
 }) => {
+  const user = useLocation().state.user;
   const [image, setImage] = useState(null)
   const [imUrl, setUrl] = useState("/placeholder.webp")
 
@@ -77,66 +77,44 @@ export default ({
     let form = new FormData();
     if(image) {
       form.append('files', image);
-    let res = await uploadImage(form);
-    res = await res.json().then((result) =>{
-      setUrl(__dirname + result.path)
-    })
+      let res = await uploadImage(form);
+      res = await res.json().then((result) =>{
+	setUrl(__dirname + result.path)
+      })
     }
   }
 
   return (
-  <AnimationRevealPage>
+    <AnimationRevealPage>
     <Container>
-      <Content>
-        <MainContainer>
-          <LogoLink href={logoLinkUrl}>
-            <LogoImage src={logo} />
-          </LogoLink>
-          <MainContent>
-            <Heading>{headingText}</Heading>
-            <FormContainer>
-              <Form action="/user/userCreate" method="POST">
-                <label class="mx-auto">Profile picture</label>
-                <ProfilePicture src={imUrl} alt="Profile Picture" />
-                <div class="flex-row">
-                <Input type="file" onChange={handleFileChange} required></Input>
-                <SubmitButton type="add" onClick={handleFileUpload}>Upload Photo</SubmitButton>
-                </div>
-                <Input type="text" hidden={true} id="profilePicture" name="profilePicture" value={imUrl}></Input>
-                {Object.keys(fields).map((field, index) => (
-                  <div key={index}>
-                    <label>{fields[field]}</label>
-                    <Input type="text" id={field} name={field} required></Input>
-                  </div>
-                ))}
-                <SubmitButton type="submit">
-                  <SubmitButtonIcon className="icon" />
-                  <span className="text">{submitButtonText}</span>
-                </SubmitButton>
-                <p tw="mt-6 text-xs text-gray-600 text-center">
-                  I agree to abide by Snack Overflow's{" "}
-                  <a href={tosUrl} tw="border-b border-gray-500 border-dotted">
-                    Terms of Service
-                  </a>{" "}
-                  and its{" "}
-                  <a href={privacyPolicyUrl} tw="border-b border-gray-500 border-dotted">
-                    Privacy Policy
-                  </a>
-                </p>
-                <p tw="mt-8 text-sm text-gray-600 text-center">
-                  Already have an account?{" "}
-                  <a href={signInUrl} tw="border-b border-gray-500 border-dotted">
-                    Sign In
-                  </a>
-                </p>
-              </Form>
-            </FormContainer>
-          </MainContent>
-        </MainContainer>
-        <IllustrationContainer>
-          <IllustrationImage imageSrc={illustrationImageSrc} />
-        </IllustrationContainer>
-      </Content>
+    <Content>
+    <MainContainer>
+    <LogoLink href={logoLinkUrl}>
+    <LogoImage src={logo} />
+    </LogoLink>
+    <MainContent>
+    <Heading>{headingText}</Heading>
+    <FormContainer>
+    <Form action="/user/userUpdate" method="POST">
+    {Object.keys(fields).map((field, index) => (
+      <div key={index}>
+      <label>{fields[field]}</label>
+      <Input type={field==="password" ? "password" : "text"} id={field} name={field} defaultValue={user[field]}></Input>
+      </div>
+    ))}
+    <SubmitButton type="submit">
+    <SubmitButtonIcon className="icon" />
+    <span className="text">{submitButtonText}</span>
+    </SubmitButton>
+    </Form>
+    </FormContainer>
+    </MainContent>
+    </MainContainer>
+    <IllustrationContainer>
+    <IllustrationImage imageSrc={illustrationImageSrc} />
+    </IllustrationContainer>
+    </Content>
     </Container>
-  </AnimationRevealPage>
-)};
+    </AnimationRevealPage>
+  )};
+

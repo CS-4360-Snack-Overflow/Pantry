@@ -6,15 +6,15 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { Container, ContentWithPaddingXl } from "components/misc/Layouts.js";
 import { SectionHeading } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-import { ReactComponent as StarIcon } from "images/star-icon.svg";
+//import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
 //import RecipeSearchBar from "components/forms/SearchBarWithIllustration";
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
-const UpperTabsControl = tw.div`flex flex-wrap bg-white px-2 py-2 rounded leading-none mt-12 xl:mt-0`;
-const TabsControl = tw.div`flex flex-wrap bg-gray-200 px-2 py-2 rounded leading-none mt-12 xl:mt-0`;
+//const UpperTabsControl = tw.div`flex flex-wrap bg-white px-2 py-2 rounded leading-none mt-12 xl:mt-0`;
+//const TabsControl = tw.div`flex flex-wrap bg-gray-200 px-2 py-2 rounded leading-none mt-12 xl:mt-0`;
 
 const TabContent = tw(motion.div)`mt-6 flex flex-wrap sm:-mr-10 md:-mr-6 lg:-mr-12`;
 const CardContainer = tw.div`mt-10 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md:pr-6 lg:pr-12`;
@@ -46,7 +46,7 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 
 export default ({
   heading = "Checkout the Menu",
-  
+
   tabs = {
     Tabs: [
       {
@@ -79,7 +79,7 @@ export default ({
         //reviews: "89",
         url: "/contact"
       },
-      
+
     ],
   }
 }) => {
@@ -95,11 +95,11 @@ export default ({
   return (
     <Container>
       <ContentWithPaddingXl>
-        
-      
+
+
         <HeaderRow>
           <Header>{heading}</Header>
-          
+
         </HeaderRow>
 
         {tabsKeys.map((tabKey, index) => (
@@ -125,7 +125,7 @@ export default ({
               <CardContainer key={index}>
                 <Card className="group" href={card.url} initial="rest" whileHover="hover" animate="rest">
                   <CardImageContainer imageSrc={card.imageSrc}>
-                    
+
                     <CardHoverOverlay
                       variants={{
                         hover: {

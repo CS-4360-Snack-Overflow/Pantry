@@ -29,6 +29,7 @@ async function loginUser(credentials, session) {
   }
 
   session.userId = user._id;
+  session.username = user.username;
   session.name = user.fullName;
 
 }
@@ -53,7 +54,7 @@ router.post('/userCreate', async (req, res) => {
     const savedUser = await user.save();
     //res.status(201).json(savedUser);
     await loginUser(req.body, req.session);
-    res.redirect('/'); //might wanna direct users to profile page later
+    res.redirect('/'); 
 
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -78,7 +79,8 @@ router.post('/userUpdate', async (req, res) => {
   try {
 
     // first access the username attribute from the model
-    const username = req.body.username;
+    const user = await User.findById(req.session.userId);
+    const username = user.username;
     const updates = req.body;
     const updatedFields = {};
 
@@ -93,7 +95,7 @@ router.post('/userUpdate', async (req, res) => {
 
     // if update was successful, there's that
     if (updatedUser) {
-      res.json(updatedUser);
+      res.redirect('/user'); 
     } else {
       res.status(404).json( { message: 'User not found' });
     }
@@ -121,14 +123,18 @@ router.post('/userDelete', requireAuth, async (req, res) => {
 router.post('/userLoginProc', async (req, res) => {
   try{
     await loginUser(req.body, req.session);
-    res.redirect('/');
+    res.send({ message: 'valid'})
   } catch (error) {
-    res.status(401).json({ error: error.message });
+    res.send({ message: 'invalid'})
   }
 });
 
-router.get('/testAuth', requireAuth, async (req, res) => {
-  res.json({active:true});
+router.get('/testAuth', async (req, res) => {
+  if (req.session.userId){
+    res.json({active:true});
+  }else{
+    res.json({active:false});
+  }
 });
 
 
@@ -145,6 +151,26 @@ router.get('/logout', requireAuth, async (req, res) => {
 
 //router.post('/recipe_create', recipeController.recipe_create_post);
 
+// Add a recipe ID to user's favorites
+router.post('/favorite/:id', async (req, res) => {
+  User.findOneAndUpdate({_id: req.session.userId}, {$addToSet: {favoriteRecipes: req.params.id}}, 
+                        (err) => {console.log(err)});
+})
+
+// Remove a recipe ID from user's favorites
+router.delete('/unfavorite/:id', async (req, res) => {
+  User.findOneAndUpdate({_id: req.session.userId}, {$pull: {favoriteRecipes: req.params.id}}, 
+                        (err) => {console.log(err)});
+})
+
+router.get('/isfavorite/:id', async (req, res) => {
+  // Checks if recipe id is in favorites array
+  const user = await User.findById(req.session.userId);
+  if(user.favoriteRecipes.includes(req.params.id)) {
+    res.json({result: true})
+  } else {
+    res.send({result: false})
+  }
+});
 
 module.exports = router;
-
